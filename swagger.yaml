@@ -415,6 +415,7 @@ components:
         - id
         - name
         - type
+        - interestSettings
       properties:
         id:
           type: string
@@ -451,14 +452,15 @@ components:
           example: 999.99
         interestSettings:
           $ref: '#/components/schemas/InterestSettings'    
+        maturityAction:
+          type: string
+          enum: [Reinvest, Withdraw]
+          example: Withdraw
     InterestSettings:
       type: object
       required:
         - rateType
         - rateValue
-        - postingScheduleType
-        - fixedPostingSchedule
-        - calculatedOnBalanceType
       properties:
         rateType:
           type: string
