@@ -1,3 +1,7 @@
+# Public website
+
+https://syncsavings.github.io/api-contract/
+
 # Run locally
 
 ```sh
