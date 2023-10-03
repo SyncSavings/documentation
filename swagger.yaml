@@ -299,14 +299,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Transaction'
+              $ref: '#/components/schemas/AvailableTransactions'
       responses:
         '201':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Transaction'
+                $ref: '#/components/schemas/AvailableTransactions'
         '400':
           description: Invalid saver information provided supplied
         '500':
@@ -356,6 +356,11 @@ components:
           type: string
           format: url
           example: https://s3-eu-east-1.amazonaws.com/{firmId}/saver/{userId}/profile.jpg
+    ReferenceId:
+        type: string
+        minLength: 24
+        maxLength: 24
+        example: "8151168891f9fca371d1a456"        
     SaverId:
         type: string
         minLength: 24
@@ -569,17 +574,27 @@ components:
               example: Daily
     Transactions:
       type: array
-      items:
-        $ref: '#/components/schemas/Transaction'
-    Transaction:
+      items: 
+        $ref: '#/components/schemas/AvailableTransactions'
+    AvailableTransactions:
+      oneOf: 
+         - $ref: '#/components/schemas/DepositTransaction'
+         - $ref: '#/components/schemas/WithdrawTransaction'
+         - $ref: '#/components/schemas/MovementTransaction'
+         - $ref: '#/components/schemas/TransferTransaction'         
+    BaseTransaction:
       type: object
+      required:
+        - id
+        - saverId
+        - amount
       properties:
         id: 
          $ref: '#/components/schemas/TransactionId'
         saverId: 
-         $ref: '#/components/schemas/SaverId'      
+         $ref: '#/components/schemas/ReferenceId'      
         accountId: 
-         $ref: '#/components/schemas/AccountId'      
+         $ref: '#/components/schemas/ReferenceId'      
         type:
           type: string
           enum: [Deposit, Withdraw, Movement, Transfer]
@@ -603,3 +618,55 @@ components:
           example: 2023-01-01T16:02:00Z
           description: transaction completion date   
           readOnly: true
+    DepositTransaction:
+      allOf:
+        - $ref: '#/components/schemas/BaseTransaction'
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              enum: [Deposit]
+              example: Deposit
+    WithdrawTransaction:
+      allOf:
+        - $ref: '#/components/schemas/BaseTransaction'
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              enum: [Withdraw]
+              example: Withdraw  
+    MovementTransaction:
+      allOf:
+        - $ref: '#/components/schemas/BaseTransaction'
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              enum: [Movement]
+              example: Movement
+            sourceAccount:
+              type: string
+              description: Account ID of the source account
+              example: A001ABC
+            destinationAccount:
+              type: string
+              description: Account ID of the destination account
+              example: A002ABC              
+    TransferTransaction:
+      allOf:
+        - $ref: '#/components/schemas/BaseTransaction'
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              enum: [Transfer]
+              example: Transfer
