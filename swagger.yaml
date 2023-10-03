@@ -432,12 +432,14 @@ components:
         minimumDeposit:
           type: number
           format: currency
-          example: 100
+          multipleOf: 0.01
+          example: 100.49
           description: System default is £0.01
         maximumDeposit:
           type: number
           format: currency
-          example: 100000
+          multipleOf: 0.01
+          example: 999.99
           description: System default is £1,000,000.00
         minimumBalance:
           type: number
@@ -445,6 +447,8 @@ components:
         maximumBalance:
           type: number
           format: currency
+          multipleOf: 0.01
+          example: 999.99
         interestSettings:
           $ref: '#/components/schemas/InterestSettings'    
     InterestSettings:
@@ -506,18 +510,21 @@ components:
           description: enum currency of the account
         balance:
           type: number
-          format: double
-          example: 0.00
+          format: currency
+          multipleOf: 0.01
+          example: 100.59
           readOnly: true
         pendingBalance:
           type: number
-          format: double
-          example: 0.00
+          format: currency
+          multipleOf: 0.01
+          example: 110.13
           readOnly: true
         interestAccrued:
           type: number 
-          format: double
-          example: 0.00
+          format: currency
+          multipleOf: 0.01
+          example: 16.14
           readOnly: true          
         goal:
           $ref: '#/components/schemas/Goal'              
@@ -541,7 +548,8 @@ components:
         targetAmount:
           type: number
           format: currency
-          example: 100000
+          multipleOf: 0.01
+          example: 100.56
           description: target amount for the account
         targetDate:
           type: string
@@ -578,7 +586,8 @@ components:
         amount:
           type: number
           format: currency
-          example: 100000
+          multipleOf: 0.01
+          example: 100500.99
           description: transaction amount
         createdDate:
           type: string
