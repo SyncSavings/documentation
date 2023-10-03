@@ -3,13 +3,13 @@ info:
   title: Sync Savings API Specification
   description: |-
     ℹ️ Embedded savings is the integration of cash savings products (easy access, fixed term and flexible interest) into other digital applications without the need to redirect users to the underlying financial institution. Embedded financial services enable providers to offer seamless access to relevant financial products at the point of intent, and thus drive engagement and value to customers. Cash savings in particular drive deep engagement with customers with recent studies revealing customers checking easy access accounts on average 4 to 5 times per week and fixed term savings 2 to 3 times per week.
-    
+
     🌐 It is estimated that the market size of global embedded finance across the entire value chain will grow from US $264bn in 2021 to US $606bn in 2025. Recent PwC research suggests that two-thirds of global economic activity will happen within business ecosystems by 2030. Key industries of focus include mobility, healthcare, personal finance, travel and lifestyle. 
 
     With our unique business model and relationships across the UK banking and fintech ecosystem, Sync is the only provider of embedded cash savings products.
-    
+
     🔑 Authentication: The API requires authentication using API keys included in request headers (see authorize)
-    
+
     Should you have any queries on the standards implemented or the capability of our services, please do let us know by emailing us at **contact@sync-savings.com**
   version: 1.0.11
 externalDocs:
@@ -31,7 +31,7 @@ tags:
     description: A Product is a ‘type’ of account (e.g. 90-Day Notice Saver). These are configured in partnership with Sync for each partner bank according to their unique product specifications.
   - name: accounts
     description: An Account is owned by a Saver. The type of an account is one of the products that are setup.
-  - name: transactions      
+  - name: transactions
     description: A transaction can be either a Deposit, a Withdrawal, a Movement or a Transfer. A Movement is an ‘internal’ movement of funds within two accounts registered at the same bank owned by the same saver
 paths:
   /v1/saver:
@@ -47,17 +47,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Saver'
+              $ref: "#/components/schemas/Saver"
       responses:
-        '201':
+        "201":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Saver'
-        '400':
+                $ref: "#/components/schemas/Saver"
+        "400":
           description: Invalid saver information provided supplied
-        '500':
+        "500":
           description: Something went wrong
   /v1/saver/{saverId}:
     get:
@@ -72,19 +72,19 @@ paths:
           description: ID of saver
           required: true
           schema:
-            $ref: '#/components/schemas/SaverId'
+            $ref: "#/components/schemas/SaverId"
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Saver'          
-        '400':
+                $ref: "#/components/schemas/Saver"
+        "400":
           description: Invalid ID supplied
-        '404':
+        "404":
           description: Customer not found
-        '500':
+        "500":
           description: Something went wrong
     put:
       tags:
@@ -98,24 +98,24 @@ paths:
           description: ID of saver
           required: true
           schema:
-            $ref: '#/components/schemas/SaverId'      
+            $ref: "#/components/schemas/SaverId"
       requestBody:
         description: Details of the updated saver
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Saver'
+              $ref: "#/components/schemas/Saver"
       responses:
-        '202':
+        "202":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Saver'
-        '400':
+                $ref: "#/components/schemas/Saver"
+        "400":
           description: Invalid saver information provided supplied
-        '500':
+        "500":
           description: Something went wrong
   /v1/products/{saverId}:
     get:
@@ -130,19 +130,19 @@ paths:
           description: ID of saver
           required: true
           schema:
-            $ref: '#/components/schemas/SaverId'
+            $ref: "#/components/schemas/SaverId"
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Products'        
-        '400':
+                $ref: "#/components/schemas/Products"
+        "400":
           description: Invalid Saver ID supplied
-        '404':
+        "404":
           description: Could not find saver
-        '500':
+        "500":
           description: Something went wrong
   /v1/product/{productId}:
     get:
@@ -157,20 +157,20 @@ paths:
           description: ID of product
           required: true
           schema:
-            $ref: '#/components/schemas/ProductId'
+            $ref: "#/components/schemas/ProductId"
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Products'        
-        '400':
+                $ref: "#/components/schemas/AvailableProducts"
+        "400":
           description: Invalid Saver ID supplied
-        '404':
+        "404":
           description: Could not find saver
-        '500':
-          description: Something went wrong   
+        "500":
+          description: Something went wrong
   /v1/account:
     post:
       tags:
@@ -184,17 +184,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Account'
+              $ref: "#/components/schemas/Account"
       responses:
-        '201':
+        "201":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Saver'
-        '400':
+                $ref: "#/components/schemas/Saver"
+        "400":
           description: Invalid saver information provided supplied
-        '500':
+        "500":
           description: Something went wrong
   /v1/account/{accountId}:
     get:
@@ -209,20 +209,20 @@ paths:
           description: ID of account
           required: true
           schema:
-            $ref: '#/components/schemas/AccountId'
+            $ref: "#/components/schemas/AccountId"
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Account'        
-        '400':
+                $ref: "#/components/schemas/Account"
+        "400":
           description: Invalid account ID supplied
-        '404':
+        "404":
           description: Could not find saver
-        '500':
-          description: Something went wrong      
+        "500":
+          description: Something went wrong
     patch:
       tags:
         - accounts
@@ -235,22 +235,22 @@ paths:
           description: ID of account
           required: true
           schema:
-            $ref: '#/components/schemas/AccountId'
+            $ref: "#/components/schemas/AccountId"
       requestBody:
         description: Details of the new account
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateInterestMethodology'            
+              $ref: "#/components/schemas/UpdateInterestMethodology"
       responses:
-        '202':
+        "202":
           description: successful operation
-        '400':
+        "400":
           description: Invalid account ID supplied
-        '404':
+        "404":
           description: Could not find saver
-        '500':
+        "500":
           description: Something went wrong
   /v1/account/{accountId}/transactions:
     get:
@@ -265,20 +265,20 @@ paths:
           description: ID of account to get transactions for
           required: true
           schema:
-            $ref: '#/components/schemas/AccountId'
+            $ref: "#/components/schemas/AccountId"
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Transactions'        
-        '400':
+                $ref: "#/components/schemas/Transactions"
+        "400":
           description: Invalid account ID supplied
-        '404':
+        "404":
           description: Could not find saver
-        '500':
-          description: Something went wrong           
+        "500":
+          description: Something went wrong
   /v1/account/{accountId}/transaction:
     post:
       tags:
@@ -292,25 +292,25 @@ paths:
           description: ID of account
           required: true
           schema:
-            $ref: '#/components/schemas/AccountId'
+            $ref: "#/components/schemas/AccountId"
       requestBody:
         description: Details of the new transaction
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AvailableTransactions'
+              $ref: "#/components/schemas/AvailableTransactions"
       responses:
-        '201':
+        "201":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AvailableTransactions'
-        '400':
+                $ref: "#/components/schemas/AvailableTransactions"
+        "400":
           description: Invalid saver information provided supplied
-        '500':
-          description: Something went wrong            
+        "500":
+          description: Something went wrong
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -318,7 +318,7 @@ components:
       in: header
       name: X-API-Key
   schemas:
-    Saver: 
+    Saver:
       type: object
       required:
         - firstname
@@ -329,7 +329,7 @@ components:
         - address
       properties:
         id:
-          $ref: '#/components/schemas/SaverId'
+          $ref: "#/components/schemas/SaverId"
         firstname:
           type: string
           example: Ada
@@ -351,41 +351,41 @@ components:
           minLength: 8
           writeOnly: true
         address:
-          $ref: '#/components/schemas/Address'
+          $ref: "#/components/schemas/Address"
         profilePicture:
           type: string
           format: url
           example: https://s3-eu-east-1.amazonaws.com/{firmId}/saver/{userId}/profile.jpg
     ReferenceId:
-        type: string
-        minLength: 24
-        maxLength: 24
-        example: "8151168891f9fca371d1a456"        
+      type: string
+      minLength: 24
+      maxLength: 24
+      example: "8151168891f9fca371d1a456"
     SaverId:
-        type: string
-        minLength: 24
-        maxLength: 24
-        example: "65119978f1f9fcb769de1916"        
-        readOnly: true
+      type: string
+      minLength: 24
+      maxLength: 24
+      example: "65119978f1f9fcb769de1916"
+      readOnly: true
     ProductId:
-        type: string
-        minLength: 24
-        maxLength: 24
-        example: "65119978f1f9fcb769de1916"        
-        readOnly: true       
+      type: string
+      minLength: 24
+      maxLength: 24
+      example: "65119978f1f9fcb769de1916"
+      readOnly: true
     AccountId:
-        type: string
-        minLength: 24
-        maxLength: 24
-        example: "65119978f1f9fcb769de1916"        
-        readOnly: true   
+      type: string
+      minLength: 24
+      maxLength: 24
+      example: "65119978f1f9fcb769de1916"
+      readOnly: true
     TransactionId:
-        type: string
-        minLength: 24
-        maxLength: 24
-        example: "65119978f1f9fcb769de1916"        
-        readOnly: true           
-    Address: 
+      type: string
+      minLength: 24
+      maxLength: 24
+      example: "65119978f1f9fcb769de1916"
+      readOnly: true
+    Address:
       type: object
       required:
         - addressLine1
@@ -413,8 +413,13 @@ components:
     Products:
       type: array
       items:
-        $ref: '#/components/schemas/Product'
-    Product:
+        $ref: "#/components/schemas/AvailableProducts"
+    AvailableProducts:
+      oneOf:
+        - $ref: "#/components/schemas/EasyAccessProduct"
+        - $ref: "#/components/schemas/FixedTermProduct"
+        - $ref: "#/components/schemas/NoticeProduct"
+    BaseProduct:
       type: object
       required:
         - id
@@ -427,14 +432,10 @@ components:
           description: Unique id assigned on creation
           minLength: 24
           maxLength: 24
-          example: "65119978f1f9fcb769de1916"        
+          example: "65119978f1f9fcb769de1916"
         name:
           type: string
-          example: Bank X 1 Year Fixed
-        type:
-          type: string
-          enum: [Easy Access, Fixed Term, Notice]
-          example: Fixed Term
+          example: Some Product
         minimumDeposit:
           type: number
           format: currency
@@ -456,7 +457,7 @@ components:
           multipleOf: 0.01
           example: 999.99
         interestSettings:
-          $ref: '#/components/schemas/InterestSettings'    
+          $ref: "#/components/schemas/InterestSettings"
         maturityAction:
           type: string
           enum: [Reinvest, Withdraw]
@@ -477,19 +478,63 @@ components:
           example: 0.0506
         postingScheduleType:
           type: string
-          enum: [Fixed Schedule, Anniversary Account Open, Anniversary First Transaction]
+          enum:
+            [
+              Fixed Schedule,
+              Anniversary Account Open,
+              Anniversary First Transaction,
+            ]
           example: Fixed Schedule
           description: System default is “Anniversary Account Open”
         fixedPostingSchedule:
           type: string
           enum: [Daily, Monthly, Annually]
           example: Daily
-          description: SystemOnly present if postingScheduleType is “Fixed Schedule” 
+          description: SystemOnly present if postingScheduleType is “Fixed Schedule”
         calculatedOnBalanceType:
           type: string
-          enum: [Fixed Schedule, Average Balance, Minimum Balance, End of Day Balance]
+          enum:
+            [
+              Fixed Schedule,
+              Average Balance,
+              Minimum Balance,
+              End of Day Balance,
+            ]
           example: Fixed Schedule
           description: System default is “End of Day Balance”
+    EasyAccessProduct:
+      allOf:
+        - $ref: "#/components/schemas/BaseProduct"
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              enum: [Easy Access]
+              example: Easy Access
+    FixedTermProduct:
+      allOf:
+        - $ref: "#/components/schemas/BaseProduct"
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              enum: [Fixed Term]
+              example: Fixed Term
+    NoticeProduct:
+      allOf:
+        - $ref: "#/components/schemas/BaseProduct"
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              enum: [Notice]
+              example: Notice
     Account:
       type: object
       required:
@@ -500,7 +545,7 @@ components:
         - goal
       properties:
         id:
-          $ref: '#/components/schemas/AccountId'
+          $ref: "#/components/schemas/AccountId"
         saverId:
           type: string
           description: ID of the saver to create account for
@@ -510,7 +555,7 @@ components:
         accountName:
           type: string
           description: The default is the name of the product, but can be customised by the saver.
-        currency: 
+        currency:
           type: string
           enum: [GBP]
           example: GBP
@@ -528,13 +573,13 @@ components:
           example: 110.13
           readOnly: true
         interestAccrued:
-          type: number 
+          type: number
           format: currency
           multipleOf: 0.01
           example: 16.14
-          readOnly: true          
+          readOnly: true
         goal:
-          $ref: '#/components/schemas/Goal'              
+          $ref: "#/components/schemas/Goal"
     Goal:
       type: object
       required:
@@ -546,7 +591,7 @@ components:
         puprose:
           type: string
           description: Default options can be configured and made bespoke to each firm.
-          example: "College fund" 
+          example: "College fund"
         image:
           type: string
           format: url
@@ -574,14 +619,14 @@ components:
               example: Daily
     Transactions:
       type: array
-      items: 
-        $ref: '#/components/schemas/AvailableTransactions'
+      items:
+        $ref: "#/components/schemas/AvailableTransactions"
     AvailableTransactions:
-      oneOf: 
-         - $ref: '#/components/schemas/DepositTransaction'
-         - $ref: '#/components/schemas/WithdrawTransaction'
-         - $ref: '#/components/schemas/MovementTransaction'
-         - $ref: '#/components/schemas/TransferTransaction'         
+      oneOf:
+        - $ref: "#/components/schemas/DepositTransaction"
+        - $ref: "#/components/schemas/WithdrawTransaction"
+        - $ref: "#/components/schemas/MovementTransaction"
+        - $ref: "#/components/schemas/TransferTransaction"
     BaseTransaction:
       type: object
       required:
@@ -589,12 +634,12 @@ components:
         - saverId
         - amount
       properties:
-        id: 
-         $ref: '#/components/schemas/TransactionId'
-        saverId: 
-         $ref: '#/components/schemas/ReferenceId'      
-        accountId: 
-         $ref: '#/components/schemas/ReferenceId'      
+        id:
+          $ref: "#/components/schemas/TransactionId"
+        saverId:
+          $ref: "#/components/schemas/ReferenceId"
+        accountId:
+          $ref: "#/components/schemas/ReferenceId"
         type:
           type: string
           enum: [Deposit, Withdraw, Movement, Transfer]
@@ -616,11 +661,11 @@ components:
           type: string
           format: date
           example: 2023-01-01T16:02:00Z
-          description: transaction completion date   
+          description: transaction completion date
           readOnly: true
     DepositTransaction:
       allOf:
-        - $ref: '#/components/schemas/BaseTransaction'
+        - $ref: "#/components/schemas/BaseTransaction"
         - type: object
           required:
             - type
@@ -631,7 +676,7 @@ components:
               example: Deposit
     WithdrawTransaction:
       allOf:
-        - $ref: '#/components/schemas/BaseTransaction'
+        - $ref: "#/components/schemas/BaseTransaction"
         - type: object
           required:
             - type
@@ -639,10 +684,10 @@ components:
             type:
               type: string
               enum: [Withdraw]
-              example: Withdraw  
+              example: Withdraw
     MovementTransaction:
       allOf:
-        - $ref: '#/components/schemas/BaseTransaction'
+        - $ref: "#/components/schemas/BaseTransaction"
         - type: object
           required:
             - type
@@ -658,10 +703,10 @@ components:
             destinationAccount:
               type: string
               description: Account ID of the destination account
-              example: A002ABC              
+              example: A002ABC
     TransferTransaction:
       allOf:
-        - $ref: '#/components/schemas/BaseTransaction'
+        - $ref: "#/components/schemas/BaseTransaction"
         - type: object
           required:
             - type
