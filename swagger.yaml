@@ -308,7 +308,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AvailableTransactions"
         "400":
-          description: Coudld not find account
+          description: Could not find account
         "500":
           description: Something went wrong
 components:
