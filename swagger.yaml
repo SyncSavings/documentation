@@ -83,7 +83,7 @@ paths:
         "400":
           description: Invalid ID supplied
         "404":
-          description: Customer not found
+          description: Saver not found
         "500":
           description: Something went wrong
     put:
@@ -168,7 +168,7 @@ paths:
         "400":
           description: Invalid Saver ID supplied
         "404":
-          description: Could not find saver
+          description: Could not find product
         "500":
           description: Something went wrong
   /v1/account:
@@ -249,7 +249,7 @@ paths:
         "400":
           description: Invalid account ID supplied
         "404":
-          description: Could not find saver
+          description: Could not find account
         "500":
           description: Something went wrong
   /v1/account/{accountId}/transactions:
@@ -276,7 +276,7 @@ paths:
         "400":
           description: Invalid account ID supplied
         "404":
-          description: Could not find saver
+          description: Could not find account to retrieve transactions for
         "500":
           description: Something went wrong
   /v1/account/{accountId}/transaction:
@@ -308,7 +308,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AvailableTransactions"
         "400":
-          description: Invalid saver information provided supplied
+          description: Coudld not find account
         "500":
           description: Something went wrong
 components:
@@ -519,22 +519,37 @@ components:
         - type: object
           required:
             - type
+            - termLengthMonths
+            - restrictNoticeToWorkingDay
           properties:
             type:
               type: string
               enum: [Fixed Term]
               example: Fixed Term
+            termLengthMonths:
+              type: number
+              description: Represents number of months
+              example: 24
+            restrictNoticeToWorkingDay:
+              type: boolean
+              description: Default is false
+              example: false
     NoticeProduct:
       allOf:
         - $ref: "#/components/schemas/BaseProduct"
         - type: object
           required:
             - type
+            - noticeDays
           properties:
             type:
               type: string
               enum: [Notice]
               example: Notice
+            noticeDays:
+              type: number
+              description: Represents days notice that must be given for withdrawal
+              example: 90
     Account:
       type: object
       required:
