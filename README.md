@@ -1,6 +1,6 @@
 # Public website
 
-https://syncsavings.github.io/api-contract/
+[https://syncsavings.github.io/api-contract/](https://syncsavings.github.io/api-contract/)
 
 # Run locally
 
