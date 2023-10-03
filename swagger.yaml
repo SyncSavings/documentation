@@ -688,6 +688,7 @@ components:
     MovementTransaction:
       allOf:
         - $ref: "#/components/schemas/BaseTransaction"
+        - $ref: "#/components/schemas/InternalTransaction"
         - type: object
           required:
             - type
@@ -707,6 +708,7 @@ components:
     TransferTransaction:
       allOf:
         - $ref: "#/components/schemas/BaseTransaction"
+        - $ref: "#/components/schemas/InternalTransaction"
         - type: object
           required:
             - type
@@ -715,3 +717,17 @@ components:
               type: string
               enum: [Transfer]
               example: Transfer
+    InternalTransaction:
+      type: object
+      required:
+        - sourceAccount
+        - destinationAccount
+      properties:
+        sourceAccount:
+          type: string
+          description: Account ID of the source account
+          example: A001ABC
+        destinationAccount:
+          type: string
+          description: Account ID of the destination account
+          example: A002ABC
