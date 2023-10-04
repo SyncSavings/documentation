@@ -645,7 +645,7 @@ components:
         id:
           $ref: "#/components/schemas/TransactionId"
         saverId:
-          $ref: "#/components/schemas/ReferenceId"
+          $ref: "#/components/schemas/SaverId"
         accountId:
           $ref: "#/components/schemas/ReferenceId"
         type:
@@ -662,7 +662,7 @@ components:
         createdDate:
           type: string
           format: date
-          example: 2023-01-01T16:02:00Z
+          example: 2023-01-01T16:00:00Z
           description: transaction creation date
           readOnly: true
         completedDate:
