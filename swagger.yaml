@@ -548,7 +548,7 @@ components:
       required:
         - id
         - saverId
-        - accountName
+        - potName
         - currency
         - goal
       properties:
@@ -560,7 +560,7 @@ components:
           minLength: 24
           maxLength: 24
           example: "65119978f1f9fcb769de1916"
-        accountName:
+        potName:
           type: string
           description: The default is the name of the product, but can be customised by the saver.
         currency:
@@ -591,15 +591,15 @@ components:
     Goal:
       type: object
       required:
-        - puprose
+        - motive
         - image
         - targetAmount
         - targetDate
       properties:
-        puprose:
+        motive:
           type: string
           description: Default options can be configured and made bespoke to each firm.
-          example: "College fund"
+          example: "Holiday fund"
         image:
           type: string
           format: url
