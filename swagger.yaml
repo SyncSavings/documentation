@@ -26,19 +26,19 @@ security:
   - ApiKeyAuth: []
 tags:
   - name: savers
-    description: A saver is a customer user who can create a savings product
+    description: A Saver is a an individual or business that can create a savings product
   - name: products
     description: A Product is a ‘type’ of account (e.g. 90-Day Notice Saver). These are configured in partnership with Sync for each partner bank according to their unique product specifications.
   - name: accounts
     description: An Account is owned by a Saver. The type of an account is one of the products that are setup.
   - name: transactions
-    description: A transaction can be either a Deposit, a Withdrawal, a Movement or a Transfer. A Movement is an ‘internal’ movement of funds within two accounts registered at the same bank owned by the same saver
+    description: A Transaction can be either a Deposit, a Withdrawal, a Movement or a Transfer. A Movement is an ‘internal’ movement of funds within two accounts registered at the same bank owned by the same saver
 paths:
   /v1/saver:
     post:
       tags:
         - savers
-      summary: create a saver
+      summary: Create a saver
       description: Create a new saver
       operationId: createSaver
       requestBody:
@@ -252,20 +252,20 @@ paths:
           description: Could not find account
         "500":
           description: Something went wrong
-  /v1/account/{accountId}/transactions:
+  /v1/transaction/{transactionId}:
     get:
       tags:
         - transactions
-      summary: Get transactions for an account
-      description: Returns transactions for an account
-      operationId: getTransactions
+      summary: Get a transaction
+      description: Returns a transaction
+      operationId: getTransaction
       parameters:
-        - name: accountId
+        - name: transactionId
           in: path
-          description: ID of account to get transactions for
+          description: ID of a transaction
           required: true
           schema:
-            $ref: "#/components/schemas/AccountId"
+            $ref: "#/components/schemas/TransactionId"
       responses:
         "200":
           description: successful operation
@@ -279,20 +279,13 @@ paths:
           description: Could not find account to retrieve transactions for
         "500":
           description: Something went wrong
-  /v1/account/{accountId}/transaction:
+  /v1/transaction:
     post:
       tags:
         - transactions
       summary: Create an account transaction
-      description: CreateCreate an account transaction
+      description: Create an account transaction
       operationId: createTransaction
-      parameters:
-        - name: accountId
-          in: path
-          description: ID of account
-          required: true
-          schema:
-            $ref: "#/components/schemas/AccountId"
       requestBody:
         description: Details of the new transaction
         required: true
@@ -355,7 +348,7 @@ components:
         profilePicture:
           type: string
           format: url
-          example: https://s3-eu-east-1.amazonaws.com/{firmId}/saver/{userId}/profile.jpg
+          example: https://s3-eu-east-1.amazonaws.com/saver/{firmId}/{saverId}/profile.jpg
     ReferenceId:
       type: string
       minLength: 24
@@ -435,7 +428,7 @@ components:
           example: "65119978f1f9fcb769de1916"
         name:
           type: string
-          example: Some Product
+          example: BankX ProductY
         minimumDeposit:
           type: number
           format: currency
@@ -611,7 +604,7 @@ components:
           type: string
           format: url
           description: Path to image. This can be uploaded by the saver or from a catalogue of pre-defined static images/icons.
-          example: https://s3-eu-east-1.amazonaws.com/{firmId}/saver/{userId}/profile.jpg
+          example: https://s3-eu-east-1.amazonaws.com/saver/{firmId}/{saverId}/profile.jpg
         targetAmount:
           type: number
           format: currency
