@@ -55,7 +55,7 @@ The example API specification used by this repository can be seen hosted at [htt
     ...
     <link rel="stylesheet" type="text/css" href="dist/swagger-ui.css" >
     <link rel="icon" type="image/png" href="dist/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="dist/favicon-16x16.png" sizes="16x16" />    
+    <link rel="icon" type="image/png" href="dist/swagger_favicon-16x16.png" sizes="16x16" />    
     ...
     <script src="dist/swagger-ui-bundle.js"> </script>
     <script src="dist/swagger-ui-standalone-preset.js"> </script>    
