@@ -483,7 +483,7 @@ components:
           type: string
           enum: [Daily, Monthly, Annually]
           example: Daily
-          description: SystemOnly present if postingScheduleType is “Fixed Schedule”
+          description: Only present if postingScheduleType is “Fixed Schedule”
         calculatedOnBalanceType:
           type: string
           enum:
