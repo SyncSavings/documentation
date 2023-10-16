@@ -308,9 +308,9 @@ paths:
     post:
       tags:
         - identity
-      summary: Create a new identity verification flow using a configured provider
+      summary: Create a new identity verification flow using Plaid
       description: Create a new identity verification flow using Plaid
-      operationId: createIdentiy
+      operationId: createIdentiyPlaid
       requestBody:
         description: Details of a new identity verification flow
         required: true
