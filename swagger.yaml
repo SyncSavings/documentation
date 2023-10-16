@@ -326,7 +326,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/PlaidIdentityResult"
         "400":
-          description: Could not find account
+          description: Invalid request
         "500":
           description: Something went wrong
 components:
