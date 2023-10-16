@@ -766,13 +766,7 @@ components:
           example: A002ABC
     PlaidIdentityRequest:
       type: object
-      required:
-        - provider
       properties:
-        provider:
-          type: string
-          enum: [PLIAD]
-          example: PLIAD
         gaveConsent:
           type: boolean
           description: has the user already accepted tos for KYC. If false the generated Link flow will ask the user to accept tos.
