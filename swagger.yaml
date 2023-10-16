@@ -859,14 +859,11 @@ components:
                   example: us_ssn
     PlaidIdentityResult:
       type: object
-      required:
-        - sourceAccount
-        - destinationAccount
       properties:
-        result:
+        todo:
           type: string
-          description: Account ID of the source account
-          example: A001ABC
+          description: TBC determine what to return here
+          example: TBC
     PlaidAddress:
       type: object
       required:
