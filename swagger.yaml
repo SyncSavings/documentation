@@ -16,11 +16,11 @@ externalDocs:
   description: Find out more about Sync Savings
   url: https://www.sync-savings.com/
 servers:
-  - url: https://dev.sync-savings.com/api
+  - url: https://dev.sync-savings-tech.com
     description: Dev server
-  - url: https://staging.sync-savings.com/api
+  - url: https://staging.sync-savings-tech
     description: Staging server
-  - url: https://sync-savings.com/api
+  - url: https://sync-savings-tech
     description: Production server (uses live data)
 security:
   - ApiKeyAuth: []
