@@ -117,11 +117,35 @@ paths:
           description: Invalid saver information provided supplied
         "500":
           description: Something went wrong
-  /v1/products/{saverId}:
+  /v1/product/:
+    post:
+      tags:
+        - products
+      summary: Create an product
+      description: Create an product
+      operationId: createProduct
+      requestBody:
+        description: Details of the new product
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FixedTermProduct"
+      responses:
+        "201":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FixedTermProduct"
+        "400":
+          description: Invalid saver information provided supplied
+        "500":
+          description: Something went wrong
     get:
       tags:
         - products
-      summary: Find products for saver
+      summary: Return all products that the requester has access to
       description: Returns a single saver
       operationId: getProductsForSaver
       parameters:
@@ -226,9 +250,9 @@ paths:
     patch:
       tags:
         - accounts
-      summary: Update Interest rate methodology
-      description: Update Interest rate methodology
-      operationId: updateAccountInterestRate
+      summary: Update an account
+      description: Update an account
+      operationId: updateAccount
       parameters:
         - name: accountId
           in: path
@@ -237,7 +261,7 @@ paths:
           schema:
             $ref: "#/components/schemas/AccountId"
       requestBody:
-        description: Details of the new account
+        description: Updating interest rate configuration
         required: true
         content:
           application/json:
@@ -336,73 +360,65 @@ components:
       in: header
       name: X-API-Key
   schemas:
-    Saver:
+    Account:
       type: object
       required:
-        - firstname
-        - surname
-        - knownAs
-        - email
-        - password
-        - address
+        - id
+        - productId
+        - saverId
+        - accountName
+        - currency
+        - goal
       properties:
         id:
-          $ref: "#/components/schemas/SaverId"
-        firstname:
+          $ref: "#/components/schemas/AccountId"
+        productId:
           type: string
-          example: Ada
-        surname:
+          description: ID of the product this account relates to
+          minLength: 24
+          maxLength: 24
+          example: "7653978f18u6cb769de7654"
+        saverId:
           type: string
-          example: Lovelace
-        knownAs:
+          description: ID of the saver to create account for
+          minLength: 24
+          maxLength: 24
+          example: "65119978f1f9fcb769de1916"
+        accountName:
           type: string
-          example: Ada
-        email:
+          description: The default is the name of the product, but can be customised by the saver.
+          example: "My first home 🏡"
+        currency:
           type: string
-          example: ada.lovelace@example.com
-          format: email
-        password:
-          type: string
-          example: adaiLovesaving99
-          format: password
-          description: Must contain at least one numbers and a capital
-          minLength: 8
-          writeOnly: true
-        address:
-          $ref: "#/components/schemas/Address"
-        profilePicture:
-          type: string
-          format: url
-          example: https://s3-eu-east-1.amazonaws.com/saver/{firmId}/{saverId}/profile.jpg
-    ReferenceId:
-      type: string
-      minLength: 24
-      maxLength: 24
-      example: "8151168891f9fca371d1a456"
-    SaverId:
-      type: string
-      minLength: 24
-      maxLength: 24
-      example: "65119978f1f9fcb769de1916"
-      readOnly: true
-    ProductId:
-      type: string
-      minLength: 24
-      maxLength: 24
-      example: "65119978f1f9fcb769de1916"
-      readOnly: true
+          enum: [ GBP ]
+          example: GBP
+          description: enum currency of the account
+        balance:
+          type: number
+          format: currency
+          multipleOf: 0.01
+          example: 20000
+          readOnly: true
+        pendingBalance:
+          type: number
+          format: currency
+          multipleOf: 0.01
+          example: 110.13
+          readOnly: true
+        interestAccrued:
+          type: number
+          format: currency
+          multipleOf: 0.01
+          example: 16.14
+          readOnly: true
+        goal:
+          $ref: "#/components/schemas/Goal"
     AccountId:
-      type: string
-      minLength: 24
-      maxLength: 24
-      example: "65119978f1f9fcb769de1916"
-      readOnly: true
-    TransactionId:
-      type: string
-      minLength: 24
-      maxLength: 24
-      example: "65119978f1f9fcb769de1916"
-      readOnly: true
+        type: string
+        minLength: 24
+        maxLength: 24
+        example: "65119978f1f9fcb769de1916"
+        readOnly: true
     Address:
       type: object
       required:
@@ -428,21 +444,24 @@ components:
         postCode:
           type: string
           example: SW1A 1AA
-    Products:
-      type: array
-      items:
-        $ref: "#/components/schemas/AvailableProducts"
     AvailableProducts:
       oneOf:
         - $ref: "#/components/schemas/EasyAccessProduct"
         - $ref: "#/components/schemas/FixedTermProduct"
         - $ref: "#/components/schemas/NoticeProduct"
+    AvailableTransactions:
+      oneOf:
+        - $ref: "#/components/schemas/DepositTransaction"
+        - $ref: "#/components/schemas/WithdrawTransaction"
+        - $ref: "#/components/schemas/MovementTransaction"
+        - $ref: "#/components/schemas/TransferTransaction"
     BaseProduct:
       type: object
       required:
         - id
         - name
         - type
+        - status
         - interestSettings
       properties:
         id:
@@ -453,7 +472,18 @@ components:
           example: "65119978f1f9fcb769de1916"
         name:
           type: string
-          example: BankX ProductY
+          example: 12-month fixed term savings account (Issue 4)
+        type:
+          $ref: "#/components/schemas/ProductType"
+        status:
+          type: string
+          enum: [ Draft, PendingReview, Live, Closed, Cancelled]
+          example: Draft
+        trancheSize:
+          type: number
+          format: currency
+          multipleOf: 0.01
+          example: 10000000.00
         minimumDeposit:
           type: number
           format: currency
@@ -468,7 +498,9 @@ components:
           description: System default is £1,000,000.00
         minimumBalance:
           type: number
+          example: 100.00
           format: currency
+          description: System default is £0.01
         maximumBalance:
           type: number
           format: currency
@@ -476,190 +508,22 @@ components:
           example: 999.99
         interestSettings:
           $ref: "#/components/schemas/InterestSettings"
-        maturityAction:
+        maturitySettings:
           type: string
-          enum: [Reinvest, Withdraw]
-          example: Withdraw
-    InterestSettings:
-      type: object
-      required:
-        - rateType
-        - rateValue
-      properties:
-        rateType:
+          enum: [ Reinvest, Withdraw ]
+          example: Reinvest
+        createdBy:
           type: string
-          enum: [Fixed, Variable]
-          example: Fixed
-        rateValue:
-          type: number
-          description: Expressed as a decimal. E.g. 0.0506 is 5.06%
-          example: 0.0506
-        postingScheduleType:
+          example: Alex Fox
+        approveBy:
           type: string
-          enum:
-            [
-              Fixed Schedule,
-              Anniversary Account Open,
-              Anniversary First Transaction,
-            ]
-          example: Fixed Schedule
-          description: System default is “Anniversary Account Open”
-        fixedPostingSchedule:
+          example: Sam Ollason
+        description:
           type: string
-          enum: [Daily, Monthly, Annually]
-          example: Daily
-          description: Only present if postingScheduleType is “Fixed Schedule”
-        calculatedOnBalanceType:
+          example: Earn a guaranteed rate for 12 months. Simple online application. Eligible deposits are covered by the FSCS up to £85k.
+        notes:
           type: string
-          enum:
-            [
-              Fixed Schedule,
-              Average Balance,
-              Minimum Balance,
-              End of Day Balance,
-            ]
-          example: Fixed Schedule
-          description: System default is “End of Day Balance”
-    EasyAccessProduct:
-      allOf:
-        - $ref: "#/components/schemas/BaseProduct"
-        - type: object
-          required:
-            - type
-          properties:
-            type:
-              type: string
-              enum: [Easy Access]
-              example: Easy Access
-    FixedTermProduct:
-      allOf:
-        - $ref: "#/components/schemas/BaseProduct"
-        - type: object
-          required:
-            - type
-            - termLengthMonths
-            - restrictNoticeToWorkingDay
-          properties:
-            type:
-              type: string
-              enum: [Fixed Term]
-              example: Fixed Term
-            termLengthMonths:
-              type: number
-              description: Represents number of months
-              example: 24
-            restrictNoticeToWorkingDay:
-              type: boolean
-              description: Default is false
-              example: false
-    NoticeProduct:
-      allOf:
-        - $ref: "#/components/schemas/BaseProduct"
-        - type: object
-          required:
-            - type
-            - noticeDays
-          properties:
-            type:
-              type: string
-              enum: [Notice]
-              example: Notice
-            noticeDays:
-              type: number
-              description: Represents days notice that must be given for withdrawal
-              example: 90
-    Account:
-      type: object
-      required:
-        - id
-        - saverId
-        - potName
-        - currency
-        - goal
-      properties:
-        id:
-          $ref: "#/components/schemas/AccountId"
-        saverId:
-          type: string
-          description: ID of the saver to create account for
-          minLength: 24
-          maxLength: 24
-          example: "65119978f1f9fcb769de1916"
-        potName:
-          type: string
-          description: The default is the name of the product, but can be customised by the saver.
-        currency:
-          type: string
-          enum: [GBP]
-          example: GBP
-          description: enum currency of the account
-        balance:
-          type: number
-          format: currency
-          multipleOf: 0.01
-          example: 100.59
-          readOnly: true
-        pendingBalance:
-          type: number
-          format: currency
-          multipleOf: 0.01
-          example: 110.13
-          readOnly: true
-        interestAccrued:
-          type: number
-          format: currency
-          multipleOf: 0.01
-          example: 16.14
-          readOnly: true
-        goal:
-          $ref: "#/components/schemas/Goal"
-    Goal:
-      type: object
-      required:
-        - motive
-        - image
-        - targetAmount
-        - targetDate
-      properties:
-        motive:
-          type: string
-          description: Default options can be configured and made bespoke to each firm.
-          example: "Holiday fund"
-        image:
-          type: string
-          format: url
-          description: Path to image. This can be uploaded by the saver or from a catalogue of pre-defined static images/icons.
-          example: https://s3-eu-east-1.amazonaws.com/saver/{firmId}/{saverId}/profile.jpg
-        targetAmount:
-          type: number
-          format: currency
-          multipleOf: 0.01
-          example: 100.56
-          description: target amount for the account
-        targetDate:
-          type: string
-          format: date
-          example: 01-01-2026
-    UpdateInterestMethodology:
-      type: object
-      properties:
-        interestSettings:
-          type: object
-          properties:
-            calculationFrequency:
-              type: string
-              enum: [Daily, Monthly, Annually]
-              example: Daily
-    Transactions:
-      type: array
-      items:
-        $ref: "#/components/schemas/AvailableTransactions"
-    AvailableTransactions:
-      oneOf:
-        - $ref: "#/components/schemas/DepositTransaction"
-        - $ref: "#/components/schemas/WithdrawTransaction"
-        - $ref: "#/components/schemas/MovementTransaction"
-        - $ref: "#/components/schemas/TransferTransaction"
+          example: Aiming for Q2 launch
     BaseTransaction:
       type: object
       required:
@@ -707,49 +571,104 @@ components:
               type: string
               enum: [Deposit]
               example: Deposit
-    WithdrawTransaction:
+    EasyAccessProduct:
       allOf:
-        - $ref: "#/components/schemas/BaseTransaction"
+        - $ref: "#/components/schemas/BaseProduct"
         - type: object
           required:
             - type
           properties:
             type:
               type: string
-              enum: [Withdraw]
-              example: Withdraw
-    MovementTransaction:
+              enum: [ Easy Access ]
+              example: Easy Access
+    FixedTermProduct:
       allOf:
-        - $ref: "#/components/schemas/BaseTransaction"
-        - $ref: "#/components/schemas/InternalTransaction"
+        - $ref: "#/components/schemas/BaseProduct"
         - type: object
           required:
             - type
+            - termLengthMonths
+            - restrictNoticeToWorkingDay
           properties:
             type:
               type: string
-              enum: [Movement]
-              example: Movement
-            sourceAccount:
-              type: string
-              description: Account ID of the source account
-              example: A001ABC
-            destinationAccount:
-              type: string
-              description: Account ID of the destination account
-              example: A002ABC
-    TransferTransaction:
-      allOf:
-        - $ref: "#/components/schemas/BaseTransaction"
-        - $ref: "#/components/schemas/InternalTransaction"
-        - type: object
-          required:
-            - type
-          properties:
-            type:
-              type: string
-              enum: [Transfer]
-              example: Transfer
+              enum: [Fixed Term]
+              example: Fixed Term
+            termLengthMonths:
+              type: number
+              description: Represents number of months
+              example: 24
+            restrictNoticeToWorkingDay:
+              type: boolean
+              description: Default is false
+              example: false
+    Goal:
+      type: object
+      required:
+        - motive
+        - image
+        - targetAmount
+        - targetDate
+      properties:
+        motive:
+          type: string
+          description: Default options can be configured and made bespoke to each firm.
+          example: "Mortgate deposit"
+        image:
+          type: string
+          format: url
+          description: Path to image. This can be uploaded by the saver or from a catalogue of pre-defined static images/icons.
+          example: https://s3-eu-east-1.amazonaws.com/saver/{firmId}/{saverId}/profile.jpg
+        targetAmount:
+          type: number
+          format: currency
+          multipleOf: 0.01
+          example: 100.56
+          description: target amount for the account
+        targetDate:
+          type: string
+          format: date
+          example: 01-01-2026
+    InterestSettings:
+      type: object
+      required:
+        - rateType
+        - rateValue
+      properties:
+        rateType:
+          type: string
+          example: Fixed
+        rateValue:
+          type: number
+          description: Expressed as a decimal. E.g. 0.0506 is 5.06%
+          example: 0.0506
+        postingScheduleType:
+          type: string
+          enum:
+            [
+              Fixed Schedule,
+              Anniversary Account Open,
+              Anniversary First Transaction,
+            ]
+          example: Fixed Schedule
+          description: System default is “Anniversary Account Open”
+        fixedPostingSchedule:
+          type: string
+          enum: [Daily, Monthly, Annually]
+          example: Daily
+          description: Only present if postingScheduleType is “Fixed Schedule”
+        calculatedOnBalanceType:
+          type: string
+          enum:
+            [
+              Fixed Schedule,
+              Average Balance,
+              Minimum Balance,
+              End of Day Balance,
+            ]
+          example: Fixed Schedule
+          description: System default is “End of Day Balance”
     InternalTransaction:
       type: object
       required:
@@ -764,6 +683,42 @@ components:
           type: string
           description: Account ID of the destination account
           example: A002ABC
+    MovementTransaction:
+      allOf:
+        - $ref: "#/components/schemas/BaseTransaction"
+        - $ref: "#/components/schemas/InternalTransaction"
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              enum: [ Movement ]
+              example: Movement
+            sourceAccount:
+              type: string
+              description: Account ID of the source account
+              example: A001ABC
+            destinationAccount:
+              type: string
+              description: Account ID of the destination account
+              example: A002ABC
+    NoticeProduct:
+      allOf:
+        - $ref: "#/components/schemas/BaseProduct"
+        - type: object
+          required:
+            - type
+            - noticeDays
+          properties:
+            type:
+              type: string
+              enum: [ Notice ]
+              example: Notice
+            noticeDays:
+              type: number
+              description: Represents days notice that must be given for withdrawal
+              example: 90
     PlaidIdentityRequest:
       type: object
       properties:
@@ -901,3 +856,117 @@ components:
           type: string
           description: Valid, capitalized, two-letter ISO code representing the country of this object. Must be in ISO 3166-1 alpha-2 form.
           example: US
+    ProductId:
+      type: string
+      minLength: 24
+      maxLength: 24
+      example: "65119978f1f9fcb769de1916"
+      readOnly: true
+    Products:
+      type: array
+      items:
+        $ref: "#/components/schemas/AvailableProducts"
+    ProductType:
+      type: string
+      enum: [EasyAccess, FixedTerm, Notice, ISA]
+      example: FixedTerm
+    ReferenceId:
+      type: string
+      minLength: 24
+      maxLength: 24
+      example: "8151168891f9fca371d1a456"
+    Saver:
+      type: object
+      required:
+        - firstname
+        - surname
+        - knownAs
+        - email
+        - password
+        - address
+      properties:
+        id:
+          $ref: "#/components/schemas/SaverId"
+        firstname:
+          type: string
+          example: Ada
+        surname:
+          type: string
+          example: Lovelace
+        knownAs:
+          type: string
+          example: Ada
+        email:
+          type: string
+          example: ada.lovelace@example.com
+          format: email
+        password:
+          type: string
+          example: adaiLovesaving99
+          format: password
+          description: Must contain at least one numbers and a capital
+          minLength: 8
+          writeOnly: true
+        address:
+          $ref: "#/components/schemas/Address"
+        profilePicture:
+          type: string
+          format: url
+          example: https://s3-eu-east-1.amazonaws.com/saver/{firmId}/{saverId}/profile.jpg
+    SaverId:
+      type: string
+      minLength: 24
+      maxLength: 24
+      example: "65119978f1f9fcb769de1916"
+      readOnly: true
+
+    TransactionId:
+      type: string
+      minLength: 24
+      maxLength: 24
+      example: "65119978f1f9fcb769de1916"
+      readOnly: true
+
+    Transactions:
+      type: array
+      items:
+        $ref: "#/components/schemas/AvailableTransactions"
+    TransferTransaction:
+      allOf:
+        - $ref: "#/components/schemas/BaseTransaction"
+        - $ref: "#/components/schemas/InternalTransaction"
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              enum: [ Transfer ]
+              example: Transfer
+    UpdateInterestMethodology:
+      type: object
+      properties:
+        interestSettings:
+          type: object
+          properties:
+            calculationFrequency:
+              type: string
+              enum: [Daily, Monthly, Annually]
+              example: Daily
+
+
+    WithdrawTransaction:
+      allOf:
+        - $ref: "#/components/schemas/BaseTransaction"
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              enum: [Withdraw]
+              example: Withdraw
+
+
+
+
