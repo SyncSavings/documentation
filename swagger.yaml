@@ -952,12 +952,12 @@ components:
         - type: object
           required:
             - type
-            - currentDeposits
+            - balance
             - pendingBalance
             - numberOfDepositors
             - averageDepositSize
           properties:
-            currentDeposits:
+            balance:
               type: number
               format: currency
               multipleOf: 0.01
