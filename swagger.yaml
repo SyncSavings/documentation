@@ -25,15 +25,228 @@ servers:
 security:
   - ApiKeyAuth: []
 tags:
-  - name: savers
-    description: A Saver is a an individual or business that can create a savings product
-  - name: products
-    description: A Product is a ‘type’ of account (e.g. 90-Day Notice Saver). These are configured in partnership with Sync for each partner bank according to their unique product specifications.
   - name: accounts
     description: An Account is owned by a Saver. The type of an account is one of the products that are setup.
+  - name: products
+    description: A Product is a ‘type’ of account (e.g. 90-Day Notice Saver). These are configured in partnership with Sync for each partner bank according to their unique product specifications.
+  - name: savers
+    description: A Saver is a an individual or business that can create a savings product
   - name: transactions
     description: A Transaction can be either a Deposit, a Withdrawal, a Movement or a Transfer. A Movement is an ‘internal’ movement of funds within two accounts registered at the same bank owned by the same saver
 paths:
+  /v1/account:
+    post:
+      tags:
+        - accounts
+      summary: Create an account for a saver
+      description: Create an account for a saver
+      operationId: createAccount
+      requestBody:
+        description: Details of the new account
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Account"
+      responses:
+        "201":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+        "400":
+          description: Invalid saver information provided supplied
+        "500":
+          description: Something went wrong
+  /v1/account/{accountId}:
+    get:
+      tags:
+        - accounts
+      summary: Get account by ID
+      description: Returns an account
+      operationId: getAccount
+      parameters:
+        - name: accountId
+          in: path
+          description: ID of account
+          required: true
+          schema:
+            $ref: "#/components/schemas/AccountId"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+        "400":
+          description: Invalid account ID supplied
+        "404":
+          description: Could not find saver
+        "500":
+          description: Something went wrong
+    patch:
+      tags:
+        - accounts
+      summary: Update an account
+      description: Update an account
+      operationId: updateAccount
+      parameters:
+        - name: accountId
+          in: path
+          description: ID of account
+          required: true
+          schema:
+            $ref: "#/components/schemas/AccountId"
+      requestBody:
+        description: Updating interest rate configuration
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateInterestMethodology"
+      responses:
+        "202":
+          description: successful operation
+        "400":
+          description: Invalid account ID supplied
+        "404":
+          description: Could not find account
+        "500":
+          description: Something went wrong
+  /v1/account/summary/{accountId}:
+    get:
+      tags:
+        - accounts
+      summary: Get account summary using account ID
+      description: Returns static fields of an account enriched by calculated dynamic fields
+      operationId: getAccountSummary
+      parameters:
+        - name: accountId
+          in: path
+          description: ID of account
+          required: true
+          schema:
+            $ref: "#/components/schemas/AccountId"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountSummary"
+        "400":
+          description: Invalid account ID supplied
+        "404":
+          description: Could not find account
+        "500":
+          description: Something went wron
+  /v1/product/:
+    post:
+      tags:
+        - products
+      summary: Create an product
+      description: Create an product
+      operationId: createProduct
+      requestBody:
+        description: Details of the new product
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FixedTermProduct"
+      responses:
+        "201":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FixedTermProduct"
+        "400":
+          description: Invalid saver information provided supplied
+        "500":
+          description: Something went wrong
+    get:
+      tags:
+        - products
+      summary: Return all products that the requester has access to
+      description: Returns a single saver
+      operationId: getProductsForSaver
+      parameters:
+        - name: saverId
+          in: path
+          description: ID of saver
+          required: true
+          schema:
+            $ref: "#/components/schemas/SaverId"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+        "400":
+          description: Invalid Saver ID supplied
+        "404":
+          description: Could not find saver
+        "500":
+          description: Something went wrong
+  /v1/product/{productId}:
+    get:
+      tags:
+        - products
+      summary: Get product by ID
+      description: Returns a product
+      operationId: getProduct
+      parameters:
+        - name: productId
+          in: path
+          description: ID of product
+          required: true
+          schema:
+            $ref: "#/components/schemas/ProductId"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AvailableProducts"
+        "400":
+          description: Invalid Saver ID supplied
+        "404":
+          description: Could not find product
+        "500":
+          description: Something went wrong
+  /v1/product/summary/{productId}:
+    get:
+      tags:
+        - products
+      summary: Get summary of a product by ID.
+      description: Returns a product's key static fields and calculated dynamic fields based on the current state of all linked account, transactions etc.
+      operationId: getProductSummary
+      parameters:
+        - name: productId
+          in: path
+          description: ID of product
+          required: true
+          schema:
+            $ref: "#/components/schemas/ProductId"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductSummary"
+        "400":
+          description: Invalid Product ID supplied
+        "404":
+          description: Could not find product
+        "500":
+          description: Something went wrong
   /v1/saver:
     post:
       tags:
@@ -117,37 +330,13 @@ paths:
           description: Invalid saver information provided supplied
         "500":
           description: Something went wrong
-  /v1/product/:
-    post:
-      tags:
-        - products
-      summary: Create an product
-      description: Create an product
-      operationId: createProduct
-      requestBody:
-        description: Details of the new product
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/FixedTermProduct"
-      responses:
-        "201":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FixedTermProduct"
-        "400":
-          description: Invalid saver information provided supplied
-        "500":
-          description: Something went wrong
+  /v1/saver/summary/{saverId}:
     get:
       tags:
-        - products
-      summary: Return all products that the requester has access to
+        - savers
+      summary: Returns the static saver fields enriched with dynamic fields calculated from data related to all of their accounts they own (e.g. balance calcualted from all of their accounts)
       description: Returns a single saver
-      operationId: getProductsForSaver
+      operationId: getSaverSummaryById
       parameters:
         - name: saverId
           in: path
@@ -161,119 +350,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Products"
+                $ref: "#/components/schemas/SaverSummary"
         "400":
-          description: Invalid Saver ID supplied
+          description: Invalid ID supplied
         "404":
-          description: Could not find saver
-        "500":
-          description: Something went wrong
-  /v1/product/{productId}:
-    get:
-      tags:
-        - products
-      summary: Get product by ID
-      description: Returns a product
-      operationId: getProduct
-      parameters:
-        - name: productId
-          in: path
-          description: ID of product
-          required: true
-          schema:
-            $ref: "#/components/schemas/ProductId"
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AvailableProducts"
-        "400":
-          description: Invalid Saver ID supplied
-        "404":
-          description: Could not find product
-        "500":
-          description: Something went wrong
-  /v1/account:
-    post:
-      tags:
-        - accounts
-      summary: Create an account for a saver
-      description: Create an account for a saver
-      operationId: createAccount
-      requestBody:
-        description: Details of the new account
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Account"
-      responses:
-        "201":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Saver"
-        "400":
-          description: Invalid saver information provided supplied
-        "500":
-          description: Something went wrong
-  /v1/account/{accountId}:
-    get:
-      tags:
-        - accounts
-      summary: Get account by ID
-      description: Returns an account
-      operationId: getAccount
-      parameters:
-        - name: accountId
-          in: path
-          description: ID of account
-          required: true
-          schema:
-            $ref: "#/components/schemas/AccountId"
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Account"
-        "400":
-          description: Invalid account ID supplied
-        "404":
-          description: Could not find saver
-        "500":
-          description: Something went wrong
-    patch:
-      tags:
-        - accounts
-      summary: Update an account
-      description: Update an account
-      operationId: updateAccount
-      parameters:
-        - name: accountId
-          in: path
-          description: ID of account
-          required: true
-          schema:
-            $ref: "#/components/schemas/AccountId"
-      requestBody:
-        description: Updating interest rate configuration
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UpdateInterestMethodology"
-      responses:
-        "202":
-          description: successful operation
-        "400":
-          description: Invalid account ID supplied
-        "404":
-          description: Could not find account
+          description: Saver not found
         "500":
           description: Something went wrong
   /v1/transaction/{transactionId}:
@@ -393,24 +474,6 @@ components:
           enum: [ GBP ]
           example: GBP
           description: enum currency of the account
-        balance:
-          type: number
-          format: currency
-          multipleOf: 0.01
-          example: 20000
-          readOnly: true
-        pendingBalance:
-          type: number
-          format: currency
-          multipleOf: 0.01
-          example: 110.13
-          readOnly: true
-        interestAccrued:
-          type: number
-          format: currency
-          multipleOf: 0.01
-          example: 16.14
-          readOnly: true
         goal:
           $ref: "#/components/schemas/Goal"
     AccountId:
@@ -419,6 +482,31 @@ components:
         maxLength: 24
         example: "65119978f1f9fcb769de1916"
         readOnly: true
+    AccountSummary:
+      allOf:
+        - $ref: "#/components/schemas/Account"
+        - type: object
+          required:
+            - type
+          properties:
+            balance:
+              type: number
+              format: currency
+              multipleOf: 0.01
+              example: 20000.14
+              readOnly: true
+            pendingBalance:
+              type: number
+              format: currency
+              multipleOf: 0.01
+              example: 110.00
+              readOnly: true
+            interestAccrued:
+              type: number
+              format: currency
+              multipleOf: 0.01
+              example: 500.14
+              readOnly: true
     Address:
       type: object
       required:
@@ -472,12 +560,14 @@ components:
           example: "65119978f1f9fcb769de1916"
         name:
           type: string
-          example: 12-month fixed term savings account (Issue 4)
+          example: 12-month business fixed term savings account (Issue 4)
         type:
           $ref: "#/components/schemas/ProductType"
+        subtype:
+          $ref: "#/components/schemas/ProductSubType"
         status:
           type: string
-          enum: [ Draft, PendingReview, Live, Closed, Cancelled]
+          enum: [ Draft, PendingReview, Live, Paused, Closed, Cancelled, Archived]
           example: Draft
         trancheSize:
           type: number
@@ -856,6 +946,45 @@ components:
           type: string
           description: Valid, capitalized, two-letter ISO code representing the country of this object. Must be in ISO 3166-1 alpha-2 form.
           example: US
+    ProductSummary:
+      allOf:
+        - $ref: "#/components/schemas/BaseProduct"
+        - type: object
+          required:
+            - type
+            - balance
+            - pendingBalance
+            - numberOfDepositors
+            - averageDepositSize
+          properties:
+            balance:
+              type: number
+              format: currency
+              multipleOf: 0.01
+              example: 1000000
+              readOnly: true
+            pendingDeposits:
+              type: number
+              format: currency
+              multipleOf: 0.01
+              example: 2500
+              readOnly: true
+            numberOfDepositors:
+              type: number
+              description: Represents number of months
+              example: 5000
+              readOnly: true
+            averageDepositSize:
+              type: number
+              format: currency
+              multipleOf: 0.01
+              example: 2000
+              readOnly: true
+            projectedFillDate:
+              type: string
+              format: date
+              example: 2023-11-15
+              readOnly: true
     ProductId:
       type: string
       minLength: 24
@@ -868,7 +997,11 @@ components:
         $ref: "#/components/schemas/AvailableProducts"
     ProductType:
       type: string
-      enum: [EasyAccess, FixedTerm, Notice, ISA]
+      enum: [ Business, Personal, Charity ]
+      example: Personal
+    ProductSubType:
+      type: string
+      enum: [ EasyAccess, FixedTerm, Notice, ISA ]
       example: FixedTerm
     ReferenceId:
       type: string
@@ -902,9 +1035,9 @@ components:
           format: email
         password:
           type: string
-          example: adaiLovesaving99
+          example: <strong_password>
           format: password
-          description: Must contain at least one numbers and a capital
+          description: Must contain at least one character and a capital leetter
           minLength: 8
           writeOnly: true
         address:
@@ -919,14 +1052,40 @@ components:
       maxLength: 24
       example: "65119978f1f9fcb769de1916"
       readOnly: true
-
+    SaverSummary:
+      allOf:
+        - $ref: "#/components/schemas/Saver"
+        - type: object
+          required:
+            - type
+            - balance
+            - pendingBalance
+            - averageDepositSize
+          properties:
+            balance:
+              type: number
+              format: currency
+              multipleOf: 0.01
+              example: 2500
+              readOnly: true
+            pendingBalance:
+              type: number
+              format: currency
+              multipleOf: 0.01
+              example: 100
+              readOnly: true
+            averageDepositSize:
+              type: number
+              format: currency
+              multipleOf: 0.01
+              example: 2000
+              readOnly: true
     TransactionId:
       type: string
       minLength: 24
       maxLength: 24
       example: "65119978f1f9fcb769de1916"
       readOnly: true
-
     Transactions:
       type: array
       items:
