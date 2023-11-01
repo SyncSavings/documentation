@@ -155,14 +155,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/FixedTermProduct"
+              $ref: "#/components/schemas/AvailableProducts"
       responses:
         "201":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FixedTermProduct"
+                $ref: "#/components/schemas/AvailableProducts"
         "400":
           description: Invalid saver information provided supplied
         "500":
@@ -179,7 +179,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Products"
+                $ref: "#/components/schemas/AvailableProducts"
         "400":
           description: Invalid Saver ID supplied
         "404":
@@ -464,17 +464,17 @@ components:
           example: "My first home 🏡"
         currency:
           type: string
-          enum: [ GBP ]
+          enum: [GBP]
           example: GBP
           description: enum currency of the account
         goal:
           $ref: "#/components/schemas/Goal"
     AccountId:
-        type: string
-        minLength: 24
-        maxLength: 24
-        example: "65119978f1f9fcb769de1916"
-        readOnly: true
+      type: string
+      minLength: 24
+      maxLength: 24
+      example: "65119978f1f9fcb769de1916"
+      readOnly: true
     AccountSummary:
       allOf:
         - $ref: "#/components/schemas/Account"
@@ -542,8 +542,10 @@ components:
         - id
         - name
         - type
+        - subType
         - status
         - interestSettings
+        - currency
       properties:
         id:
           type: string
@@ -556,11 +558,12 @@ components:
           example: 12-month business fixed term savings account (Issue 4)
         type:
           $ref: "#/components/schemas/ProductType"
-        subtype:
+        subType:
           $ref: "#/components/schemas/ProductSubType"
         status:
           type: string
-          enum: [ Draft, PendingReview, Live, Paused, Closed, Cancelled, Archived]
+          enum:
+            [draft, pending_review, live, paused, closed, cancelled, Archived]
           example: Draft
         trancheSize:
           type: number
@@ -589,11 +592,15 @@ components:
           format: currency
           multipleOf: 0.01
           example: 999.99
+        currency:
+          type: string
+          description: currency of the product in ISO 4217 format
+          example: GBP
         interestSettings:
           $ref: "#/components/schemas/InterestSettings"
         maturitySettings:
           type: string
-          enum: [ Reinvest, Withdraw ]
+          enum: [Reinvest, Withdraw]
           example: Reinvest
         createdBy:
           type: string
@@ -661,23 +668,23 @@ components:
           required:
             - type
           properties:
-            type:
+            subType:
               type: string
-              enum: [ Easy Access ]
-              example: Easy Access
+              enum: [easy_access]
+              example: easy_access
     FixedTermProduct:
       allOf:
         - $ref: "#/components/schemas/BaseProduct"
         - type: object
           required:
-            - type
+            - subType
             - termLengthMonths
             - restrictNoticeToWorkingDay
           properties:
-            type:
+            subType:
               type: string
-              enum: [Fixed Term]
-              example: Fixed Term
+              enum: [fixed_term]
+              example: fixed_term
             termLengthMonths:
               type: number
               description: Represents number of months
@@ -776,7 +783,7 @@ components:
           properties:
             type:
               type: string
-              enum: [ Movement ]
+              enum: [Movement]
               example: Movement
             sourceAccount:
               type: string
@@ -796,7 +803,7 @@ components:
           properties:
             type:
               type: string
-              enum: [ Notice ]
+              enum: [Notice]
               example: Notice
             noticeDays:
               type: number
@@ -990,12 +997,12 @@ components:
         $ref: "#/components/schemas/AvailableProducts"
     ProductType:
       type: string
-      enum: [ Business, Personal, Charity ]
-      example: Personal
+      enum: [business, personal, charity]
+      example: personal
     ProductSubType:
       type: string
-      enum: [ EasyAccess, FixedTerm, Notice, ISA ]
-      example: FixedTerm
+      enum: [easy_access, fixed_term, notice, isa]
+      example: fixed_term
     ReferenceId:
       type: string
       minLength: 24
@@ -1093,7 +1100,7 @@ components:
           properties:
             type:
               type: string
-              enum: [ Transfer ]
+              enum: [Transfer]
               example: Transfer
     UpdateInterestMethodology:
       type: object
