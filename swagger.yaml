@@ -563,7 +563,7 @@ components:
         status:
           type: string
           enum:
-            [Draft, PendingReview, Live, Paused, Closed, Cancelled, Archived]
+            [Draft, Pending Review, Live, Paused, Closed, Cancelled, Archived]
           example: Draft
         trancheSize:
           type: number
