@@ -179,7 +179,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AvailableProducts"
+                $ref: "#/components/schemas/Products"
         "400":
           description: Invalid Saver ID supplied
         "404":
@@ -563,7 +563,7 @@ components:
         status:
           type: string
           enum:
-            [draft, pending_review, live, paused, closed, cancelled, Archived]
+            [Draft, Pending Review, Live, Paused, Closed, Cancelled, Archived]
           example: Draft
         trancheSize:
           type: number
@@ -670,8 +670,8 @@ components:
           properties:
             subType:
               type: string
-              enum: [easy_access]
-              example: easy_access
+              enum: [Easy Access]
+              example: Easy Access
     FixedTermProduct:
       allOf:
         - $ref: "#/components/schemas/BaseProduct"
@@ -683,8 +683,8 @@ components:
           properties:
             subType:
               type: string
-              enum: [fixed_term]
-              example: fixed_term
+              enum: [Fixed Term]
+              example: Fixed Term
             termLengthMonths:
               type: number
               description: Represents number of months
@@ -997,12 +997,12 @@ components:
         $ref: "#/components/schemas/AvailableProducts"
     ProductType:
       type: string
-      enum: [business, personal, charity]
-      example: personal
+      enum: [Business, Personal, Charity]
+      example: Personal
     ProductSubType:
       type: string
-      enum: [easy_access, fixed_term, notice, isa]
-      example: fixed_term
+      enum: [Easy Access, Fixed Term, Notice, ISA]
+      example: Fixed Term
     ReferenceId:
       type: string
       minLength: 24
