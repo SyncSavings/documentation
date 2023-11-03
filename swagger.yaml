@@ -25,10 +25,10 @@ servers:
 security:
   - ApiKeyAuth: []
 tags:
-  - name: accounts
-    description: An Account is owned by a Saver. The type of an account is one of the products that are setup.
+  - name: savings accounts
+    description: An Savings SavingsAccount is owned by a Saver. A Savings SavingsAccount is related to a Product
   - name: products
-    description: A Product is a ‘type’ of account (e.g. 90-Day Notice Saver). These are configured in partnership with Sync for each partner bank according to their unique product specifications.
+    description: A Product is a ‘type’ of account (e.g. 90-Day Notice Saver). These are configured in partnership with Sync for each partner bank according bespoke product and commercial specifications.
   - name: savers
     description: A Saver is a an individual or business that can create a savings product
   - name: transactions
@@ -37,24 +37,24 @@ paths:
   /v1/account:
     post:
       tags:
-        - accounts
-      summary: Create an account for a saver
-      description: Create an account for a saver
-      operationId: createAccount
+        - savings accounts
+      summary: Create an Savings SavingsAccount for a saver
+      description: Create an acSavings SavingsAccount for a saver
+      operationId: createSavingsAccount
       requestBody:
-        description: Details of the new account
+        description: Details of the new Savings SavingsAccount
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Account"
+              $ref: "#/components/schemas/SavingsAccount"
       responses:
         "201":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Account"
+                $ref: "#/components/schemas/SavingsAccount"
         "400":
           description: Invalid saver information provided supplied
         "500":
@@ -64,26 +64,26 @@ paths:
       tags:
         - accounts
       summary: Get account by ID
-      description: Returns an account
-      operationId: getAccount
+      description: Returns an Savings Account
+      operationId: getSavingsAccount
       parameters:
         - name: accountId
           in: path
           description: ID of account
           required: true
           schema:
-            $ref: "#/components/schemas/AccountId"
+            $ref: "#/components/schemas/SavingsAccountId"
       responses:
         "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Account"
+                $ref: "#/components/schemas/SavingsAccount"
         "400":
-          description: Invalid account ID supplied
+          description: Invalid Savings Account ID supplied
         "404":
-          description: Could not find saver
+          description: Could not find Savings Account
         "500":
           description: Something went wrong
     patch:
@@ -91,14 +91,14 @@ paths:
         - accounts
       summary: Update an account
       description: Update an account
-      operationId: updateAccount
+      operationId: updateSavingsAccount
       parameters:
         - name: accountId
           in: path
           description: ID of account
           required: true
           schema:
-            $ref: "#/components/schemas/AccountId"
+            $ref: "#/components/schemas/SavingsAccountId"
       requestBody:
         description: Updating interest rate configuration
         required: true
@@ -110,9 +110,9 @@ paths:
         "202":
           description: successful operation
         "400":
-          description: Invalid account ID supplied
+          description: Invalid Savings Account ID supplied
         "404":
-          description: Could not find account
+          description: Could not find Savings Account
         "500":
           description: Something went wrong
   /v1/account/summary/{accountId}:
@@ -121,27 +121,27 @@ paths:
         - accounts
       summary: Get account summary using account ID
       description: Returns static fields of an account enriched by calculated dynamic fields
-      operationId: getAccountSummary
+      operationId: getSavingsAccountSummary
       parameters:
         - name: accountId
           in: path
           description: ID of account
           required: true
           schema:
-            $ref: "#/components/schemas/AccountId"
+            $ref: "#/components/schemas/SavingsAccountId"
       responses:
         "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AccountSummary"
+                $ref: "#/components/schemas/SavingsAccountSummary"
         "400":
-          description: Invalid account ID supplied
+          description: Invalid Savings Account ID supplied
         "404":
-          description: Could not find account
+          description: Could not find Savings Account
         "500":
-          description: Something went wron
+          description: Something went wrong
   /v1/product/:
     post:
       tags:
@@ -150,7 +150,7 @@ paths:
       description: Create an product
       operationId: createProduct
       requestBody:
-        description: Details of the new product
+        description: Details of the new product that you want to create
         required: true
         content:
           application/json:
@@ -434,7 +434,7 @@ components:
       in: header
       name: X-API-Key
   schemas:
-    Account:
+    SavingsAccount:
       type: object
       required:
         - id
@@ -445,7 +445,7 @@ components:
         - goal
       properties:
         id:
-          $ref: "#/components/schemas/AccountId"
+          $ref: "#/components/schemas/SavingsAccountId"
         productId:
           type: string
           description: ID of the product this account relates to
@@ -469,15 +469,15 @@ components:
           description: enum currency of the account
         goal:
           $ref: "#/components/schemas/Goal"
-    AccountId:
+    SavingsAccountId:
       type: string
       minLength: 24
       maxLength: 24
       example: "65119978f1f9fcb769de1916"
       readOnly: true
-    AccountSummary:
+    SavingsAccountSummary:
       allOf:
-        - $ref: "#/components/schemas/Account"
+        - $ref: "#/components/schemas/SavingsAccount"
         - type: object
           required:
             - type
@@ -527,8 +527,8 @@ components:
           example: SW1A 1AA
     AvailableProducts:
       oneOf:
-        - $ref: "#/components/schemas/EasyAccessProduct"
         - $ref: "#/components/schemas/FixedTermProduct"
+        - $ref: "#/components/schemas/EasyAccessProduct"
         - $ref: "#/components/schemas/NoticeProduct"
     AvailableTransactions:
       oneOf:
@@ -727,7 +727,7 @@ components:
         - rateValue
       properties:
         rateType:
-          type: string
+          enum: [Fixed, Variable]
           example: Fixed
         rateValue:
           type: number
@@ -738,11 +738,11 @@ components:
           enum:
             [
               Fixed Schedule,
-              Anniversary Account Open,
+              Anniversary Savings Account Open,
               Anniversary First Transaction,
             ]
           example: Fixed Schedule
-          description: System default is “Anniversary Account Open”
+          description: System default is “Anniversary Savings Account Open”
         fixedPostingSchedule:
           type: string
           enum: [Daily, Monthly, Annually]
@@ -752,26 +752,25 @@ components:
           type: string
           enum:
             [
-              Fixed Schedule,
               Average Balance,
               Minimum Balance,
               End of Day Balance,
             ]
-          example: Fixed Schedule
-          description: System default is “End of Day Balance”
+          example: End of Day Balance
+          description: Determines when point in time balance figure is used to calculate interest
     InternalTransaction:
       type: object
       required:
-        - sourceAccount
-        - destinationAccount
+        - sourceSavingsAccount
+        - destinationSavingsAccount
       properties:
-        sourceAccount:
+        sourceSavingsAccount:
           type: string
-          description: Account ID of the source account
+          description: SavingsAccount ID of the source account
           example: A001ABC
-        destinationAccount:
+        destinationSavingsAccount:
           type: string
-          description: Account ID of the destination account
+          description: SavingsAccount ID of the destination account
           example: A002ABC
     MovementTransaction:
       allOf:
@@ -785,13 +784,13 @@ components:
               type: string
               enum: [Movement]
               example: Movement
-            sourceAccount:
+            sourceSavingsAccount:
               type: string
-              description: Account ID of the source account
+              description: SavingsAccount ID of the source account
               example: A001ABC
-            destinationAccount:
+            destinationSavingsAccount:
               type: string
-              description: Account ID of the destination account
+              description: SavingsAccount ID of the destination account
               example: A002ABC
     NoticeProduct:
       allOf:
@@ -924,15 +923,15 @@ components:
       properties:
         street:
           type: string
-          description: AccountThe primary street portion of an address. If the user has submitted their address, this field will always be filled.
+          description: SavingsAccountThe primary street portion of an address. If the user has submitted their address, this field will always be filled.
           example: 100 Market Street
         street2:
           type: string
-          description: AccountExtra street information, like an apartment or suite number.
+          description: SavingsAccountExtra street information, like an apartment or suite number.
           example: Apt 1A
         city:
           type: string
-          description: AccountCityCity from the end user's address
+          description: SavingsAccountCityCity from the end user's address
           example: San Francisco
         region:
           type: string
@@ -940,7 +939,7 @@ components:
           example: CA
         postalCode:
           type: string
-          description: AccountThe postal code for the associated address. Between 2 and 10 alphanumeric characters. For US-based addresses this must be 5 numeric digits.
+          description: SavingsAccountThe postal code for the associated address. Between 2 and 10 alphanumeric characters. For US-based addresses this must be 5 numeric digits.
           example: 94103
         country:
           type: string
@@ -1001,7 +1000,7 @@ components:
       example: Personal
     ProductSubType:
       type: string
-      enum: [Easy Access, Fixed Term, Notice, ISA]
+      enum: [Easy Access, Fixed Term, ISA, Notice]
       example: Fixed Term
     ReferenceId:
       type: string
