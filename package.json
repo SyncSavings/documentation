@@ -1,0 +1,15 @@
+{
+  "name": "api-contract",
+  "version": "1.0.0",
+  "description": "[https://syncsavings.github.io/api-contract/](https://syncsavings.github.io/api-contract/)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@redocly/cli": "^1.16.0"
+  }
+}
