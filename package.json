@@ -4,7 +4,7 @@
   "description": "[https://syncsavings.github.io/api-contract/](https://syncsavings.github.io/api-contract/)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "docs:dev": "redocly preview-docs ./docs/main.yaml"
   },
   "keywords": [],
   "author": "",
