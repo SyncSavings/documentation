@@ -1,0 +1,38 @@
+openapi: 3.0.3
+info:
+  title: Sync Savings API Specification
+  description: |
+    # Introduction
+
+    Welcome to the Sync Savings API, providing access to the Sync Savings Platform.
+
+    ℹ️ Embedded savings is the integration of cash savings products into other digital applications without the need to redirect users to the underlying financial institution. Embedded financial services enable providers to offer seamless access to relevant financial products at the point of intent, and thus drive engagement and value to customers.
+
+    🔑 Authentication: The API requires authentication using API keys included in request headers (see authorize)
+
+    Should you have any queries on the standards implemented or the capability of our services, please do let us know by emailing us at **contact@sync-savings.com**
+
+    # Overview
+
+    The Sync Savings API provides a set of RESTful, JSON-based APIs that can be used to create and manage savings for your users.
+
+    # Security
+
+    We store only the required information to be able to provide your users with a savings account and all data is encrypted at rest and in transit by TLS 1.2+. We use industry-leading 
+    
+    User data is segregated by Distributor 
+
+servers:
+  - url: https://api.staging.sync-savings.com
+    description: Staging API
+  - url: https://api.sync-savings.com
+    description: Production API (uses live data)
+
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          scopes: {}
