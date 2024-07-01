@@ -1,29 +1,36 @@
 openapi: 3.0.3
 info:
   title: Sync Savings API Specification
-  description: |-
-    ℹ️ Embedded savings is the integration of cash savings products (easy access, fixed term and flexible interest) into other digital applications without the need to redirect users to the underlying financial institution. Embedded financial services enable providers to offer seamless access to relevant financial products at the point of intent, and thus drive engagement and value to customers. Cash savings in particular drive deep engagement with customers with recent studies revealing customers checking easy access accounts on average 4 to 5 times per week and fixed term savings 2 to 3 times per week.
+  description: |
+    # Introduction
 
-    🌐 It is estimated that the market size of global embedded finance across the entire value chain will grow from US $264bn in 2021 to US $606bn in 2025. Recent PwC research suggests that two-thirds of global economic activity will happen within business ecosystems by 2030. Key industries of focus include mobility, healthcare, personal finance, travel and lifestyle. 
+    Welcome to the Sync Savings API, providing access to the Sync Savings Platform.
 
-    With our unique business model and relationships across the UK banking and fintech ecosystem, Sync is the only provider of embedded cash savings products.
+    ℹ️ Embedded savings is the integration of cash savings products into other digital applications without the need to redirect users to the underlying financial institution. Embedded financial services enable providers to offer seamless access to relevant financial products at the point of intent, and thus drive engagement and value to customers.
 
     🔑 Authentication: The API requires authentication using API keys included in request headers (see authorize)
 
     Should you have any queries on the standards implemented or the capability of our services, please do let us know by emailing us at **contact@sync-savings.com**
-  version: 1.0.11
-externalDocs:
-  description: Find out more about Sync Savings
-  url: https://www.sync-savings.com/
+
+    # Overview
+
+    The Sync Savings API provides a set of RESTful, JSON-based APIs that can be used to create and manage savings for your users.
+
+    # Security
+
+    We store only the required information to be able to provide your users with a savings account and all data is encrypted at rest and in transit by TLS 1.2+. We use industry-leading 
+    
+    User data is segregated by Distributor 
+
 servers:
-  - url: https://dev.sync-savings-tech.com
-    description: Dev server
-  - url: https://staging.sync-savings-tech
-    description: Staging server
-  - url: https://sync-savings-tech
-    description: Production server (uses live data)
+  - url: https://api.staging.sync-savings.com
+    description: Staging API
+  - url: https://api.sync-savings.com
+    description: Production API (uses live data)
+
 security:
-  - ApiKeyAuth: []
+  - oauth2: []
+
 tags:
   - name: accounts
     description: An Account is owned by a Saver. The type of an account is one of the products that are setup.
@@ -408,7 +415,7 @@ paths:
         - identity
       summary: Create a new identity verification flow using Plaid
       description: Create a new identity verification flow using Plaid
-      operationId: createIdentiyPlaid
+      operationId: createIdentityPlaid
       requestBody:
         description: Details of a new identity verification flow
         required: true
@@ -427,12 +434,6 @@ paths:
           description: Invalid request
         "500":
           description: Something went wrong
-components:
-  securitySchemes:
-    ApiKeyAuth:
-      type: apiKey
-      in: header
-      name: X-API-Key
   schemas:
     Account:
       type: object
@@ -704,7 +705,7 @@ components:
         motive:
           type: string
           description: Default options can be configured and made bespoke to each firm.
-          example: "Mortgate deposit"
+          example: "Mortgage deposit"
         image:
           type: string
           format: url
@@ -1123,3 +1124,12 @@ components:
               type: string
               enum: [Withdraw]
               example: Withdraw
+
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          scopes: {}
