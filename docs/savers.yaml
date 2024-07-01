@@ -16,7 +16,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Saver'
       responses:
-        201:
+        '201':
           description: The Saver has been created
           content:
             application/json:
@@ -38,7 +38,7 @@ paths:
       summary: View an existing Saver
       description: View a previously create Saver and their details
       responses:
-        200:
+        '200':
           description: The requested Saver has been found and returned
           content:
             application/json:
