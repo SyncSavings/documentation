@@ -38,19 +38,24 @@ tags:
     description: |
       Create new Savers and view those Savers
       
-      ## Something about Savers
+      ## A heading inside Savers
 
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempor, purus eget finibus ullamcorper, est arcu pellentesque nisl, non tincidunt ante eros vel nibh. Quisque vel arcu at nisi gravida blandit. Integer sit amet quam eu enim feugiat iaculis eu sed nibh. Phasellus posuere tellus enim, quis sollicitudin magna rutrum quis. In turpis metus, varius quis porttitor eget, ultrices dignissim orci. Aliquam luctus feugiat justo, non ornare erat ornare sit amet. Proin tincidunt libero at enim finibus, egestas finibus erat imperdiet. In et tincidunt lacus, ut suscipit arcu.
 
-      ## Something else about Savers
+      ## A second heading inside Savers
 
       Other text goes here.
+  - name: Accounts
+    description: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempor, purus eget finibus ullamcorper, est arcu pellentesque nisl, non tincidunt ante eros vel nibh. Quisque vel arcu at nisi gravida blandit. Integer sit amet quam eu enim feugiat iaculis eu sed nibh. Phasellus posuere tellus enim, quis sollicitudin magna rutrum quis. In turpis metus, varius quis porttitor eget, ultrices dignissim orci. Aliquam luctus feugiat justo, non ornare erat ornare sit amet. Proin tincidunt libero at enim finibus, egestas finibus erat imperdiet. In et tincidunt lacus, ut suscipit arcu.
 
 paths:
   /savers:
     $ref: 'savers.yaml#/paths/~1savers'
   /savers/{saverId}:
     $ref: 'savers.yaml#/paths/~1savers~1{saverId}'
+  /accounts:
+    $ref: 'accounts.yaml#/paths/~1accounts'
 
 
 
