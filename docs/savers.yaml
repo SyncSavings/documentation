@@ -7,36 +7,34 @@ info:
 paths:
   /savers:
     post:
+      summary: Create a new Saver
+      description: Create a new Saver with Sync Savings
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              properties:
-                firstName:
-                  type: string
-                  example: Christopher
-                  description: The given name of the Saver.
-                lastName:
-                  type: string
-                  example: Robin
-                  description: The family name of the Saver.
+              $ref: '#/components/schemas/Saver'
+      responses:
+        201:
+          description: The Saver has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Saver'
       tags:
         - Savers
-      summary: Create a new Saver
-      description: Create a new Saver with Sync Savings
   /savers/{saverId}:
     summary: ''
     parameters:
       - name: saverId
-        description: The ID of the Saver to be retrieved
+        description: The ID of the Saver
         example: 668286d72ea20e3725f813eb
         in: path
         required: true
         schema:
           type: string
     get:
-      tags:
-        - Savers
       summary: View an existing Saver
       description: View a previously create Saver and their details
       responses:
@@ -45,13 +43,62 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  firstName:
-                    type: string
-                    example: Christopher
-                    description: The given name of the Saver.
-                  lastName:
-                    type: string
-                    example: Robin
-                    description: The family name of the Saver.
+                $ref: '#/components/schemas/SaverWithId'
+      tags:
+        - Savers
+    # TODO: this is just a template, can be removed if not needed
+    # patch:
+    #   tags:
+    #     - Savers
+    #   summary: Update an existing Saver
+    #   description: Update an existing Saver
+    #   requestBody:
+    #     required: true
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: '#/components/schemas/SaverUpdate'
+    #   responses:
+    #     200:
+    #       description: The Saver has been found and updated
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/SaverWithId'
 
+components:
+  schemas:
+    Saver:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: Christopher
+          description: The given name of the Saver.
+        lastName:
+          type: string
+          example: Robin
+          description: The family name of the Saver.
+    # Template/POC for how partial request bodies look when rendered
+    # SaverUpdate:
+    #   type: object
+    #   properties:
+    #     firstName:
+    #       type: string
+    #       example: Christopher
+    #       description: The given name of the Saver.
+    #     lastName:
+    #       type: string
+    #       example: Robin
+    #       description: The family name of the Saver.
+    #   minProperties: 1
+    #   additionalProperties: false
+    SaverWithId:
+      allOf:
+        - $ref: '#/components/schemas/Saver'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: 668286d72ea20e3725f813eb
+              description: The unique identifier of the Saver
