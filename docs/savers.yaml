@@ -1,0 +1,57 @@
+openapi: 3.0.3
+
+info:
+  title: Savers schemas
+  version: '1.0'
+
+paths:
+  /savers:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                firstName:
+                  type: string
+                  example: Christopher
+                  description: The given name of the Saver.
+                lastName:
+                  type: string
+                  example: Robin
+                  description: The family name of the Saver.
+      tags:
+        - Savers
+      summary: Create a new Saver
+      description: Create a new Saver with Sync Savings
+  /savers/{saverId}:
+    summary: ''
+    parameters:
+      - name: saverId
+        description: The ID of the Saver to be retrieved
+        example: 668286d72ea20e3725f813eb
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Savers
+      summary: View an existing Saver
+      description: View a previously create Saver and their details
+      responses:
+        200:
+          description: The requested Saver has been found and returned
+          content:
+            application/json:
+              schema:
+                properties:
+                  firstName:
+                    type: string
+                    example: Christopher
+                    description: The given name of the Saver.
+                  lastName:
+                    type: string
+                    example: Robin
+                    description: The family name of the Saver.
+

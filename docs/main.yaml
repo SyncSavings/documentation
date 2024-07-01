@@ -16,17 +16,43 @@ info:
 
     The Sync Savings API provides a set of RESTful, JSON-based APIs that can be used to create and manage savings for your users.
 
+    <Insert generalised workflow here>
+
     # Security
 
-    We store only the required information to be able to provide your users with a savings account and all data is encrypted at rest and in transit by TLS 1.2+. We use industry-leading 
+    We store only the required information to be able to provide your users with a savings account, all data is encrypted at rest and in transit by TLS 1.2+. Authentication is provided by AWS's Cognito product which restricts access to the API.
     
-    User data is segregated by Distributor 
+    User data is segregated by Distributor so that it is only accessible to clients from the relevant Distributor and with a token bearing the correct level of permission.
 
 servers:
   - url: https://api.staging.sync-savings.com
     description: Staging API
   - url: https://api.sync-savings.com
     description: Production API (uses live data)
+
+security:
+  - oauth2: []
+
+tags:
+  - name: Savers
+    description: |
+      Create new Savers and view those Savers
+      
+      ## Something about Savers
+
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempor, purus eget finibus ullamcorper, est arcu pellentesque nisl, non tincidunt ante eros vel nibh. Quisque vel arcu at nisi gravida blandit. Integer sit amet quam eu enim feugiat iaculis eu sed nibh. Phasellus posuere tellus enim, quis sollicitudin magna rutrum quis. In turpis metus, varius quis porttitor eget, ultrices dignissim orci. Aliquam luctus feugiat justo, non ornare erat ornare sit amet. Proin tincidunt libero at enim finibus, egestas finibus erat imperdiet. In et tincidunt lacus, ut suscipit arcu.
+
+      ## Something else about Savers
+
+      Other text goes here.
+
+paths:
+  /savers:
+    $ref: 'savers.yaml#/paths/~1savers'
+  /savers/{saverId}:
+    $ref: 'savers.yaml#/paths/~1savers~1{saverId}'
+
+
 
 components:
   securitySchemes:
