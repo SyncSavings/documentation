@@ -33,7 +33,6 @@ components:
         saverId:
           type: string
           example: 668286d72ea20e3725f813eb
-          required: true
           description: The ID of the Saver that owns the Account
         sourceAccountDetails:
           type: object
@@ -41,16 +40,20 @@ components:
             accountNumber:
               type: string
               example: 11223344
-              required: true
               description: The bank account number of the Saver
             sortCode:
               type: string
               example: 60-83-71
-              required: true
               description: The sort code of the Saver
             accountOwner:
               type: string
               example: Christopher Robin
-              required: true
               description: The name on the Saver's bank account
+          required:
+            - accountNumber
+            - sortCode
+            - accountOwner
+      required:
+        - saverId
+        - sourceAccountDetails
             

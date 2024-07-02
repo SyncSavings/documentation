@@ -79,6 +79,9 @@ components:
           type: string
           example: Robin
           description: The family name of the Saver.
+      required:
+        - firstName
+        - lastName
     # Template/POC for how partial request bodies look when rendered
     # SaverUpdate:
     #   type: object
