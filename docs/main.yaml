@@ -52,9 +52,9 @@ tags:
 
   - name: Transactions
     description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempor, purus eget finibus ullamcorper, est arcu pellentesque nisl, non tincidunt ante eros vel nibh. Quisque vel arcu at nisi gravida blandit. Integer sit amet quam eu enim feugiat iaculis eu sed nibh. Phasellus posuere tellus enim, quis sollicitudin magna rutrum quis. In turpis metus, varius quis porttitor eget, ultrices dignissim orci. Aliquam luctus feugiat justo, non ornare erat ornare sit amet. Proin tincidunt libero at enim finibus, egestas finibus erat imperdiet. In et tincidunt lacus, ut suscipit arcu.
+      This is the description of the Transactions
 
-      ## A section in Transaction
+      ## A section in Transactions
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempor, purus eget finibus ullamcorper, est arcu pellentesque nisl, non tincidunt ante eros vel nibh. Quisque vel arcu at nisi gravida blandit. Integer sit amet quam eu enim feugiat iaculis eu sed nibh. Phasellus posuere tellus enim, quis sollicitudin magna rutrum quis. In turpis metus, varius quis porttitor eget, ultrices dignissim orci. Aliquam luctus feugiat justo, non ornare erat ornare sit amet. Proin tincidunt libero at enim finibus, egestas finibus erat imperdiet. In et tincidunt lacus, ut suscipit arcu.
 
 
