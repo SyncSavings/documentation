@@ -1,0 +1,16 @@
+{
+  "name": "api-contract",
+  "version": "1.0.0",
+  "description": "[https://syncsavings.github.io/api-contract/](https://syncsavings.github.io/api-contract/)",
+  "main": "index.js",
+  "scripts": {
+    "build": "redocly build-docs ./docs/main.yaml --output dist/index.html",
+    "build:dev": "redocly preview-docs ./docs/main.yaml"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@redocly/cli": "^1.16.0"
+  }
+}

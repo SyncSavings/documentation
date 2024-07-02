@@ -1,0 +1,63 @@
+openapi: 3.0.3
+
+info:
+  title: Transactions schemas
+  version: '1.0'
+
+paths:
+  /transactions:
+    post:
+      summary: Create a new Transaction
+      description: Create a new Transaction with Sync Savings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+      responses:
+        '201':
+          description: The Transaction has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionWithId'
+
+components:
+  schemas:
+    Transaction:
+      type: object
+      properties:
+        accountId:
+          type: string
+          example: 6682d9d4d8c3ad5632af059c
+          description: The ID of the Account that the transaction relates to
+        type:
+          type: string
+          enum: [WITHDRAWAL]
+          description: The type of the transaction to be created in Sync's system
+        reference:
+          type: string
+        amount:
+          type: number
+          multipleOf: 0.01
+          example: 123.45
+          description: The monetary value of the Transaction
+      required:
+        - accountId
+        - type
+        - reference
+        - amount
+    TransactionWithId:
+      allOf:
+        - $ref: '#/components/schemas/Transaction'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: 6683b802a65f44cae8dc06e2
+              description: The unique identifier of the Transaction
+
+
+
+        
