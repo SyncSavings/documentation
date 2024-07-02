@@ -1,6 +1,7 @@
 openapi: 3.0.3
 info:
   title: Sync Savings API Specification
+  version: '1.0'
   description: |
     # Introduction
 
@@ -49,6 +50,15 @@ tags:
     description: |
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempor, purus eget finibus ullamcorper, est arcu pellentesque nisl, non tincidunt ante eros vel nibh. Quisque vel arcu at nisi gravida blandit. Integer sit amet quam eu enim feugiat iaculis eu sed nibh. Phasellus posuere tellus enim, quis sollicitudin magna rutrum quis. In turpis metus, varius quis porttitor eget, ultrices dignissim orci. Aliquam luctus feugiat justo, non ornare erat ornare sit amet. Proin tincidunt libero at enim finibus, egestas finibus erat imperdiet. In et tincidunt lacus, ut suscipit arcu.
 
+  - name: Transactions
+    description: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempor, purus eget finibus ullamcorper, est arcu pellentesque nisl, non tincidunt ante eros vel nibh. Quisque vel arcu at nisi gravida blandit. Integer sit amet quam eu enim feugiat iaculis eu sed nibh. Phasellus posuere tellus enim, quis sollicitudin magna rutrum quis. In turpis metus, varius quis porttitor eget, ultrices dignissim orci. Aliquam luctus feugiat justo, non ornare erat ornare sit amet. Proin tincidunt libero at enim finibus, egestas finibus erat imperdiet. In et tincidunt lacus, ut suscipit arcu.
+
+      ## A section in Transaction
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempor, purus eget finibus ullamcorper, est arcu pellentesque nisl, non tincidunt ante eros vel nibh. Quisque vel arcu at nisi gravida blandit. Integer sit amet quam eu enim feugiat iaculis eu sed nibh. Phasellus posuere tellus enim, quis sollicitudin magna rutrum quis. In turpis metus, varius quis porttitor eget, ultrices dignissim orci. Aliquam luctus feugiat justo, non ornare erat ornare sit amet. Proin tincidunt libero at enim finibus, egestas finibus erat imperdiet. In et tincidunt lacus, ut suscipit arcu.
+
+
+
 paths:
   /savers:
     $ref: 'savers.yaml#/paths/~1savers'
@@ -56,6 +66,8 @@ paths:
     $ref: 'savers.yaml#/paths/~1savers~1{saverId}'
   /accounts:
     $ref: 'accounts.yaml#/paths/~1accounts'
+  /transactions:
+    $ref: 'transactions.yaml#/paths/~1transactions'
 
 
 
