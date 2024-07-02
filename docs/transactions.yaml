@@ -22,6 +22,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionWithId'
+      tags:
+        - Transactions
 
 components:
   schemas:
