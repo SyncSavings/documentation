@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.1.0
 
 info:
   title: Savers schemas
@@ -79,9 +79,31 @@ components:
           type: string
           example: Robin
           description: The family name of the Saver.
+        email:
+          type: string
+          example: christopher.robin@sync-savings.com
+          description: The email address of the Saver.
+        dateOfBirth:
+          type: string
+          format: date
+          example: '1969-12-31'
+          description: The date of birth of the Saver in ISO-8601 format.
+        mobileNumber:
+          type: string
+          pattern: /\+447\d{9}/
+          example: '+447123456789'
+          description: The mobile phone number of the Saver.
+        address:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Address'
       required:
         - firstName
         - lastName
+        - email
+        - dateOfBirth
+        - mobileNumber
+        - address
     # Template/POC for how partial request bodies look when rendered
     # SaverUpdate:
     #   type: object
@@ -105,3 +127,38 @@ components:
               type: string
               example: 668286d72ea20e3725f813eb
               description: The unique identifier of the Saver
+    Address:
+      type: object
+      properties:
+        property:
+          type: string
+          examples:
+            number:
+              value: '145'
+              summary: A house number.
+            house:
+              value: Pooh Corner
+              summary: A house name.
+          description: How the Saver's residence is identified.
+        street:
+          type: string
+          example: London Street
+          description: The street of the Saver's address.
+        city:
+          type: string
+          example: London
+          description: The name of the city, town, etc.
+        country:
+          type: string
+          example: GB
+          description: An ISO-3166 2-character country code.
+        postCode:
+          type: string
+          example: EC3N 4AB
+          description: Postal code for the area.
+      required:
+        - property
+        - street
+        - city
+        - country
+        - postCode
