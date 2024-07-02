@@ -87,7 +87,7 @@ components:
           type: string
           format: date
           example: '1969-12-31'
-          description: The date of birth of the Saver in ISO-8601 format.
+          description: The date of birth of the Saver in ISO 8601 format.
         mobileNumber:
           type: string
           pattern: /\+447\d{9}/
@@ -151,7 +151,7 @@ components:
         country:
           type: string
           example: GB
-          description: An ISO-3166 2-character country code.
+          description: 2-character country code in ISO 3166 format.
         postCode:
           type: string
           example: EC3N 4AB
