@@ -34,17 +34,31 @@ components:
           type: string
           example: 668286d72ea20e3725f813eb
           description: The ID of the Saver that owns the Account
+        name:
+          type: string
+          example: Holiday in Bahamas
+          description: A friendly name that a Saver can use to identify the Account
+        goalAmount:
+          type: number
+          multipleOf: 0.01
+          example: 12345.67
+          description: The amount the Saver wants to save for their goal
+        isoCurrencyCode:
+          type: string
+          enum: ['GBP']
+          description: The currency of the account in ISO 4217 format.
         sourceAccountDetails:
           type: object
+          description: This bank account is where Withdrawal Transactions will be paid to
           properties:
             accountNumber:
               type: string
-              example: 11223344
+              example: '11223344'
               description: The bank account number of the Saver
             sortCode:
               type: string
               example: 60-83-71
-              description: The sort code of the Saver
+              description: The sort code of the Saver's bank account
             accountOwner:
               type: string
               example: Christopher Robin
@@ -55,5 +69,7 @@ components:
             - accountOwner
       required:
         - saverId
+        - name
+        - goalAmount
         - sourceAccountDetails
             
