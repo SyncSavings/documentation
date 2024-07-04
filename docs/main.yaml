@@ -2,6 +2,9 @@ openapi: 3.0.3
 info:
   title: Sync Savings API Specification
   version: '1.0'
+  x-logo:
+    url: ./sync_star.png
+    backgroundColor: '#FFFFFF'
   description: |
     # Introduction
 
