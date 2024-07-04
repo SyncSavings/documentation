@@ -1,5 +1,3 @@
-openapi: 3.1.0
-
 info:
   title: Savers schemas
   version: '1.0'
@@ -8,13 +6,12 @@ paths:
   /savers:
     post:
       summary: Create a new Saver
-      description: Create a new Saver with Sync Savings
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SaverRequestBody'
+              $ref: '#/components/schemas/CreateSaverRequestBody'
       responses:
         '201':
           description: The Saver has been created
@@ -36,7 +33,6 @@ paths:
           type: string
     get:
       summary: View an existing Saver
-      description: View a previously create Saver and their details
       responses:
         '200':
           description: The requested Saver has been found and returned
@@ -49,7 +45,7 @@ paths:
 
 components:
   schemas:
-    SaverRequestBody:
+    CreateSaverRequestBody:
       type: object
       properties:
         firstName:
@@ -88,26 +84,21 @@ components:
 
     SaverResponseBody:
       allOf:
-        - $ref: '#/components/schemas/SaverRequestBody'
+        - $ref: '#/components/schemas/CreateSaverRequestBody'
         - type: object
           properties:
             id:
               type: string
               example: 668286d72ea20e3725f813eb
-              description: The unique identifier of the Saver in Sync's system
+              description: The unique identifier of the Saver in Sync's system.
 
     Address:
       type: object
       properties:
         property:
           type: string
-          examples:
-            number:
-              value: '145'
-              summary: A house number.
-            house:
-              value: Pooh Corner
-              summary: A house name.
+          example: '145'
+          summary: A house number.
           description: How the Saver's residence is identified.
         street:
           type: string

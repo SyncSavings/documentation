@@ -40,27 +40,15 @@ security:
 tags:
   - name: Savers
     description: |
-      Create new Savers and view those Savers
-      
-      ## A heading inside Savers
+      Savers are Distributors' customers, Savers want to open an Account to save money.
 
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempor, purus eget finibus ullamcorper, est arcu pellentesque nisl, non tincidunt ante eros vel nibh. Quisque vel arcu at nisi gravida blandit. Integer sit amet quam eu enim feugiat iaculis eu sed nibh. Phasellus posuere tellus enim, quis sollicitudin magna rutrum quis. In turpis metus, varius quis porttitor eget, ultrices dignissim orci. Aliquam luctus feugiat justo, non ornare erat ornare sit amet. Proin tincidunt libero at enim finibus, egestas finibus erat imperdiet. In et tincidunt lacus, ut suscipit arcu.
-
-      ## A second heading inside Savers
-
-      Other text goes here.
   - name: Accounts
     description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempor, purus eget finibus ullamcorper, est arcu pellentesque nisl, non tincidunt ante eros vel nibh. Quisque vel arcu at nisi gravida blandit. Integer sit amet quam eu enim feugiat iaculis eu sed nibh. Phasellus posuere tellus enim, quis sollicitudin magna rutrum quis. In turpis metus, varius quis porttitor eget, ultrices dignissim orci. Aliquam luctus feugiat justo, non ornare erat ornare sit amet. Proin tincidunt libero at enim finibus, egestas finibus erat imperdiet. In et tincidunt lacus, ut suscipit arcu.
+      Accounts are owned by a Saver, they are the representation in Sync's system of the Saver's bank account.
 
   - name: Transactions
     description: |
-      This is the description of the Transactions
-
-      ## A section in Transactions
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempor, purus eget finibus ullamcorper, est arcu pellentesque nisl, non tincidunt ante eros vel nibh. Quisque vel arcu at nisi gravida blandit. Integer sit amet quam eu enim feugiat iaculis eu sed nibh. Phasellus posuere tellus enim, quis sollicitudin magna rutrum quis. In turpis metus, varius quis porttitor eget, ultrices dignissim orci. Aliquam luctus feugiat justo, non ornare erat ornare sit amet. Proin tincidunt libero at enim finibus, egestas finibus erat imperdiet. In et tincidunt lacus, ut suscipit arcu.
-
-
+      Transactions are owned by an Account, they are the representation in Sync's system of cash movements in the Saver's bank account.
 
 paths:
   /savers:
@@ -69,10 +57,12 @@ paths:
     $ref: 'savers.yaml#/paths/~1savers~1{saverId}'
   /accounts:
     $ref: 'accounts.yaml#/paths/~1accounts'
+  /accounts/{accountId}:
+    $ref: 'accounts.yaml#/paths/~1accounts~1{accountId}'
   /transactions:
     $ref: 'transactions.yaml#/paths/~1transactions'
-
-
+  /transactions/{transactionId}:
+    $ref: 'transactions.yaml#/paths/~1transactions~1{transactionId}'
 
 components:
   securitySchemes:

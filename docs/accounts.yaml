@@ -1,5 +1,3 @@
-openapi: 3.0.3
-
 info:
   title: Accounts schemas
   version: '1.0'
@@ -14,20 +12,41 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Account'
+              $ref: '#/components/schemas/AccountRequestBody'
       responses:
         '201':
           description: The Account has been created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Account'
+                $ref: '#/components/schemas/AccountResponseBody'
+      tags:
+        - Accounts
+  /accounts/{accountId}:
+    summary: ''
+    parameters:
+      - name: accountId
+        description: The ID of the Account
+        example: 6682d9d4d8c3ad5632af059c
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: View an existing Account
+      responses:
+        '200':
+          description: The requested Account has been found and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponseBody'
       tags:
         - Accounts
 
 components:
   schemas:
-    Account:
+    AccountRequestBody:
       type: object
       properties:
         saverId:
@@ -72,4 +91,13 @@ components:
         - name
         - goalAmount
         - sourceAccountDetails
-            
+
+    AccountResponseBody:
+      allOf:
+        - $ref: '#/components/schemas/AccountRequestBody'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: 6682d9d4d8c3ad5632af059c
+              description: The unique identifier of the Account
