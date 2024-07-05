@@ -1,5 +1,3 @@
-openapi: 3.0.3
-
 info:
   title: Transactions schemas
   version: '1.0'
@@ -14,20 +12,42 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Transaction'
+              $ref: '#/components/schemas/CreateTransactionRequestBody'
       responses:
         '201':
           description: The Transaction has been created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TransactionWithId'
+                $ref: '#/components/schemas/TransactionResponseBody'
+      tags:
+        - Transactions
+  
+  /transactions/{transactionId}:
+    summary: ''
+    parameters:
+      - name: transactionId
+        description: The ID of the Transaction
+        example: 6683b802a65f44cae8dc06e2
+        in: path
+        required: true
+        schema:
+          type: string        
+    get:
+      summary: View an existing Transaction
+      responses:
+        '200':
+          description: The requested Transaction has been found and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponseBody'
       tags:
         - Transactions
 
 components:
   schemas:
-    Transaction:
+    CreateTransactionRequestBody:
       type: object
       properties:
         accountId:
@@ -50,16 +70,15 @@ components:
         - type
         - reference
         - amount
-    TransactionWithId:
+    TransactionResponseBody:
       allOf:
-        - $ref: '#/components/schemas/Transaction'
+        - $ref: '#/components/schemas/CreateTransactionRequestBody'
         - type: object
           properties:
             id:
               type: string
               example: 6683b802a65f44cae8dc06e2
               description: The unique identifier of the Transaction
-
-
-
-        
+            status:
+              type: string
+              enum: ['AUTHORISING', 'SETTLED']

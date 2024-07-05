@@ -1,5 +1,3 @@
-openapi: 3.1.0
-
 info:
   title: Savers schemas
   version: '1.0'
@@ -8,20 +6,19 @@ paths:
   /savers:
     post:
       summary: Create a new Saver
-      description: Create a new Saver with Sync Savings
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Saver'
+              $ref: '#/components/schemas/CreateSaverRequestBody'
       responses:
         '201':
           description: The Saver has been created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SaverWithId'
+                $ref: '#/components/schemas/SaverResponseBody'
       tags:
         - Savers
   /savers/{saverId}:
@@ -36,39 +33,19 @@ paths:
           type: string
     get:
       summary: View an existing Saver
-      description: View a previously create Saver and their details
       responses:
         '200':
           description: The requested Saver has been found and returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SaverWithId'
+                $ref: '#/components/schemas/SaverResponseBody'
       tags:
         - Savers
-    # TODO: this is just a template, can be removed if not needed
-    # patch:
-    #   tags:
-    #     - Savers
-    #   summary: Update an existing Saver
-    #   description: Update an existing Saver
-    #   requestBody:
-    #     required: true
-    #     content:
-    #       application/json:
-    #         schema:
-    #           $ref: '#/components/schemas/SaverUpdate'
-    #   responses:
-    #     200:
-    #       description: The Saver has been found and updated
-    #       content:
-    #         application/json:
-    #           schema:
-    #             $ref: '#/components/schemas/SaverWithId'
 
 components:
   schemas:
-    Saver:
+    CreateSaverRequestBody:
       type: object
       properties:
         firstName:
@@ -104,41 +81,24 @@ components:
         - dateOfBirth
         - mobileNumber
         - address
-    # Template/POC for how partial request bodies look when rendered
-    # SaverUpdate:
-    #   type: object
-    #   properties:
-    #     firstName:
-    #       type: string
-    #       example: Christopher
-    #       description: The given name of the Saver.
-    #     lastName:
-    #       type: string
-    #       example: Robin
-    #       description: The family name of the Saver.
-    #   minProperties: 1
-    #   additionalProperties: false
-    SaverWithId:
+
+    SaverResponseBody:
       allOf:
-        - $ref: '#/components/schemas/Saver'
+        - $ref: '#/components/schemas/CreateSaverRequestBody'
         - type: object
           properties:
             id:
               type: string
               example: 668286d72ea20e3725f813eb
-              description: The unique identifier of the Saver
+              description: The unique identifier of the Saver in Sync's system.
+
     Address:
       type: object
       properties:
         property:
           type: string
-          examples:
-            number:
-              value: '145'
-              summary: A house number.
-            house:
-              value: Pooh Corner
-              summary: A house name.
+          example: '145'
+          summary: A house number.
           description: How the Saver's residence is identified.
         street:
           type: string
