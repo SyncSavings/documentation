@@ -6,7 +6,7 @@ paths:
   /transactions:
     post:
       summary: Create a new Transaction
-      description: Create a new Transaction with Sync Savings
+      description: Create a new Transaction for an existing Account
       requestBody:
         required: true
         content:
@@ -20,6 +20,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionResponseBody'
+      tags:
+        - Transactions
+    get:
+      summary: Search existing Transactions
+      parameters:
+        - in: query
+          name: accountId
+          required: true
+          schema:
+            type: string
+            example: 6682d9d4d8c3ad5632af059c
+            description: The ID of the Account that the transaction relates to
       tags:
         - Transactions
   
