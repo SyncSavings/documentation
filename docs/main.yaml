@@ -20,13 +20,19 @@ info:
 
     The Sync Savings API provides a set of RESTful, JSON-based APIs that can be used to create and manage savings for your users.
 
-    <Insert generalised workflow here>
-
     # Security
 
     We store only the required information to be able to provide your users with a savings account, all data is encrypted at rest and in transit by TLS 1.2+. Authentication is provided by AWS's Cognito product which restricts access to the API.
     
     User data is segregated by Distributor so that it is only accessible to clients from the relevant Distributor and with a token bearing the correct level of permission.
+
+    # Authentication
+
+    We use the [OAuth 2.0 Client Credentials](https://auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow) flow for authentication.
+      The `clientId` and `clientSecret` can be exchanged for an accessToken, this can be reused until it expires. Typically this is after 10 minutes,
+      the time that the token will expire is listed in the `"exp"` field of the access token.
+
+      Details of how to obtain an access token will be included when issuing the `clientId` and `clientSecret`. All requests must include the access token in the `Authorization` header.
 
 servers:
   - url: https://api.staging.sync-savings.com
@@ -70,5 +76,5 @@ components:
       type: oauth2
       flows:
         clientCredentials:
-          tokenUrl: ''
+          tokenUrl: 'https://sync-savings.auth.eu-west-2.amazoncognito.com/oauth2/token'
           scopes: {}
