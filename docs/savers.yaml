@@ -53,7 +53,7 @@ paths:
 
 components:
   schemas:
-    CreateSaverRequestBody:
+    Saver:
       type: object
       properties:
         firstName:
@@ -82,24 +82,6 @@ components:
           type: object
           allOf:
             - $ref: '#/components/schemas/Address'
-      required:
-        - firstName
-        - lastName
-        - email
-        - dateOfBirth
-        - mobileNumber
-        - address
-
-    SaverResponseBody:
-      allOf:
-        - $ref: '#/components/schemas/CreateSaverRequestBody'
-        - type: object
-          properties:
-            id:
-              type: string
-              example: 668286d72ea20e3725f813eb
-              description: The unique identifier of the Saver in Sync's system.
-
     Address:
       type: object
       properties:
@@ -124,9 +106,40 @@ components:
           type: string
           example: EC3N 4AB
           description: Postal code for the area.
-      required:
-        - property
-        - street
-        - city
-        - country
-        - postCode
+
+    AddressRequest:
+      allOf:
+        - $ref: '#/components/schemas/Address'
+        - required:
+          - property
+          - street
+          - city
+          - country
+          - postCode
+
+    CreateSaverRequestBody:
+      allOf:
+        - $ref: '#/components/schemas/Saver'
+        - type: object
+          properties:
+            address:
+              $ref: '#/components/schemas/AddressRequest'
+        - required:
+          - firstName
+          - lastName
+          - email
+          - dateOfBirth
+          - mobileNumber
+          - address
+
+    SaverResponseBody:
+      allOf:
+        - $ref: '#/components/schemas/Saver'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: 668286d72ea20e3725f813eb
+              description: The unique identifier of the Saver in Sync's system.
+
+

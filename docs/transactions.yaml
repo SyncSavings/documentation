@@ -38,6 +38,15 @@ paths:
             type: string
             example: 6682d9d4d8c3ad5632af059c
             description: The ID of the Account that the transaction relates to
+      responses:
+        '200':
+          description: The Transactions owned by the provided Account ID.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionResponseBody'
       tags:
         - Transactions
   
@@ -50,7 +59,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string        
+          type: string
     get:
       summary: View an existing Transaction
       responses:
@@ -67,7 +76,7 @@ paths:
 
 components:
   schemas:
-    CreateTransactionRequestBody:
+    Transaction:
       type: object
       properties:
         accountId:
@@ -85,14 +94,18 @@ components:
           multipleOf: 0.01
           example: 123.45
           description: The monetary value of the Transaction
-      required:
-        - accountId
-        - type
-        - reference
-        - amount
+    CreateTransactionRequestBody:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Transaction'
+        - required:
+          - accountId
+          - type
+          - reference
+          - amount
     TransactionResponseBody:
       allOf:
-        - $ref: '#/components/schemas/CreateTransactionRequestBody'
+        - $ref: '#/components/schemas/Transaction'
         - type: object
           properties:
             id:

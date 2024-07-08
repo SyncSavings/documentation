@@ -54,7 +54,7 @@ paths:
 
 components:
   schemas:
-    AccountRequestBody:
+    Account:
       type: object
       properties:
         saverId:
@@ -76,33 +76,48 @@ components:
           description: The currency of the account in ISO 4217 format.
         sourceAccountDetails:
           type: object
-          description: This bank account is where Withdrawal Transactions will be paid to
+          allOf:
+            - $ref: '#/components/schemas/BankAccountDetails'
+    BankAccountDetails:
+      type: object
+      description: This bank account is where Withdrawal Transactions will be paid to
+      properties:
+        accountNumber:
+          type: string
+          example: '11223344'
+          description: The bank account number of the Saver
+        sortCode:
+          type: string
+          example: 60-83-71
+          description: The sort code of the Saver's bank account
+        accountOwner:
+          type: string
+          example: Christopher Robin
+          description: The name on the Saver's bank account
+    BankAccountDetailsRequest:
+      allOf:
+        - $ref: '#/components/schemas/BankAccountDetails'
+        - required:
+          - accountNumber
+          - sortCode
+          - accountOwner
+      
+    AccountRequestBody:
+      allOf:
+        - $ref: '#/components/schemas/Account'
+        - type: object
           properties:
-            accountNumber:
-              type: string
-              example: '11223344'
-              description: The bank account number of the Saver
-            sortCode:
-              type: string
-              example: 60-83-71
-              description: The sort code of the Saver's bank account
-            accountOwner:
-              type: string
-              example: Christopher Robin
-              description: The name on the Saver's bank account
-          required:
-            - accountNumber
-            - sortCode
-            - accountOwner
+            sourceAccountDetails:
+              $ref: '#/components/schemas/BankAccountDetailsRequest'
       required:
         - saverId
         - name
-        - goalAmount
+        - isoCurrencyCode
         - sourceAccountDetails
 
     AccountResponseBody:
       allOf:
-        - $ref: '#/components/schemas/AccountRequestBody'
+        - $ref: '#/components/schemas/Account'
         - type: object
           properties:
             id:
