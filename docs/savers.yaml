@@ -19,6 +19,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SaverResponseBody'
+        '400':
+          description: The data provided in the request body is incomplete or invalid. Refer to the returned validation errors for more details.
+          content:
+            application/json:
+              schema:
+                $ref: 'schemas.yaml#/components/schemas/ValidationErrorResponse'
       tags:
         - Savers
   /savers/{saverId}:
@@ -40,6 +46,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SaverResponseBody'
+          '404':
+            description: The Account with the specified ID does not exist
       tags:
         - Savers
 

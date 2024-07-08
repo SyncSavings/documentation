@@ -20,6 +20,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionResponseBody'
+        '400':
+          description: The data provided in the request body is incomplete or invalid. Refer to the returned validation errors for more details.
+          content:
+            application/json:
+              schema:
+                $ref: 'schemas.yaml#/components/schemas/ValidationErrorResponse'
       tags:
         - Transactions
     get:
@@ -54,6 +60,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionResponseBody'
+        '404':
+          description: The Account with the specified ID does not exist
       tags:
         - Transactions
 
