@@ -46,6 +46,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SaverResponseBody'
+          '404':
+            description: The Account with the specified ID does not exist
       tags:
         - Savers
 

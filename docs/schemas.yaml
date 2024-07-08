@@ -30,12 +30,3 @@ components:
                           type: string
                           example: amount must be a number conforming to the specified constraints
                           description: A comprehensive error message regarding this validation problem.
-
-
-
-
-
-
-
-                
-
