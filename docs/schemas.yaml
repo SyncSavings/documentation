@@ -1,0 +1,41 @@
+components:
+  schemas:
+    ValidationErrorResponse:
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum: ['validation_error']
+                description: The error code for the response. `validation_error` is used for validation issues.
+              title:
+                type: string
+                example: 'Validation Failed'
+                description: A human-readable summary of the problem
+              detail:
+                type: string
+                description: A human-readable explanation specific to this occurrence of the problem
+              meta:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: amount must be a number conforming to the specified constraints
+                          description: A comprehensive error message regarding this validation problem.
+
+
+
+
+
+
+
+                
+
