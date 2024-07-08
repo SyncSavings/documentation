@@ -1,6 +1,5 @@
 info:
   title: Savers schemas
-  version: '1.0'
 
 paths:
   /savers:

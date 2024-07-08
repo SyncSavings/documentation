@@ -1,6 +1,5 @@
 info:
   title: Transactions schemas
-  version: '1.0'
 
 paths:
   /transactions:

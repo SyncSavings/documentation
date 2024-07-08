@@ -1,6 +1,5 @@
 info:
   title: Accounts schemas
-  version: '1.0'
 
 paths:
   /accounts:
