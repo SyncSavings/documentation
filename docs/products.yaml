@@ -1,0 +1,23 @@
+info:
+  title: Products schemas
+
+paths:
+  /products:
+    summary: ''
+    description: List available Products
+    get:
+      responses:
+        '200':
+          description: The Products that are available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponseBody'
+
+components:
+  schemas:
+    ProductResponseBody:
+      type: array
+      items:
+        type: object
+        properties:

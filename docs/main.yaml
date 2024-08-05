@@ -60,6 +60,8 @@ paths:
     $ref: 'savers.yaml#/paths/~1savers'
   /savers/{saverId}:
     $ref: 'savers.yaml#/paths/~1savers~1{saverId}'
+  /products:
+    $ref: 'products.yaml#/paths/~1products'
   /accounts:
     $ref: 'accounts.yaml#/paths/~1accounts'
   /accounts/{accountId}:
