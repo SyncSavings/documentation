@@ -81,6 +81,10 @@ components:
           type: object
           allOf:
             - $ref: '#/components/schemas/Address'
+        taxResidency:
+          type: string
+          enum: ['GB']
+          description: The country where the Saver is a tax resident. Currently GB only.
     Address:
       type: object
       properties:
