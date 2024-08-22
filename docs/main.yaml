@@ -47,6 +47,10 @@ tags:
     description: |
       Savers are Distributors' customers, Savers want to open an Account to save money.
 
+  - name: Products
+    description: | 
+      Products represent the types of savings accounts available with Banks
+
   - name: Accounts
     description: |
       Accounts are owned by a Saver, they are the representation in Sync's system of the Saver's bank account.

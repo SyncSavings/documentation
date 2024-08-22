@@ -64,6 +64,10 @@ components:
           type: string
           example: Holiday in Bahamas
           description: A friendly name that a Saver can use to identify the Account
+        productId:
+          type: string
+          example: 66c7020263facd181eb0f6cf
+          description: The ID of the Product that this Account is an instance of
         goalAmount:
           type: number
           multipleOf: 0.01
@@ -111,6 +115,7 @@ components:
       required:
         - saverId
         - name
+        - productId
         - isoCurrencyCode
         - sourceAccountDetails
 
