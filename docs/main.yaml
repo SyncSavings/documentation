@@ -47,6 +47,10 @@ tags:
     description: |
       Savers are Distributors' customers, Savers want to open an Account to save money.
 
+  - name: Products
+    description: | 
+      Products represent the types of savings accounts available with Banks
+
   - name: Accounts
     description: |
       Accounts are owned by a Saver, they are the representation in Sync's system of the Saver's bank account.
@@ -60,6 +64,8 @@ paths:
     $ref: 'savers.yaml#/paths/~1savers'
   /savers/{saverId}:
     $ref: 'savers.yaml#/paths/~1savers~1{saverId}'
+  /products:
+    $ref: 'products.yaml#/paths/~1products'
   /accounts:
     $ref: 'accounts.yaml#/paths/~1accounts'
   /accounts/{accountId}:
