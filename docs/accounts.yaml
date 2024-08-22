@@ -128,3 +128,5 @@ components:
               type: string
               example: 6682d9d4d8c3ad5632af059c
               description: The unique identifier of the Account
+            bankAccountDetails:
+              $ref: '#/components/schemas/BankAccountDetails'
