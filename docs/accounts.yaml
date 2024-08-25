@@ -69,7 +69,6 @@ paths:
       tags:
         - Accounts
 
-
 components:
   schemas:
     Account:
