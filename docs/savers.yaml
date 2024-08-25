@@ -49,6 +49,25 @@ paths:
             description: The Account with the specified ID does not exist
       tags:
         - Savers
+    patch:
+      summary: Update an existing Saver
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaverUpdateBody'
+      responses:
+        '200':
+          description: Successfully updated the Saver
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaverResponseBody'
+      tags:
+        - Savers
+
+
 
 components:
   schemas:
@@ -157,4 +176,7 @@ components:
               example: 668286d72ea20e3725f813eb
               description: The unique identifier of the Saver in Sync's system.
 
-
+    SaverUpdateBody:
+      allOf:
+        - $ref: '#/components/schemas/Saver'
+      
