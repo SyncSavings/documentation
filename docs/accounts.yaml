@@ -50,6 +50,25 @@ paths:
           description: The Account with the specified ID does not exist
       tags:
         - Accounts
+    patch:
+      summary: Update an existing Account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountUpdateBody'
+      responses:
+        '200':
+          description: Successfully updated the Account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponseBody'
+        '404':
+          description: The Account with the specified ID does not exist
+      tags:
+        - Accounts
+
 
 components:
   schemas:
@@ -118,6 +137,19 @@ components:
         - productId
         - isoCurrencyCode
         - sourceAccountDetails
+    
+    AccountUpdateBody:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Holiday in Bahamas
+          description: A friendly name that a Saver can use to identify the Account
+        goalAmount:
+          type: number
+          multipleOf: 0.01
+          example: 12345.67
+          description: The amount the Saver wants to save for their goal
 
     AccountResponseBody:
       allOf:
