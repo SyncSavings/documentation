@@ -162,6 +162,7 @@ components:
           - dateOfBirth
           - mobileNumber
           - address
+          - taxResidency
           - termsAgreed
           - summaryBoxViewed
           - fscsSheetViewed
