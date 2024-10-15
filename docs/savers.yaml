@@ -100,6 +100,10 @@ components:
           type: object
           allOf:
             - $ref: '#/components/schemas/Address'
+        sourceAccountDetails:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/SourceAccountDetails'
         taxResidency:
           type: string
           enum: ['GB']
@@ -162,6 +166,7 @@ components:
           - dateOfBirth
           - mobileNumber
           - address
+          - sourceAccountDetails
           - taxResidency
           - termsAgreed
           - summaryBoxViewed
@@ -180,4 +185,25 @@ components:
     SaverUpdateBody:
       allOf:
         - $ref: '#/components/schemas/Saver'
+    
+    SourceAccountDetails:
+      type: object
+      description: This bank account is where Withdrawal Transactions will be paid to
+      properties:
+        accountNumber:
+          type: string
+          example: '11223344'
+          description: The bank account number of the Saver
+        sortCode:
+          type: string
+          example: 60-83-71
+          description: The sort code of the Saver's bank account
+        accountOwner:
+          type: string
+          example: Christopher Robin
+          description: The name on the Saver's bank account
+      required:
+        - accountNumber
+        - sortCode
+        - accountOwner
       

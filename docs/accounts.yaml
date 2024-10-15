@@ -95,10 +95,6 @@ components:
           type: string
           enum: ['GBP']
           description: The currency of the account in ISO 4217 format.
-        sourceAccountDetails:
-          type: object
-          allOf:
-            - $ref: '#/components/schemas/BankAccountDetails'
     BankAccountDetails:
       type: object
       description: This bank account is where Withdrawal Transactions will be paid to
@@ -126,16 +122,11 @@ components:
     AccountRequestBody:
       allOf:
         - $ref: '#/components/schemas/Account'
-        - type: object
-          properties:
-            sourceAccountDetails:
-              $ref: '#/components/schemas/BankAccountDetailsRequest'
       required:
         - saverId
         - name
         - productId
         - isoCurrencyCode
-        - sourceAccountDetails
     
     AccountUpdateBody:
       type: object
