@@ -88,6 +88,7 @@ components:
           description: The ID of the Product that this Account is an instance of
         goalAmount:
           type: number
+          minimum: 0.01
           multipleOf: 0.01
           example: 12345.67
           description: The amount the Saver wants to save for their goal
@@ -95,10 +96,7 @@ components:
           type: string
           enum: ['GBP']
           description: The currency of the account in ISO 4217 format.
-        sourceAccountDetails:
-          type: object
-          allOf:
-            - $ref: '#/components/schemas/BankAccountDetails'
+
     BankAccountDetails:
       type: object
       description: This bank account is where Withdrawal Transactions will be paid to
@@ -115,27 +113,15 @@ components:
           type: string
           example: Christopher Robin
           description: The name on the Saver's bank account
-    BankAccountDetailsRequest:
-      allOf:
-        - $ref: '#/components/schemas/BankAccountDetails'
-        - required:
-          - accountNumber
-          - sortCode
-          - accountOwner
       
     AccountRequestBody:
       allOf:
         - $ref: '#/components/schemas/Account'
-        - type: object
-          properties:
-            sourceAccountDetails:
-              $ref: '#/components/schemas/BankAccountDetailsRequest'
       required:
         - saverId
         - name
         - productId
         - isoCurrencyCode
-        - sourceAccountDetails
     
     AccountUpdateBody:
       type: object
@@ -146,6 +132,7 @@ components:
           description: A friendly name that a Saver can use to identify the Account
         goalAmount:
           type: number
+          minimum: 0.01
           multipleOf: 0.01
           example: 12345.67
           description: The amount the Saver wants to save for their goal
@@ -161,3 +148,11 @@ components:
               description: The unique identifier of the Account
             bankAccountDetails:
               $ref: '#/components/schemas/BankAccountDetails'
+            availableBalance:
+              type: number
+              example: 1234.56
+              description: The amount of money in the account available for Transactions
+            totalInterest:
+              type: number
+              example: 142.76
+              description: The amount of interest paid to this account since it started

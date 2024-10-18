@@ -84,7 +84,7 @@ components:
           description: The ID of the Account that the transaction relates to
         type:
           type: string
-          enum: [WITHDRAWAL]
+          enum: ['WITHDRAWAL']
           description: The type of the transaction to be created in Sync's system
         reference:
           type: string
