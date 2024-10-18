@@ -132,6 +132,7 @@ components:
           description: A friendly name that a Saver can use to identify the Account
         goalAmount:
           type: number
+          minimum: 0.01
           multipleOf: 0.01
           example: 12345.67
           description: The amount the Saver wants to save for their goal
