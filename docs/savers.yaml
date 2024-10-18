@@ -104,6 +104,10 @@ components:
           type: object
           allOf:
             - $ref: '#/components/schemas/SourceAccountDetails'
+        institution:
+          type: string
+          example: 'Winslow Luggages'
+          description: If you aggregate data and need to identity Savers by the source of that data `institution` can be used for this, e.g. this could be populated with the Saver's employer.
         employment:
           type: object
           properties:
