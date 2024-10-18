@@ -147,3 +147,11 @@ components:
               description: The unique identifier of the Account
             bankAccountDetails:
               $ref: '#/components/schemas/BankAccountDetails'
+            availableBalance:
+              type: number
+              example: 1234.56
+              description: The amount of money in the account available for Transactions
+            totalInterest:
+              type: number
+              example: 142.76
+              description: The amount of interest paid to this account since it started
