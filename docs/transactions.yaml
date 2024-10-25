@@ -1,5 +1,5 @@
 info:
-  title: Transactions schemas
+  title: Transactions
 
 paths:
   /transactions:
@@ -81,7 +81,7 @@ components:
         accountId:
           type: string
           example: 6682d9d4d8c3ad5632af059c
-          description: The ID of the Account that the transaction relates to
+          description: The ID of the Account that the Transaction relates to
         type:
           type: string
           enum: ['WITHDRAWAL']
