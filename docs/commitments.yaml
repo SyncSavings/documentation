@@ -1,0 +1,160 @@
+info:
+  title: Commitments
+
+paths:
+  /commitments:
+    post:
+      summary: Create a new Commitment
+      description: Create a new Commitment for an existing Account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommitmentRequestBody'
+      responses:
+        '201':
+          description: The Commitment has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitmentResponseBody'
+        '400':
+          description: The data provided in the request body is incomplete or invalid. Refer to the returned validation errors for more details.
+          content:
+            application/json:
+              schema:
+                $ref: 'schemas.yaml#/components/schemas/ValidationErrorResponse'
+        '404':
+          description: The accountId provided does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum: ['Not found']
+                  statusCode:
+                    type: number
+                    enum: [404]
+      tags:
+        - Commitments
+    get:
+      summary: Search existing Commitments.
+      description: This endpoint is to facilitate payments into Accounts. 
+      parameters:
+        - in: query
+          name: organisation
+          required: true
+          schema:
+            type: string
+            example: 'Winslow Luggages'
+            description: The `organisation` field from Savers
+      responses:
+        '200':
+          description: The commitments that belong to Accounts owned by Savers which have the provided `organisation`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitmentSearchResult'
+      tags:
+        - Commitments
+  
+  /commitments/{commitmentId}:
+    summary: ''
+    parameters:
+      - name: commitmentId
+        description: The ID of the Commitment
+        example: 671b7c2b3f541ccb827b7c0a
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: View an existing Commitment
+      responses:
+        '200':
+          description: The requested Commitment has been found and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitmentResponseBody'
+        '404':
+          description: The Commitment with the specified ID does not exist
+      tags:
+        - Commitments
+
+components:
+  schemas:
+    CommitmentRequestBody:
+      allOf:
+        - $ref: '#/components/schemas/Commitment'
+      required:
+        - accountId
+        - amount
+    
+    CommitmentResponseBody:
+      allOf:
+        - $ref: '#/components/schemas/Commitment'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: 671b7c2b3f541ccb827b7c0a
+              description: The unique identifier of the Commitment
+
+    Commitment:
+      type: object
+      properties:
+        accountId:
+          type: string
+          example: 6682d9d4d8c3ad5632af059c
+          description: The ID of the Account that the Commitment relates to
+        amount:
+          type: number
+          minimum: 0.01
+          multipleOf: 0.01
+          example: 67.89
+          description: The amount the Saver wants to pay into their Account
+
+    CommitmentSearchResult:
+      type: object
+      properties:
+        accounts:
+          type: array
+          items:
+            type: object
+            properties:
+              saverId:
+                type: string
+                example: 668286d72ea20e3725f813eb
+                description: The ID of the Saver that owns the Account
+              accountId:
+                type: string
+                example: 6682d9d4d8c3ad5632af059c
+                description: The ID of the Account that the Commitment relates to
+              bankAccountDetails:
+                type: object
+                properties:
+                  accountNumber:
+                    type: string
+                    example: '11223344'
+                    description: The bank account number of the Saver
+                  sortCode:
+                    type: string
+                    example: 60-83-71
+                    description: The sort code of the Saver's bank account
+              amount:
+                type: number
+                minimum: 0.01
+                multipleOf: 0.01
+                example: 67.89
+                description: The amount the Saver wants to pay into their Account
+        totalAmount:
+          type: number
+          minimum: 0.01
+          multipleOf: 0.01
+          example: 67.89
+          description: The sum of the amounts provided in the `accounts` array
+

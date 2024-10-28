@@ -49,7 +49,7 @@ tags:
 
   - name: Products
     description: | 
-      Products represent the types of savings accounts available with Banks
+      Products represent the types of savings accounts available with Banks.
 
   - name: Accounts
     description: |
@@ -58,6 +58,10 @@ tags:
   - name: Transactions
     description: |
       Transactions are owned by an Account, they are the representation in Sync's system of cash movements in the Saver's bank account.
+
+  - name: Commitments
+    description: |
+      Commitments are the Saver's instruction of how much they want to contribute to their Account.
 
 paths:
   /savers:
@@ -74,6 +78,10 @@ paths:
     $ref: 'transactions.yaml#/paths/~1transactions'
   /transactions/{transactionId}:
     $ref: 'transactions.yaml#/paths/~1transactions~1{transactionId}'
+  /commitments:
+    $ref: 'commitments.yaml#/paths/~1commitments'
+  /commitments/{commitmentId}:
+    $ref: 'commitments.yaml#/paths/~1commitments~1{commitmentId}'
 
 components:
   securitySchemes:
