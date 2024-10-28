@@ -84,6 +84,22 @@ paths:
           description: The Commitment with the specified ID does not exist
       tags:
         - Commitments
+    patch:
+      summary: Update an existing Commitment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommitmentUpdateBody'
+      responses:
+        '200':
+          description: Successfully updated the Commitment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitmentResponseBody'
+      tags:
+        - Commitments
 
 components:
   schemas:
@@ -111,6 +127,16 @@ components:
           type: string
           example: 6682d9d4d8c3ad5632af059c
           description: The ID of the Account that the Commitment relates to
+        amount:
+          type: number
+          minimum: 0.01
+          multipleOf: 0.01
+          example: 67.89
+          description: The amount the Saver wants to pay into their Account
+
+    CommitmentUpdateBody:
+      type: object
+      properties:
         amount:
           type: number
           minimum: 0.01
