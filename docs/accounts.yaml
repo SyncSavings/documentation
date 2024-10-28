@@ -96,6 +96,15 @@ components:
           type: string
           enum: ['GBP']
           description: The currency of the account in ISO 4217 format.
+        termsAgreed:
+          type: boolean
+          description: Whether the Saver has agreed to the product terms and conditions
+        summaryBoxViewed:
+          type: boolean
+          description: Whether the Saver has seen and read the Summary Box of the Savings Account
+        fscsSheetViewed:
+          type: boolean
+          description: Whether the Saver has seen and read the FSCS protection information declaration
 
     BankAccountDetails:
       type: object
