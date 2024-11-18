@@ -78,3 +78,7 @@ components:
             type: number
             multipleOf: 0.01
             example: 4.5
+          annualEquivalentRate:
+            type: number
+            multipleOf: 0.01
+            example: 4.6
