@@ -93,6 +93,9 @@ components:
           multipleOf: 0.01
           example: 123.45
           description: The monetary value of the Transaction
+        isoCurrencyCode:
+          type: string
+          enum: ['GBP']
     CreateTransactionRequestBody:
       type: object
       allOf:
@@ -102,6 +105,7 @@ components:
           - type
           - reference
           - amount
+          - isoCurrencyCode
     TransactionResponseBody:
       allOf:
         - $ref: '#/components/schemas/Transaction'
