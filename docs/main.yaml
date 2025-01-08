@@ -5,7 +5,7 @@ info:
     url: ./sync_logo.png
     backgroundColor: '#FFFFFF'
   description: |
-    # Introduction
+    # Introduction
 
     Welcome to the Sync Savings API, providing access to the Sync Savings Platform.
 
@@ -25,13 +25,19 @@ info:
     
     User data is segregated by Distributor so that it is only accessible to clients from the relevant Distributor and with a token bearing the correct level of permission.
 
-    # Authentication
+    # Authentication
 
     We use the [OAuth 2.0 Client Credentials](https://auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow) flow for authentication.
       The `clientId` and `clientSecret` can be exchanged for an accessToken, this can be reused until it expires. Typically this is after 10 minutes,
       the time that the token will expire is listed in the `"exp"` field of the access token.
 
       Details of how to obtain an access token will be included when issuing the `clientId` and `clientSecret`. All requests must include the access token in the `Authorization` header.
+    
+    # Pagination
+
+    All of our Search endpoints, e.g. [searching transactions by Account ID](#tag/Transactions/paths/~1transactions/get) accept optional `limit` and `page` query parameters.
+    
+    By default the `limit` parameter is set to `10` and the `page` is set to `1`.
 
 servers:
   - url: https://api.staging.sync-savings.com
