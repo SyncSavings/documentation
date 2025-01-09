@@ -214,13 +214,14 @@ components:
 
     SaverResponseBody:
       allOf:
-        - $ref: '#/components/schemas/Saver'
         - type: object
           properties:
             id:
               type: string
               example: 668286d72ea20e3725f813eb
               description: The unique identifier of the Saver in Sync's system.
+        - $ref: '#/components/schemas/Saver'
+        - $ref: 'schemas.yaml#/components/schemas/Dates'
 
     SaverUpdateBody:
       allOf:

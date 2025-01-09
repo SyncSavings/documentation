@@ -112,13 +112,14 @@ components:
     
     CommitmentResponseBody:
       allOf:
-        - $ref: '#/components/schemas/Commitment'
         - type: object
           properties:
             id:
               type: string
               example: 671b7c2b3f541ccb827b7c0a
               description: The unique identifier of the Commitment
+        - $ref: '#/components/schemas/Commitment'
+        - $ref: 'schemas.yaml#/components/schemas/Dates'
 
     Commitment:
       type: object
