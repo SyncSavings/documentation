@@ -148,7 +148,6 @@ components:
 
     AccountResponseBody:
       allOf:
-        - $ref: '#/components/schemas/Account'
         - type: object
           properties:
             id:
@@ -165,3 +164,5 @@ components:
               type: number
               example: 142.76
               description: The amount of interest paid to this account since it started
+        - $ref: '#/components/schemas/Account'
+        - $ref: 'schemas.yaml#/components/schemas/Dates'

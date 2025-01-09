@@ -108,7 +108,6 @@ components:
           - isoCurrencyCode
     TransactionResponseBody:
       allOf:
-        - $ref: '#/components/schemas/Transaction'
         - type: object
           properties:
             id:
@@ -118,3 +117,5 @@ components:
             status:
               type: string
               enum: ['AUTHORISING', 'SETTLED']
+        - $ref: '#/components/schemas/Transaction'
+        - $ref: 'schemas.yaml#/components/schemas/Dates'

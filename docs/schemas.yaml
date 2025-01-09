@@ -30,3 +30,13 @@ components:
                           type: string
                           example: amount must be a number conforming to the specified constraints
                           description: A comprehensive error message regarding this validation problem.
+    Dates:
+      properties:
+        createdAt:
+          type: string
+          example: '2024-12-31T00:00:00.000Z'
+          description: The time that the resource was created
+        updatedAt:
+          type: string
+          example: '2024-12-31T00:00:00.000Z'
+          description: The time that the resource was most recently updated

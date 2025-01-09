@@ -19,66 +19,68 @@ paths:
 components:
   schemas:
     ProductResponseBody:
-      type: array
-      items:
-        type: object
-        properties:
-          _id:
-            type: string
-            example: 66c7020263facd181eb0f6cf
-            description: The ID of the Product
-          name:
-            type: string
-            example: Hundred Acre Savings Instant Access Honeypot
-            description: A branding name for the Product
-          customerType:
-            type: string
-            enum: ['personal']
-            example: personal
-            description: Whether the Product is available for Business or Individual Savers. Currently Personal only.
-          accessType:
-            type: string
-            enum: ['easy_access']
-            example: easy_access
-            description: A descriptor of how money in the account can be accessed
-          status:
-            type: string
-            enum: ['active', 'inactive']
-            description: Whether or not the Product can be used to open new Accounts
-          minimumDeposit:
-            type: number
-            multipleOf: 0.01
-            required: false
-            description: The smallest Amount supported for a Deposit Transaction
-            example: 200.00
-          maximumDeposit:
-            type: number
-            multipleOf: 0.01
-            required: false
-            description: The largest Amount supported for a Deposit Transaction
-            example: 49999.99
-          minimumBalance:
-            type: number
-            multipleOf: 0.01
-            required: false
-            description: The smallest Balance supported for an Account
-            example: 10000.00
-          maximumBalance:
-            type: number
-            multipleOf: 0.01
-            required: false
-            description: The largest Balance supported for an Account
-            example: 1000000.00
-          currency:
-            type: string
-            enum: ['GBP']
-            example: GBP
-            description: The currency of the product
-          interestRate:
-            type: number
-            multipleOf: 0.01
-            example: 4.5
-          annualEquivalentRate:
-            type: number
-            multipleOf: 0.01
-            example: 4.6
+      allOf:
+      - type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              example: 66c7020263facd181eb0f6cf
+              description: The ID of the Product
+            name:
+              type: string
+              example: Hundred Acre Savings Instant Access Honeypot
+              description: A branding name for the Product
+            customerType:
+              type: string
+              enum: ['personal']
+              example: personal
+              description: Whether the Product is available for Business or Individual Savers. Currently Personal only.
+            accessType:
+              type: string
+              enum: ['easy_access']
+              example: easy_access
+              description: A descriptor of how money in the account can be accessed
+            status:
+              type: string
+              enum: ['active', 'inactive']
+              description: Whether or not the Product can be used to open new Accounts
+            minimumDeposit:
+              type: number
+              multipleOf: 0.01
+              required: false
+              description: The smallest Amount supported for a Deposit Transaction
+              example: 200.00
+            maximumDeposit:
+              type: number
+              multipleOf: 0.01
+              required: false
+              description: The largest Amount supported for a Deposit Transaction
+              example: 49999.99
+            minimumBalance:
+              type: number
+              multipleOf: 0.01
+              required: false
+              description: The smallest Balance supported for an Account
+              example: 10000.00
+            maximumBalance:
+              type: number
+              multipleOf: 0.01
+              required: false
+              description: The largest Balance supported for an Account
+              example: 1000000.00
+            currency:
+              type: string
+              enum: ['GBP']
+              example: GBP
+              description: The currency of the product
+            interestRate:
+              type: number
+              multipleOf: 0.01
+              example: 4.5
+            annualEquivalentRate:
+              type: number
+              multipleOf: 0.01
+              example: 4.6
+      - $ref: 'schemas.yaml#/components/schemas/Dates'
