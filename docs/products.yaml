@@ -36,7 +36,7 @@ components:
               type: string
               enum: ['personal']
               example: personal
-              description: Whether the Product is available for Business or Individual Savers. Currently Personal only.
+              description: Whether the Product is available for Business or Individual Savers. Currently `Personal` only
             accessType:
               type: string
               enum: ['easy_access']

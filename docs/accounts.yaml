@@ -27,6 +27,26 @@ paths:
                 $ref: 'schemas.yaml#/components/schemas/ValidationErrorResponse'
       tags:
         - Accounts
+    get:
+      summary: Search existing Accounts
+      parameters:
+        - in: query
+          name: saverId
+          required: true
+          schema:
+            type: string
+            example: 668286d72ea20e3725f813eb
+            description: The ID of the Saver that the Account is owned by
+      responses:
+        '200':
+          description: The Account owned by the provided Saver ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponseBody'
+      tags:
+        - Accounts
+
   /accounts/{accountId}:
     summary: ''
     parameters:

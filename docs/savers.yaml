@@ -19,7 +19,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/SaverResponseBody'
         '400':
-          description: The data provided in the request body is incomplete or invalid. Refer to the returned validation errors for more details.
+          description: The data provided in the request body is incomplete or invalid. Refer to the returned validation errors for more details
           content:
             application/json:
               schema:
@@ -107,7 +107,7 @@ components:
         institution:
           type: string
           example: 'Winslow Luggages'
-          description: If you aggregate data and need to identity Savers by the source of that data `institution` can be used for this, e.g. this could be populated with the Saver's employer.
+          description: If you aggregate data and need to identity Savers by the source of that data `institution` can be used for this, e.g. this could be populated with the Saver's employer
         employment:
           type: object
           properties:
@@ -132,7 +132,7 @@ components:
                 currency:
                   type: string
                   enum: ['GBP']
-                  description: The currency of the Saver's income in ISO 4217 format.
+                  description: The currency of the Saver's income in ISO 4217 format
                 value:
                   type: number
                   minimum: 0.01
@@ -154,7 +154,7 @@ components:
         taxResidency:
           type: string
           enum: ['GB']
-          description: The country where the Saver is a tax resident. Currently GB only.
+          description: The country where the Saver is a tax resident. Currently GB only
     Address:
       type: object
       properties:
@@ -162,11 +162,11 @@ components:
           type: string
           example: '145'
           summary: A house number.
-          description: How the Saver's residence is identified.
+          description: How the Saver's residence is identified
         street:
           type: string
           example: London Street
-          description: The street of the Saver's address.
+          description: The street of the Saver's address
         city:
           type: string
           example: London
@@ -174,7 +174,7 @@ components:
         country:
           type: string
           example: GB
-          description: 2-character country code in ISO 3166 format.
+          description: 2-character country code in ISO 3166 format
         postCode:
           type: string
           example: EC3N 4AB

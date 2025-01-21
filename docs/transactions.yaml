@@ -20,7 +20,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/TransactionResponseBody'
         '400':
-          description: The data provided in the request body is incomplete or invalid. Refer to the returned validation errors for more details.
+          description: The data provided in the request body is incomplete or invalid. Refer to the returned validation errors for more details
           content:
             application/json:
               schema:
@@ -39,7 +39,7 @@ paths:
             description: The ID of the Account that the transaction relates to
       responses:
         '200':
-          description: The Transactions owned by the provided Account ID.
+          description: The Transactions owned by the provided Account ID
           content:
             application/json:
               schema:
