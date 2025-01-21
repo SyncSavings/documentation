@@ -53,7 +53,7 @@ paths:
             description: The `organisation` field from Savers
       responses:
         '200':
-          description: The commitments that belong to Accounts owned by Savers which have the provided `organisation`.
+          description: The commitments that belong to Accounts owned by Savers which have the provided `organisation`
           content:
             application/json:
               schema:
