@@ -83,4 +83,19 @@ components:
               type: number
               multipleOf: 0.01
               example: 4.6
+            documentLinks:
+              type: object
+              properties:
+                terms:
+                  type: string
+                  example: https://google.com
+                  description: The URL of the Terms and Conditions PDF
+                fscsSheet:
+                  type: string
+                  example: https://google.com
+                  description: The URL of the FSCS Fact Sheet PDF
+                summaryBox:
+                  type: string
+                  example: https://google.com
+                  description: The URL of the Summary Box PDF
       - $ref: 'schemas.yaml#/components/schemas/Dates'
