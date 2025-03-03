@@ -237,7 +237,7 @@ components:
           description: The bank account number of the Saver
         sortCode:
           type: string
-          example: 60-83-71
+          example: '608371'
           description: The sort code of the Saver's bank account
         accountOwner:
           type: string
