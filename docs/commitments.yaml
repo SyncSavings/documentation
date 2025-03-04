@@ -45,15 +45,15 @@ paths:
       description: This endpoint is to facilitate payments into Accounts. 
       parameters:
         - in: query
-          name: organisation
+          name: institution
           required: true
           schema:
             type: string
             example: 'Winslow Luggages'
-            description: The `organisation` field from Savers
+            description: The `institution` field from Savers
       responses:
         '200':
-          description: The commitments that belong to Accounts owned by Savers which have the provided `organisation`
+          description: The commitments that belong to Accounts owned by Savers which have the provided `institution`
           content:
             application/json:
               schema:
