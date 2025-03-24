@@ -85,7 +85,7 @@ components:
 
     Deposit:
       type: object
-      description: This is an itemised list of how the payment that this Reconciliation represents should be distributed
+      description: Details how the Account to be credited along with the amount
       properties:
         accountId:
           type: string
@@ -96,7 +96,7 @@ components:
           minimum: 0.01
           multipleOf: 0.01
           example: 67.89
-          description: The amount to be allocated to the specified Account
+          description: The amount to be credited to the specified Account
 
     ReconciliationRequestBody:
       allOf:
@@ -130,6 +130,7 @@ components:
               description: The status of the Reconciliation
             deposits:
               type: array
+              description: This is an itemised list of how the payment that this Reconciliation represents should be distributed
               items:
                 $ref: '#/components/schemas/DepositResponse'
 
