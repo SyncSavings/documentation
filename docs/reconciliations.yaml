@@ -27,6 +27,21 @@ paths:
                 $ref: 'schemas.yaml#/components/schemas/ValidationErrorResponse'
       tags:
         - Reconciliations
+    get:
+      summary: Search existing Reconciliations
+      responses:
+        '200':
+          description: The requested Reconciliation has been found and returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReconciliationResponseBody'
+        '404':
+          description: No reconciliations found
+      tags:
+        - Reconciliations
   /reconciliations/{reconciliationId}:
     summary: ''
     parameters:
