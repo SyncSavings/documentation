@@ -69,6 +69,10 @@ tags:
     description: |
       Commitments are the Saver's instruction of how much they want to contribute to their Account.
 
+  - name: Reconciliations
+    description: |
+      Reconciliations are instructions to Sync on how to distribute a consolidated payment in.
+
 paths:
   /savers:
     $ref: 'savers.yaml#/paths/~1savers'
@@ -88,6 +92,10 @@ paths:
     $ref: 'commitments.yaml#/paths/~1commitments'
   /commitments/{commitmentId}:
     $ref: 'commitments.yaml#/paths/~1commitments~1{commitmentId}'
+  /reconciliations:
+    $ref: 'reconciliations.yaml#/paths/~1reconciliations'
+  /reconciliations/{reconciliationId}:
+    $ref: 'reconciliations.yaml#/paths/~1reconciliations~1{reconciliationId}'
 
 components:
   securitySchemes:

@@ -1,0 +1,152 @@
+info:
+  title: Reconciliations
+
+paths:
+  /reconciliations:
+    post:
+      summary: Create a new Reconciliation
+      description: Create a new Reconciliation for existing Accounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReconciliationRequestBody'
+      responses:
+        '201':
+          description: The Reconciliation has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReconciliationResponseBody'
+        '400':
+          description: The data provided in the request body is incomplete or invalid. Refer to the returned validation errors for more details
+          content:
+            application/json:
+              schema:
+                $ref: 'schemas.yaml#/components/schemas/ValidationErrorResponse'
+      tags:
+        - Reconciliations
+    get:
+      summary: Search existing Reconciliations
+      responses:
+        '200':
+          description: The requested Reconciliation has been found and returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReconciliationResponseBody'
+        '404':
+          description: No reconciliations found
+      tags:
+        - Reconciliations
+  /reconciliations/{reconciliationId}:
+    summary: ''
+    parameters:
+      - name: reconciliationId
+        description: The ID of the Reconciliation
+        example: 67e1444b07086452becd707c
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: View an existing Reconciliation
+      responses:
+        '200':
+          description: The requested Reconciliation has been found and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReconciliationResponseBody'
+        '404':
+          description: The Reconciliation with the specified ID does not exist
+      tags:
+        - Reconciliations
+    delete:
+      summary: Delete an existing Reconciliation
+      responses:
+        '200':
+          description: The specified Reconciliation has been deleted
+        '404':
+          description: The Reconciliation with the specified ID does not exist
+      tags:
+        - Reconciliations
+
+components:
+  schemas:
+    Reconciliation:
+      type: object
+      properties:
+        paymentReference: 
+          type: string
+          example: REF001-20250630
+          description: The end-to-end reference for the payment
+        paymentTotal: 
+          type: number
+          example: 67.89
+          description: The total amount of the payment
+        institution:
+          type: string
+          example: institution-1
+          description: The `institution` field from Savers. Accounts in this payment must belong to Savers with a matching `institution` field.
+        paymentDate:
+          type: string
+          format: date
+          example: '2025-06-30'
+          description: The date the payment will be made in ISO 8601 format.
+
+    Deposit:
+      type: object
+      description: Details how the Account to be credited along with the amount
+      properties:
+        accountId:
+          type: string
+          example: 6682d9d4d8c3ad5632af059c
+          description: The ID of the Account that is to be credited
+        amount: 
+          type: number
+          minimum: 0.01
+          multipleOf: 0.01
+          example: 67.89
+          description: The amount to be credited to the specified Account
+
+    ReconciliationRequestBody:
+      allOf:
+        - $ref: '#/components/schemas/Reconciliation'
+        - type: object
+          properties:
+            deposits:
+              type: array
+              items:
+                $ref: '#/components/schemas/Deposit'
+
+    DepositResponse:
+      allOf:
+        - $ref: '#/components/schemas/Deposit'
+        - type: object
+          properties:
+            saverName:
+              type: string
+              example: Christopher Robin
+              description: The name of the Saver associated with the specified Account
+
+    ReconciliationResponseBody:
+      allOf:
+        - $ref: '#/components/schemas/Reconciliation'
+        - type: object
+          properties:
+            status:
+              type: string
+              enum: ['pending', 'completed', 'failed', 'failed_returned']
+              example: pending
+              description: The status of the Reconciliation
+            deposits:
+              type: array
+              description: This is an itemised list of how the payment that this Reconciliation represents should be distributed
+              items:
+                $ref: '#/components/schemas/DepositResponse'
+
+

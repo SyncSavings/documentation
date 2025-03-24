@@ -46,7 +46,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/SaverResponseBody'
           '404':
-            description: The Account with the specified ID does not exist
+            description: The Saver with the specified ID does not exist
       tags:
         - Savers
     patch:
