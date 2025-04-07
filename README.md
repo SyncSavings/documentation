@@ -1,6 +1,6 @@
 # Public website
 
-[https://syncsavings.github.io/api-contract/](https://syncsavings.github.io/api-contract/)
+[https://syncsavings.github.io/documentation/](https://syncsavings.github.io/documentation/)
 
 We use [redocly](https://redocly.com/docs) to generate our documentation, `docs/main.yaml` and the files that it references follow the OpenAPI specification version 3.0.3
 
