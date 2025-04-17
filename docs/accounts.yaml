@@ -88,7 +88,15 @@ paths:
           description: The Account with the specified ID does not exist
       tags:
         - Accounts
-
+    delete:
+      summary: Close an existing Account
+      responses:
+        '204':
+          description: Successfully initiated the Account closure
+        '404':
+          description: The Account with the specified ID does not exist
+      tags:
+        - Accounts
 components:
   schemas:
     Account:
