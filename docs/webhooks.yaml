@@ -1,0 +1,62 @@
+description: |
+  Events are sent as Signed JSON Web Tokens (JWS) via a HTTPS POST request. An example of the JWS can be seen below.
+  ```
+  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0cmFuc2FjdGlvbklkIjoiNjgxYjI0NjVmMGM0OTBkYzc1MGMwYWYxIiwidHlwZSI6ImludGVyZXN0X3RyYW5zYWN0aW9uX2NyZWF0ZWQiLCJpYXQiOjE3NDY2MDkyNTN9.LNvA4T4zzV11iAmDtohd-L4guNRIDMfxrchTUvqRDIA
+  ```
+  # Verification
+  You must verify the JWT signature using the secret you will have been issued. Once the signature is verified you can safely decode & parse the payload as a JSON object.
+  #  Event types
+  | Event                                                                                        | Description                                                             |
+  |----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+  |   [Saver status updated](#tag/Webhooks/Event-types/Saver-status-updated)                     | This event is sent when the status of a saver is updated.               |
+  |   [Account status updated](#tag/Webhooks/Event-types/Account-status-updated)                 | This event is sent when the status of a saver's account is updated.     |
+  |   [Transaction status updated](#tag/Webhooks/Event-types/Transaction-status-updated)         | This event is sent when the status of a transaction is updated.         |
+  |   [Withdrawal transaction created](#tag/Webhooks/Event-types/Withdrawal-transaction-created) | This event is sent when a new withdrawal from an account is requested.  |
+  |   [Deposit transaction created](#tag/Webhooks/Event-types/Deposit-transaction-created)       | This event is sent when a new deposit into an account is made.          |
+  |   [Interest transaction created](#tag/Webhooks/Event-types/Interest-transaction-created)     | This event is sent when a new interest payment into an account is made. |
+  ## Saver status updated
+  ```json
+  {
+    "saverId": "668286d72ea20e3725f813eb",
+    "status": "active",
+    "bank Name": "bank_name",
+    "type": "saver_status_updated"
+  }
+  ```
+  ## Account status updated
+  ```json
+  {
+    "accountId": "68148179c1fdf1148c24ded3",
+    "status": "active",
+    "type": "account_status_updated"
+  }
+  ```
+  ## Transaction status updated
+  ```json
+  {
+    "transactionId": "668286d72ea20e3725f813eb",
+    "status": "active",
+    "type": "transaction_status_updated"
+  }
+  ```
+  ## Withdrawal transaction created
+  ```json
+  {
+    "transactionId": "68148191c1fdf1148c24deda",
+    "type": "withdrawal_transaction_created"
+  }
+  ```
+  ## Deposit transaction created
+  ```json
+  {
+    "transactionId": "66ba0f9e05758c7ef7fcc10p",
+    "type": "deposit_transaction_created"
+  }
+  ```
+  ## Interest transaction created
+  ```json
+  {
+    "transactionId": "67d9531d506e6cff79f276b5",
+    "type": "interest_transaction_created"
+  }
+  ````
