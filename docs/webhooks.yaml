@@ -5,6 +5,8 @@ description: |
   ```
   # Verification
   You must verify the JWT signature using the secret you will have been issued. Once the signature is verified you can safely decode & parse the payload as a JSON object.
+  # Acknowledgement
+  After a webhook event has been received, it must be acknowledged by responding with a successful (2XX) status code. Events which are not acknowledged with a successful status code will be resent up to 5 times, in an attempt to ensure that the event is received successfully.
   #  Event types
   | Event                                                                                        | Description                                                             |
   |----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
