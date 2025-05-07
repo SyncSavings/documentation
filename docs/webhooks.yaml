@@ -17,6 +17,11 @@ description: |
   |   [Deposit transaction created](#tag/Webhooks/Event-types/Deposit-transaction-created)       | This event is sent when a new deposit into an account is made.          |
   |   [Interest transaction created](#tag/Webhooks/Event-types/Interest-transaction-created)     | This event is sent when a new interest payment into an account is made. |
   ## Saver status updated
+  A saver's status can be either:
+  - `active` - the saver is active and can make deposits/withdrawals
+  - `pending` - the saver is pending and an active eKYC process is in progress
+  - `rejected` - the saver has failed the KYC process
+  - `escalated` - the saver has failed the eKYC process and has been escalated to manual ID verification process
   ```json
   {
     "saverId": "668286d72ea20e3725f813eb",
@@ -26,6 +31,10 @@ description: |
   }
   ```
   ## Account status updated
+  An account's status can be either:
+  - `active` - the account is open and active
+  - `closing` - a request to close the account has been received
+  - `closed` - all funds have been withdrawn from the account and all accrued interest has been paid
   ```json
   {
     "accountId": "68148179c1fdf1148c24ded3",
@@ -34,10 +43,13 @@ description: |
   }
   ```
   ## Transaction status updated
+  A transaction's status can be either:
+  - `AUTHORISING` - the transaction is being processed
+  - `SETTLED` - the transaction has been processed
   ```json
   {
     "transactionId": "668286d72ea20e3725f813eb",
-    "status": "active",
+    "status": "SETTLED",
     "type": "transaction_status_updated"
   }
   ```
