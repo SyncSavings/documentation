@@ -103,7 +103,12 @@ components:
         sourceAccountDetails:
           type: object
           allOf:
-            - $ref: '#/components/schemas/SourceAccountDetails'
+            - $ref: '#/components/schemas/SaverBankDetails'
+        withdrawalAccountDetails:
+          type: object
+          description: This bank account is where Withdrawal Transactions will be paid to and is prioritised over `sourceAccountDetails`
+          allOf:
+            - $ref: '#/components/schemas/SaverBankDetails'
         institution:
           type: string
           example: 'Winslow Luggages'
@@ -221,7 +226,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/Saver'
     
-    SourceAccountDetails:
+    SaverBankDetails:
       type: object
       description: This bank account is where Withdrawal Transactions will be paid to
       properties:
