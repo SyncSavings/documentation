@@ -118,7 +118,7 @@ components:
               type: string
               example: 671b7c2b3f541ccb827b7c0a
               description: The unique identifier of the Commitment
-            pauseUntil:
+            pausedUntil:
               type: string
               format: date
               example: '2025-12-31'
@@ -149,7 +149,7 @@ components:
           multipleOf: 0.01
           example: 67.89
           description: The amount the Saver wants to pay into their Account
-        pauseUntil:
+        pausedUntil:
           type: string
           format: date
           example: '2025-12-31'
