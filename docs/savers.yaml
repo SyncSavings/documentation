@@ -219,6 +219,11 @@ components:
               type: string
               example: 668286d72ea20e3725f813eb
               description: The unique identifier of the Saver in Sync's system.
+            status:
+              type: string
+              enum: ['active','pending','escalated', 'rejected']
+              description: The current status of the Saver
+              example: 'active'
         - $ref: '#/components/schemas/Saver'
         - $ref: 'schemas.yaml#/components/schemas/Dates'
 
