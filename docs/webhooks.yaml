@@ -26,6 +26,8 @@ description: |
   - `pending` - the Saver is pending and an active eKYC process is in progress
   - `escalated` - the Saver has failed the eKYC process and has been escalated to manual ID verification process
   - `rejected` - the Saver has failed the KYC process
+  - `closing` - a request to close the Saver has been received
+  - `closed` - the Saver is closed and all Accounts for the Saver have been closed
   ```json
   {
     "type": "saver_status_updated",
