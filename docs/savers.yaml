@@ -68,6 +68,18 @@ paths:
           description: The Saver with the specified ID does not exist
       tags:
         - Savers
+    delete:
+      summary: Delete an existing Saver
+      description: This will only work if the Saver is in an active state and will close the Saver's Account
+      responses:
+        '204':
+          description: Successfully deleted the Saver
+        '404':
+          description: The Saver with the specified ID does not exist
+        '400':
+          description: The Saver cannot be deleted because it is not in an active state'
+      tags:
+        - Savers
 
 components:
   schemas:
