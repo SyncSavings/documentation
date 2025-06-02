@@ -228,8 +228,34 @@ components:
         - $ref: 'schemas.yaml#/components/schemas/Dates'
 
     SaverUpdateBody:
-      allOf:
-        - $ref: '#/components/schemas/Saver'
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: Christopher
+          description: The given name of the Saver.
+        lastName:
+          type: string
+          example: Robin
+          description: The family name of the Saver.
+        email:
+          type: string
+          example: christopher.robin@sync-savings.com
+          description: The email address of the Saver.
+        dateOfBirth:
+          type: string
+          format: date
+          example: '1969-12-31'
+          description: The date of birth of the Saver in ISO 8601 format.
+        mobileNumber:
+          type: string
+          pattern: /\+447\d{9}/
+          example: '+447123456789'
+          description: The mobile phone number of the Saver.
+        address:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Address'
     
     SaverBankDetails:
       type: object
