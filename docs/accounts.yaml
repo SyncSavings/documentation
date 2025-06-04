@@ -197,5 +197,9 @@ components:
               type: number
               example: 142.76
               description: The amount of interest paid to this account since it started
+            accruedInterest:
+              type: number
+              example: 0.12
+              description: The amount of interest accrued since the last interest payment
         - $ref: '#/components/schemas/Account'
         - $ref: 'schemas.yaml#/components/schemas/Dates'
