@@ -112,6 +112,10 @@ components:
           type: object
           allOf:
             - $ref: '#/components/schemas/Address'
+        nationality:
+          type: string
+          example: GB
+          description: 2-character country code in ISO 3166 format
         sourceAccountDetails:
           type: object
           allOf:
