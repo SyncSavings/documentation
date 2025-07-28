@@ -38,8 +38,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ReconciliationResponseBody'
-        '404':
-          description: No reconciliations found
       tags:
         - Reconciliations
   /reconciliations/{reconciliationId}:
