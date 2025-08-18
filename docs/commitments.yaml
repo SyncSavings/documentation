@@ -171,6 +171,10 @@ components:
                 type: string
                 example: 6682d9d4d8c3ad5632af059c
                 description: The ID of the Account that the Commitment relates to
+              downstreamId:
+                type: string
+                example: '1234567890'
+                description: The unique identifier of the Saver in the downstream system, if applicable.
               bankAccountDetails:
                 type: object
                 properties:
