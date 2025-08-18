@@ -240,6 +240,10 @@ components:
               enum: ['active','pending','escalated', 'rejected']
               description: The current status of the Saver
               example: 'active'
+            downstreamId:
+              type: string
+              example: '1234567890'
+              description: The unique identifier of the Saver in the downstream system, if applicable.
         - $ref: '#/components/schemas/Saver'
         - $ref: 'schemas.yaml#/components/schemas/Dates'
 
