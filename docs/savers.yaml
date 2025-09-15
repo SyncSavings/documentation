@@ -219,6 +219,7 @@ components:
           - dateOfBirth
           - mobileNumber
           - address
+          - nationality
           - sourceAccountDetails
           - taxResidency
           - termsAgreed

@@ -1,0 +1,40 @@
+name: Github action to notify slack channel of PR
+run-name: Sending Slack Notification
+env:
+  oli-loades: ${{secrets.OLI_SLACK_USER_ID}}
+  MooKwai: ${{secrets.SAM_SLACK_USER_ID}}
+  MotNosniktaw: ${{secrets.TOM_SLACK_USER_ID}}
+on:
+  pull_request:
+    types: [review_requested]
+jobs:
+  run:
+    name: Slack message
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Slack message
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            text: Review Time!
+            blocks:
+              - type: section
+                text:
+                  type: mrkdwn
+                  text: <@${{ env[github.actor] }}> has requested a review from <@${{ env[github.event.pull_request.requested_reviewers[0].login] }}>
+              - type: section
+                text:
+                  type: mrkdwn
+                  text: '*${{ github.event.pull_request.title }}*'
+              - type: actions
+                elements:
+                  - type: button
+                    text:
+                      type: plain_text
+                      text: View PR
+                    style: primary
+                    value: click
+                    url: ${{ github.event.pull_request._links.html.href }}
+              - type: divider
