@@ -33,7 +33,7 @@ description: |
     "type": "saver_status_updated",
     "saverId": "668286d72ea20e3725f813eb",
     "status": "active",
-    "bank Name": "A Bank"
+    "bankName": "A Bank"
   }
   ```
   
