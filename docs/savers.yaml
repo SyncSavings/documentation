@@ -245,6 +245,10 @@ components:
               type: string
               example: '1234567890'
               description: The unique identifier of the Saver in the downstream system, if applicable.
+            idvUrl:
+              type: string
+              example: https://google.com
+              description: If the saver's status is `escalated` this is the URL they need to use to provide additional information
         - $ref: '#/components/schemas/Saver'
         - $ref: 'schemas.yaml#/components/schemas/Dates'
 
