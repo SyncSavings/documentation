@@ -43,7 +43,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountResponseBody'
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountResponseBody'
       tags:
         - Accounts
 
