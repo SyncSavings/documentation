@@ -11,20 +11,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountRequestBody'
+              $ref: "#/components/schemas/AccountRequestBody"
       responses:
-        '201':
+        "201":
           description: The Account has been created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountResponseBody'
-        '400':
+                $ref: "#/components/schemas/AccountResponseBody"
+        "400":
           description: The data provided in the request body is incomplete or invalid. Refer to the returned validation errors for more details.
           content:
             application/json:
               schema:
-                $ref: 'schemas.yaml#/components/schemas/ValidationErrorResponse'
+                $ref: "schemas.yaml#/components/schemas/ValidationErrorResponse"
       tags:
         - Accounts
     get:
@@ -38,17 +38,19 @@ paths:
             example: 668286d72ea20e3725f813eb
             description: The ID of the Saver that the Account is owned by
       responses:
-        '200':
-          description: The Account owned by the provided Saver ID
+        "200":
+          description: The Accounts owned by the provided Saver ID
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountResponseBody'
+                type: array
+                items:
+                  $ref: "#/components/schemas/AccountResponseBody"
       tags:
         - Accounts
 
   /accounts/{accountId}:
-    summary: ''
+    summary: ""
     parameters:
       - name: accountId
         description: The ID of the Account
@@ -60,13 +62,13 @@ paths:
     get:
       summary: View an existing Account
       responses:
-        '200':
+        "200":
           description: The requested Account has been found and returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountResponseBody'
-        '404':
+                $ref: "#/components/schemas/AccountResponseBody"
+        "404":
           description: The Account with the specified ID does not exist
       tags:
         - Accounts
@@ -76,24 +78,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountUpdateBody'
+              $ref: "#/components/schemas/AccountUpdateBody"
       responses:
-        '200':
+        "200":
           description: Successfully updated the Account
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountResponseBody'
-        '404':
+                $ref: "#/components/schemas/AccountResponseBody"
+        "404":
           description: The Account with the specified ID does not exist
       tags:
         - Accounts
     delete:
       summary: Close an existing Account
       responses:
-        '204':
+        "204":
           description: Successfully initiated the Account closure
-        '404':
+        "404":
           description: The Account with the specified ID does not exist
       tags:
         - Accounts
@@ -122,7 +124,7 @@ components:
           description: The amount the Saver wants to save for their goal
         isoCurrencyCode:
           type: string
-          enum: ['GBP']
+          enum: ["GBP"]
           description: The currency of the account in ISO 4217 format.
         termsAgreed:
           type: boolean
@@ -140,26 +142,26 @@ components:
       properties:
         accountNumber:
           type: string
-          example: '11223344'
+          example: "11223344"
           description: The bank account number of the Saver
         sortCode:
           type: string
-          example: '608371'
+          example: "608371"
           description: The sort code of the Saver's bank account
         accountOwner:
           type: string
           example: Christopher Robin
           description: The name on the Saver's bank account
-      
+
     AccountRequestBody:
       allOf:
-        - $ref: '#/components/schemas/Account'
+        - $ref: "#/components/schemas/Account"
       required:
         - saverId
         - name
         - productId
         - isoCurrencyCode
-    
+
     AccountUpdateBody:
       type: object
       properties:
@@ -184,11 +186,11 @@ components:
               description: The unique identifier of the Account
             status:
               type: string
-              enum: ['active','closing','closed']
+              enum: ["active", "closing", "closed"]
               description: The current status of the Account
-              example: 'active'
+              example: "active"
             bankAccountDetails:
-              $ref: '#/components/schemas/BankAccountDetails'
+              $ref: "#/components/schemas/BankAccountDetails"
             availableBalance:
               type: number
               example: 1234.56
@@ -201,5 +203,5 @@ components:
               type: number
               example: 0.12
               description: The amount of interest accrued since the last interest payment
-        - $ref: '#/components/schemas/Account'
-        - $ref: 'schemas.yaml#/components/schemas/Dates'
+        - $ref: "#/components/schemas/Account"
+        - $ref: "schemas.yaml#/components/schemas/Dates"
