@@ -40,8 +40,8 @@ info:
     By default the `limit` parameter is set to `10` and the `page` is set to `1`.
 
 servers:
-  - url: https://api.staging.sync-savings.com
-    description: Staging API
+  - url: https://api.sandbox.sync-savings.com
+    description: Sandbox API
   - url: https://api.sync-savings.com
     description: Production API (uses live data)
 
