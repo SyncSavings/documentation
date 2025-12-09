@@ -39,7 +39,7 @@ paths:
             description: The ID of the Saver that the Account is owned by
       responses:
         '200':
-          description: The Account owned by the provided Saver ID
+          description: The Accounts owned by the provided Saver ID
           content:
             application/json:
               schema:
@@ -152,7 +152,7 @@ components:
           type: string
           example: Christopher Robin
           description: The name on the Saver's bank account
-      
+
     AccountRequestBody:
       allOf:
         - $ref: '#/components/schemas/Account'
@@ -161,7 +161,7 @@ components:
         - name
         - productId
         - isoCurrencyCode
-    
+
     AccountUpdateBody:
       type: object
       properties:
@@ -186,7 +186,7 @@ components:
               description: The unique identifier of the Account
             status:
               type: string
-              enum: ['active','closing','closed']
+              enum: ['active', 'closing', 'closed']
               description: The current status of the Account
               example: 'active'
             bankAccountDetails:
