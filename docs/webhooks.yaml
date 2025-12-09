@@ -27,6 +27,7 @@ description: |
   - `escalated` - the Saver has failed the eKYC process and has been escalated to manual ID verification process
   - `rejected` - the Saver has failed the KYC process
   - `closing` - a request to close the Saver has been received
+  - `awaiting_account_closure` - the Saver is being closed and is waiting for all of their accounts to finish closing
   - `closed` - the Saver is closed and all Accounts for the Saver have been closed
   ```json
   {
@@ -41,6 +42,7 @@ description: |
   An Account's status can be either:
   - `active` - the Account is open and active
   - `closing` - a request to close the Account has been received
+  - `awaiting_closing_interest` - the Account is closing and the existing funds have been withdrawn but it is waiting for end of month interest to be paid out
   - `closed` - all funds have been withdrawn from the Account and all accrued interest has been paid
   ```json
   {

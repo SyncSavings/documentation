@@ -186,7 +186,7 @@ components:
               description: The unique identifier of the Account
             status:
               type: string
-              enum: ['active', 'closing', 'closed']
+              enum: ['active', 'closing', 'closed', 'awaiting_closing_interest']
               description: The current status of the Account
               example: 'active'
             bankAccountDetails:
