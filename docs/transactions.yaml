@@ -48,7 +48,7 @@ paths:
                   $ref: '#/components/schemas/TransactionResponseBody'
       tags:
         - Transactions
-  
+
   /transactions/{transactionId}:
     summary: ''
     parameters:
@@ -84,7 +84,7 @@ components:
           description: The ID of the Account that the Transaction relates to
         type:
           type: string
-          enum: ['WITHDRAWAL']
+          enum: ['WITHDRAWAL', 'TRANSFER']
           description: The type of the transaction to be created in Sync's system
         reference:
           type: string
@@ -96,7 +96,33 @@ components:
         isoCurrencyCode:
           type: string
           enum: ['GBP']
+
     CreateTransactionRequestBody:
+      oneOf:
+        - $ref: '#/components/schemas/CreateTransferRequestBody'
+        - $ref: '#/components/schemas/CreateWithdrawalRequestBody'
+      discriminator:
+        propertyName: type
+        mapping:
+          TRANSFER: '#/components/schemas/CreateTransferRequestBody'
+          WITHDRAWAL: '#/components/schemas/CreateWithdrawalRequestBody'
+    CreateTransferRequestBody:
+      allOf:
+        - $ref: '#/components/schemas/Transaction'
+        - type: object
+          properties:
+            destinationAccountId:
+              type: string
+              example: 6682d9d4d8c3ad5632af035h
+              description: The ID of the Account that the Transfer is heading to
+          required:
+            - accountId
+            - type
+            - reference
+            - amount
+            - isoCurrencyCode
+            - destinationAccountId
+    CreateWithdrawalRequestBody:
       type: object
       allOf:
         - $ref: '#/components/schemas/Transaction'

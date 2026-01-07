@@ -238,7 +238,7 @@ components:
               description: The unique identifier of the Saver in Sync's system.
             status:
               type: string
-              enum: ['active','pending','escalated', 'rejected']
+              enum: ['active','pending','escalated', 'rejected', 'closing', 'awaiting_account_closure', 'closed']
               description: The current status of the Saver
               example: 'active'
             upstreamId:
