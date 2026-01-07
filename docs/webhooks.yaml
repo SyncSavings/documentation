@@ -15,13 +15,17 @@ description: |
   |----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
   |   [Saver status updated](#tag/Webhooks/Event-types/Saver-status-updated)                     | This event is sent when the status of a Saver is updated.               |
   |   [Account status updated](#tag/Webhooks/Event-types/Account-status-updated)                 | This event is sent when the status of a Saver's Account is updated.     |
+  |   [Reconciliation created](#tag/Webhooks/Event-types/Reconciliation-created)                 | This event is sent when a new Reconciliation is created.                |
+  |   [Reconciliation status updated](#tag/Webhooks/Event-types/Reconciliation-status-updated)   | This event is sent when the status of a Reconciliation is updated.      |
+  |   [Commitment created](#tag/Webhooks/Event-types/Commitment-created)                         | This event is sent when a new Commitment is created.                    |
+  |   [Commitment updated](#tag/Webhooks/Event-types/Commitment-updated)                         | This event is sent when an existing Commitment is updated.              |
   |   [Transaction status updated](#tag/Webhooks/Event-types/Transaction-status-updated)         | This event is sent when the status of a Transaction is updated.         |
   |   [Withdrawal transaction created](#tag/Webhooks/Event-types/Withdrawal-transaction-created) | This event is sent when a new withdrawal from an Account is requested.  |
   |   [Deposit transaction created](#tag/Webhooks/Event-types/Deposit-transaction-created)       | This event is sent when a new deposit into an Account is made.          |
   |   [Interest transaction created](#tag/Webhooks/Event-types/Interest-transaction-created)     | This event is sent when a new interest payment into an Account is made. |
   
   ## Saver status updated
-  A Saver's status can be either:
+  A Saver's status can be one of:
   - `active` - the Saver is active and can create an Account
   - `pending` - the Saver is pending and an active eKYC process is in progress
   - `escalated` - the Saver has failed the eKYC process and has been escalated to manual ID verification process
@@ -39,7 +43,7 @@ description: |
   ```
   
   ## Account status updated
-  An Account's status can be either:
+  An Account's status can one of:
   - `active` - the Account is open and active
   - `closing` - a request to close the Account has been received
   - `awaiting_closing_interest` - the Account is closing and the existing funds have been withdrawn but it is waiting for end of month interest to be paid out
@@ -51,7 +55,48 @@ description: |
     "status": "active"
   }
   ```
-  
+
+  ## Reconciliation created
+  ```json
+  {
+    "type": "reconciliation_created",
+    "reconciliationId": "6682d9d4d8c3ad5632af059c"
+  }
+  ```
+
+  ## Reconciliation status updated
+  A Reconciliation's status can be one of:
+    - `pending` - the Reconciliation is waiting for a payment in
+    - `completed` - a payment was received and distributed to Accounts
+    - `failed` - a payment was received but the details were incorrect
+    - `failed_returned` - the next status from `failed`, the payment is being returned
+  ```json
+  {
+    "type": "reconciliation_status_updated",
+    "reconciliationId": "6682d9d4d8c3ad5632af059c",
+    "status": "completed"
+  }
+  ```
+
+  ## Commitment created
+  ```json
+  {
+    "type": "commitment_created",
+    "commitmentId": "668286d72ea20e3725f813eb"
+  }
+  ```
+
+  ## Commitment updated
+  Commitment updates can include:
+  - Changes to the amount
+  - Pausing by updating the pausedUntil field
+  ```json
+  {
+    "type": "commitment_updated",
+    "commitmentId": "668286d72ea20e3725f813eb""
+  }
+  ```
+
   ## Transaction status updated
   A Transaction's status can be either:
   - `AUTHORISING` - the Transaction is being processed
