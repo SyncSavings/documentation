@@ -10,6 +10,9 @@ description: |
   # Acknowledgement
   After a webhook event has been received, it must be acknowledged by responding with a successful (2XX) status code. Events which are not acknowledged with a successful status code will be resent up to 5 times, in an attempt to ensure that the event is received successfully.
   
+  # Institutions
+  If a resource has an associated institution, it is included in the body of each event as the `institution` property (string).
+
   #  Event types
   | Event                                                                                        | Description                                                             |
   |----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
