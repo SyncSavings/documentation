@@ -136,6 +136,10 @@ components:
         - $ref: '#/components/schemas/Reconciliation'
         - type: object
           properties:
+            id:
+              type: string
+              example: 6682d9d4d8c3ad5632af058a
+              description: The unique identifier of the Reconciliation
             status:
               type: string
               enum: ['pending', 'completed', 'failed', 'failed_returned']
