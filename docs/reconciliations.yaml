@@ -4,6 +4,7 @@ info:
 paths:
   /reconciliations:
     post:
+      operationId: createReconciliation
       summary: Create a new Reconciliation
       description: Create a new Reconciliation for existing Accounts
       requestBody:

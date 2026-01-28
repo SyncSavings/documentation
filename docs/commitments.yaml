@@ -41,6 +41,7 @@ paths:
       tags:
         - Commitments
     get:
+      operationId: searchCommitmentsByInstitution
       summary: Search existing Commitments.
       description: This endpoint is to facilitate payments into Accounts. 
       parameters:
