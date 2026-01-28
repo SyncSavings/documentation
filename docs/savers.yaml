@@ -128,7 +128,16 @@ components:
         institution:
           type: string
           example: 'Winslow Luggages'
-          description: If you aggregate data and need to identity Savers by the source of that data `institution` can be used for this, e.g. this could be populated with the Saver's employer
+          description: |
+            Represents how you group Savers in your system.
+
+            This field is used when:
+            - Searching [Commitments](#tag/Commitments)
+            - Creating expectations of pooled payments via [Reconciliations](#tag/Reconciliations)
+
+            In particular, see:
+            - [Search existing Commitments](#operation/searchCommitmentsByInstitution)
+            - [Create Reconciliation](#operation/createReconciliation)
         employment:
           type: object
           properties:
