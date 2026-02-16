@@ -1,7 +1,7 @@
 description: |
   Events are sent as Signed JSON Web Tokens (JWS) via a HTTPS POST request. An example of the JWS can be seen below.
   ```
-  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0cmFuc2FjdGlvbklkIjoiNjgxYjI0NjVmMGM0OTBkYzc1MGMwYWYxIiwidHlwZSI6ImludGVyZXN0X3RyYW5zYWN0aW9uX2NyZWF0ZWQiLCJpYXQiOjE3NDY2MDkyNTN9.LNvA4T4zzV11iAmDtohd-L4guNRIDMfxrchTUvqRDIA
+  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoic2F2ZXJfc3RhdHVzX3VwZGF0ZWQiLCJzYXZlcklkIjoiNjY4Mjg2ZDcyZWEyMGUzNzI1ZjgxM2ViIiwic3RhdHVzIjoiYWN0aXZlIiwiYmFua05hbWUiOiJBIEJhbmsiLCJpYXQiOjE3NzAyMTg0NzUsImV4cCI6MTc3MDIxODc3NX0.4-X5KqEMwfulT0bvXW2I7EokU77Ytg8RMlh2cPcPAng
   ```
   
   # Verification
