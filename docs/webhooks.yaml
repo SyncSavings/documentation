@@ -104,10 +104,8 @@ description: |
 
   ## Transaction status updated
   A Transaction's status can be either:
-  - `INSTRUCTED` - the Transaction has been created and is ready for processing
   - `AUTHORISING` - the Transaction is being processed
   - `SETTLED` - the Transaction has been processed
-  - `BLOCKED` - the Transaction has been flagged for investigation
   ```json
   {
     "type": "transaction_status_updated",
