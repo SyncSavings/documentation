@@ -151,5 +151,6 @@ components:
               description: This is an itemised list of how the payment that this Reconciliation represents should be distributed
               items:
                 $ref: '#/components/schemas/DepositResponse'
+        - $ref: 'schemas.yaml#/components/schemas/Dates'
 
 
