@@ -171,10 +171,9 @@ components:
             - status
             - income
         sourceOfFunds:
-            type: string
-            enum: ['gambling-or-lottery','investments','property-or-asset-sale','business-income','savings','salary-or-bonus','student-loans-or-bursary','retirement-or-pension','legal-settlement','family-or-gifted','loan','inheritance']
-            example: 'salary-or-bonus'
-            description: The nature of the money being used to fund the Bank Account
+            type: array
+            items:
+              $ref: '#/components/schemas/sourceOfFunds'
         taxResidency:
           type: string
           enum: ['GB']
@@ -204,6 +203,12 @@ components:
           example: EC3N 4AB
           description: Postal code for the area.
 
+    sourceOfFunds:
+      type: string
+      enum: ['gambling-or-lottery','investments','property-or-asset-sale','business-income','savings','salary-or-bonus','student-loans-or-bursary','retirement-or-pension','legal-settlement','family-or-gifted','loan','inheritance']
+      example: 'salary-or-bonus'
+      description: The nature of the money being used to fund the Bank Account
+
     AddressRequest:
       allOf:
         - $ref: '#/components/schemas/Address'
@@ -221,6 +226,8 @@ components:
           properties:
             address:
               $ref: '#/components/schemas/AddressRequest'
+            sourceOfFunds:
+              $ref: '#/components/schemas/sourceOfFunds'
         - required:
           - firstName
           - lastName
@@ -235,7 +242,6 @@ components:
           - summaryBoxViewed
           - fscsSheetViewed
           - employment
-          - sourceOfFunds
 
     SaverResponseBody:
       allOf:
