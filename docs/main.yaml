@@ -76,6 +76,9 @@ tags:
   - name: Webhooks
     $ref: 'webhooks.yaml'
 
+  - name: Changelog
+    $ref: 'changelog.yaml'
+
 paths:
   /savers:
     $ref: 'savers.yaml#/paths/~1savers'
