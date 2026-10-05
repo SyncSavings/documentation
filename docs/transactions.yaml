@@ -37,6 +37,19 @@ paths:
             type: string
             example: 6682d9d4d8c3ad5632af059c
             description: The ID of the Account that the transaction relates to
+        - in: query
+          name: type
+          required: false
+          style: form
+          explode: false
+          description: The types of the transactions to filter by
+          schema:
+            type: array
+            items:
+              type: string
+              enum: ['DEPOSIT', 'WITHDRAWAL', 'INTEREST', 'TRANSFER']
+          example: ['DEPOSIT', 'WITHDRAWAL']
+        - $ref: 'schemas.yaml#/components/parameters/Search'
       responses:
         '200':
           description: The Transactions owned by the provided Account ID
@@ -142,6 +155,6 @@ components:
               description: The unique identifier of the Transaction
             status:
               type: string
-              enum: ['INSTRUCTED', 'AUTHORISING', 'SETTLED', 'BLOCKED']
+              enum: ['INSTRUCTED', 'AUTHORISING', 'SETTLED', 'BLOCKED', 'REJECTED']
         - $ref: '#/components/schemas/Transaction'
         - $ref: 'schemas.yaml#/components/schemas/Dates'
