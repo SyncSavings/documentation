@@ -6,6 +6,8 @@ paths:
     get:
       summary: 'List available Products'
       description: 'List available Products'
+      parameters:
+        - $ref: 'schemas.yaml#/components/parameters/Search'
       responses:
         '200':
           description: The Products that are available

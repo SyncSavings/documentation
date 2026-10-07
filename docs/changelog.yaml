@@ -1,0 +1,58 @@
+description: |
+
+  # Upcoming
+
+  # September 2026
+  - `GET /products` returns `subType` in place of `accessType`, with the same values, and a new `type` field.
+  - The `saver_status_updated` webhook no longer includes `bankName`.
+  - `POST /accounts` returns `400` when the Saver has a `productId` and the Account's `productId` is different.
+  - A withdrawal the bank fails to pay out moves from `AUTHORISING` to `REJECTED`, with a `transaction_status_updated` webhook. Before, it was marked `SETTLED`.
+  
+  # June 2026
+  - `GET /products` returns a `bank` object with the bank's `name`, `legalName` and `logoUrl`.
+
+  # May 2026
+  - A Reconciliation rejected because the payment doesn't match it, for example on amount, has `status` `failed` instead of `failed_returned`, in responses and in `reconciliation_status_updated`.
+  - Failed Reconciliations include a `failure` object whose `reason` is `payment_reference_not_found`, `amount_mismatch` or `payment_reference_mismatch`.
+  - A payment that matches no pending Reconciliation appears in `GET /reconciliations` as a `failed` Reconciliation with `failure.reason` `payment_reference_not_found`. No `reconciliation_created` webhook is sent for it.
+  - A payment whose reference matches a pending Reconciliation's `paymentReference` only when letter case is ignored fails that Reconciliation with `failure.reason` `payment_reference_mismatch`.
+  - `paymentReference` on `POST /reconciliations` may contain `.` and no longer accepts `_`.
+  - `GET /transactions` accepts optional `type` (comma-separated Transaction types), `sortBy` (`createdAt` or `updatedAt`) and `sortOrder` (`asc` or `desc`) query parameters.
+  - `GET /products` accepts optional `sortBy` and `sortOrder` query parameters.
+
+  # April 2026
+  - `POST /savers` returns `400` when `nationality` is `US`.
+  - Reconciliation responses include `createdAt` and `updatedAt`.
+  - `GET /reconciliations` accepts optional `sortBy` (`createdAt` or `updatedAt`) and `sortOrder` (`asc` or `desc`) query parameters.
+  - `paymentReference` on `POST /reconciliations` can be up to 18 characters, up from 15.
+
+  # March 2026
+  - New endpoint `GET /commitments/{commitmentId}` returns a single Commitment.
+  - `POST /savers` returns `400` when another Saver has the same sort code and account number in `sourceAccountDetails`, whatever the `accountOwner`.
+  - Withdrawals flagged by Sync's transaction monitoring are created with status `BLOCKED` and aren't paid out. The Saver and their Accounts move to the new `blocked` status, which `saver_status_updated` and `account_status_updated` report.
+  - Each entry in the `accounts` array of `GET /commitments` includes `commitmentUpdateDate`, the last time that Account's active Commitments changed, including the end of a pause.
+  - `POST /reconciliations` rejects a `paymentReference` already used by a pending Reconciliation, ignoring letter case.
+
+  # February 2026
+  - `account_status_updated` is sent with status `active` when an Account is created.
+  - `interest_transaction_created` is also sent for interest paid on Accounts held in a pooled bank account.
+  - Webhook JWTs include an `exp` claim and expire 5 minutes after signing.
+  - `paymentReference` on `POST /reconciliations` must be at most 15 characters and contain only letters, digits, `_` and `-`.
+
+  # January 2026
+  - New webhook events `commitment_created` and `commitment_updated`, sent when a Commitment is created or updated, including pauses.
+  - New webhook events `reconciliation_created` and `reconciliation_status_updated`.
+  - Webhook payloads include `institution` when the resource has one.
+  - `POST /transactions` accepts `type` `TRANSFER` with a `destinationAccountId` to move money between two of a Saver's active Accounts, if multiple Accounts per Saver is enabled for you.
+  - Transactions can have `type` `TRANSFER`, with a new `subType` of `INBOUND` or `OUTBOUND`.
+  - If multiple Accounts per Saver is enabled for you, a Saver can hold up to 5 active Accounts, and `GET /accounts?saverId={saverId}` returns all of them.
+  - `POST /accounts` only returns `400 This Saver already has an Account` when the Saver has an active Account.
+  - `DELETE /accounts/{accountId}` accepts an optional body to pay the closing balance to the Saver's bank account (`type` `WITHDRAWAL`) or into another of their active Accounts (`type` `TRANSFER` with `destinationAccountId`). Accounts return the choice as `closureOptions`.
+  - Closing Accounts pass through a new `awaiting_closing_interest` status between `closing` and `closed` while month-end interest is paid.
+  - Closing Savers pass through a new `awaiting_account_closure` status between `closing` and `closed`.
+
+  # December 2025
+  - `address.postCode` on `POST /savers` and `PATCH /savers/{saverId}` accepts lowercase letters, and is stored in uppercase.
+
+  # October 2025
+  - `GET /accounts?saverId={saverId}` returns an array of Accounts instead of a single Account.

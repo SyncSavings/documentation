@@ -105,6 +105,7 @@ description: |
   A Transaction's status can be either:
   - `AUTHORISING` - the Transaction is being processed
   - `SETTLED` - the Transaction has been processed
+  - `REJECTED` - the Transaction has failed to be processed by the bank
   ```json
   {
     "type": "transaction_status_updated",

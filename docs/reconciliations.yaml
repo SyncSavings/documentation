@@ -30,6 +30,19 @@ paths:
         - Reconciliations
     get:
       summary: Search existing Reconciliations
+      parameters:
+        - in: query
+          name: institutions
+          required: false
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+            example: ['institution-1', 'institution-2']
+            description: The institutions the reconciliations should be filtered by
+        - $ref: 'schemas.yaml#/components/parameters/Search'
       responses:
         '200':
           description: The requested Reconciliation has been found and returned

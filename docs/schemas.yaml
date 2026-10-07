@@ -40,3 +40,38 @@ components:
           type: string
           example: '2024-12-31T00:00:00.000Z'
           description: The time that the resource was most recently updated
+    Search:
+      properties:
+          page:
+            type: integer
+            minimum: 1
+            default: 1
+            example: 1
+            description: The page of results to return, starting at 1
+          limit:
+            type: integer
+            minimum: 1
+            default: 10
+            example: 10
+            description: The maximum number of results to return per page
+          sortBy:
+            type: string
+            enum: ['createdAt', 'updatedAt']
+            example: createdAt
+            description: The field to sort results by. Without it, results use the endpoint's default order
+          sortOrder:
+            type: string
+            enum: ['asc', 'desc']
+            default: asc
+            example: desc
+            description: The direction to sort results in. Only applies when `sortBy` is set
+  parameters:
+    Search:
+      in: query
+      name: search
+      required: false
+      style: form
+      explode: true
+      description: Pagination and sorting. Send each field as its own query parameter, e.g. `?page=2&limit=20&sortBy=createdAt&sortOrder=desc`
+      schema:
+        $ref: '#/components/schemas/Search'
