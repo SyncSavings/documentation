@@ -5,12 +5,15 @@
   "main": "index.js",
   "scripts": {
     "build": "redocly build-docs ./docs/main.yaml --output dist/index.html",
-    "build:dev": "redocly preview-docs ./docs/main.yaml"
+    "dev": "concurrently -k -n docs,serve \"nodemon --watch docs --ext yaml,yml,json --exec 'npm run build'\" \"serve dist -l 8080\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@redocly/cli": "^1.16.0"
+    "@redocly/cli": "^1.16.0",
+    "concurrently": "^10.0.6",
+    "nodemon": "^3.1.14",
+    "serve": "^14.2.6"
   }
 }

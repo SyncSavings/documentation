@@ -7,7 +7,7 @@ We use [redocly](https://redocly.com/docs) to generate our documentation, `docs/
 # Run locally
 
 ```sh
-$ npm run build:dev
+$ npm run dev
 $ open http://127.0.0.1:8080/
 ```
 
