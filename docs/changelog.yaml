@@ -2,6 +2,9 @@ description: |
 
   # Upcoming
 
+  # October 2026
+  - `PATCH /savers/{saverId}` accepts `institution`, to move a Saver to a different institution. Changing only `institution` doesn't re-run identity checks. It isn't available if your Savers' money or data is held separately for each institution.
+
   # September 2026
   - `GET /products` returns `subType` in place of `accessType`, with the same values, and a new `type` field.
   - The `saver_status_updated` webhook no longer includes `bankName`.

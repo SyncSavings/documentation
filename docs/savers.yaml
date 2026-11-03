@@ -296,6 +296,10 @@ components:
           type: object
           allOf:
             - $ref: '#/components/schemas/Address'
+        institution:
+          type: string
+          minLength: 1
+          example: 'Winslow Luggages'
     
     SaverBankDetails:
       type: object
