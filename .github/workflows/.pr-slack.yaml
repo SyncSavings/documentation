@@ -43,6 +43,9 @@ jobs:
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           webhook-type: incoming-webhook
+          # toJSON writes the title as a quoted string. Quoting it by hand as
+          # '*title*' broke on an apostrophe: the payload failed to parse and
+          # no message was posted.
           payload: |
             text: Review Time!
             blocks:
@@ -53,7 +56,7 @@ jobs:
               - type: section
                 text:
                   type: mrkdwn
-                  text: '*${{ github.event.pull_request.title }}*'
+                  text: ${{ toJSON(format('*{0}*', github.event.pull_request.title)) }}
               - type: context
                 elements:
                   - type: mrkdwn
