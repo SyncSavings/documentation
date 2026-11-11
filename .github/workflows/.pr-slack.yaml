@@ -11,23 +11,48 @@ jobs:
   run:
     name: Slack message
     runs-on: ubuntu-latest
+    # A review request aimed at a team has no requested_reviewer, so there is
+    # nobody to mention. Skip rather than post "<@> has requested a review".
+    if: github.event.requested_reviewer.login != ''
     steps:
+      - name: Resolve mentions
+        id: who
+        env:
+          ACTOR_ID: ${{ env[github.actor] }}
+          ACTOR_LOGIN: ${{ github.actor }}
+          REVIEWER_ID: ${{ env[github.event.requested_reviewer.login] }}
+          REVIEWER_LOGIN: ${{ github.event.requested_reviewer.login }}
+        run: |
+          mention() {
+            if [ -n "$1" ]; then printf '<@%s>' "$1"; else printf '%s' "$2"; fi
+          }
+          actor=$(mention "$ACTOR_ID" "$ACTOR_LOGIN")
+          reviewer=$(mention "$REVIEWER_ID" "$REVIEWER_LOGIN")
+          echo "line=$actor has requested a review from $reviewer" >> "$GITHUB_OUTPUT"
+
       - name: Send Slack message
         uses: slackapi/slack-github-action@v3
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           webhook-type: incoming-webhook
+          # toJSON writes the title as a quoted string. Quoting it by hand as
+          # '*title*' broke on an apostrophe: the payload failed to parse and
+          # no message was posted.
           payload: |
             text: Review Time!
             blocks:
               - type: section
                 text:
                   type: mrkdwn
-                  text: <@${{ env[github.actor] }}> has requested a review from <@${{ env[github.event.pull_request.requested_reviewers[0].login] }}>
+                  text: ${{ steps.who.outputs.line }}
               - type: section
                 text:
                   type: mrkdwn
-                  text: '*${{ github.event.pull_request.title }}*'
+                  text: ${{ toJSON(format('*{0}*', github.event.pull_request.title)) }}
+              - type: context
+                elements:
+                  - type: mrkdwn
+                    text: '`${{ github.repository }}` · ${{ github.event.pull_request.changed_files }} files changed'
               - type: actions
                 elements:
                   - type: button
