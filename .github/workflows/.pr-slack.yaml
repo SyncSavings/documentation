@@ -6,12 +6,38 @@ env:
   MotNosniktaw: ${{secrets.TOM_SLACK_USER_ID}}
 on:
   pull_request:
-    types: [review_requested]
+    types: [review_requested, ready_for_review]
 jobs:
   run:
     name: Slack message
     runs-on: ubuntu-latest
+    # A review request aimed at a team has no requested_reviewer, so there is
+    # nobody to mention. Skip rather than post "<@> has requested a review".
+    if: >-
+      github.event.action == 'ready_for_review' ||
+      github.event.requested_reviewer.login != ''
     steps:
+      - name: Resolve mentions
+        id: who
+        env:
+          ACTOR_ID: ${{ env[github.actor] }}
+          ACTOR_LOGIN: ${{ github.actor }}
+          REVIEWER_ID: ${{ env[github.event.requested_reviewer.login] }}
+          REVIEWER_LOGIN: ${{ github.event.requested_reviewer.login }}
+          ACTION: ${{ github.event.action }}
+        run: |
+          mention() {
+            if [ -n "$1" ]; then printf '<@%s>' "$1"; else printf '%s' "$2"; fi
+          }
+          actor=$(mention "$ACTOR_ID" "$ACTOR_LOGIN")
+          if [ "$ACTION" = "review_requested" ]; then
+            reviewer=$(mention "$REVIEWER_ID" "$REVIEWER_LOGIN")
+            line="$actor has requested a review from $reviewer"
+          else
+            line="$actor marked a pull request ready for review"
+          fi
+          echo "line=$line" >> "$GITHUB_OUTPUT"
+
       - name: Send Slack message
         uses: slackapi/slack-github-action@v3
         with:
@@ -23,11 +49,15 @@ jobs:
               - type: section
                 text:
                   type: mrkdwn
-                  text: <@${{ env[github.actor] }}> has requested a review from <@${{ env[github.event.pull_request.requested_reviewers[0].login] }}>
+                  text: ${{ steps.who.outputs.line }}
               - type: section
                 text:
                   type: mrkdwn
                   text: '*${{ github.event.pull_request.title }}*'
+              - type: context
+                elements:
+                  - type: mrkdwn
+                    text: '`${{ github.repository }}` · ${{ github.event.pull_request.changed_files }} files changed'
               - type: actions
                 elements:
                   - type: button
