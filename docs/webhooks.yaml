@@ -37,6 +37,8 @@ description: |
   - `awaiting_account_closure` - the Saver is being closed and is waiting for all of their accounts to finish closing
   - `closed` - the Saver is closed and all Accounts for the Saver have been closed
   - `blocked` - the Saver is flagged for investigation
+  - `fix_up` - The Saver's details are incorrect and need to be updated before the Saver can continue.
+  - `manual_review` - We are reviewing the Saver's details. the Saver's status will be updated again once the review is complete.
   ```json
   {
     "type": "saver_status_updated",

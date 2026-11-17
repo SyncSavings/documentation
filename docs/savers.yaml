@@ -66,6 +66,8 @@ paths:
                 $ref: '#/components/schemas/SaverResponseBody'
         '404':
           description: The Saver with the specified ID does not exist
+        '400': 
+          description: The Saver is not in a state that can be updated
       tags:
         - Savers
     delete:
@@ -253,7 +255,7 @@ components:
               description: The unique identifier of the Saver in Sync's system.
             status:
               type: string
-              enum: ['active','pending','escalated', 'rejected', 'closing', 'awaiting_account_closure', 'closed', 'blocked']
+              enum: ['active','pending','escalated', 'rejected', 'closing', 'awaiting_account_closure', 'closed', 'blocked', 'fix_up', 'manual_review']
               description: The current status of the Saver
               example: 'active'
             upstreamId:
@@ -264,6 +266,15 @@ components:
               type: string
               example: https://google.com
               description: If the saver's status is `escalated` this is the URL they need to use to provide additional information
+            fieldsToFix:
+              type: array
+              nullable: true
+              items:
+                type: string
+                enum: ['identity']
+              description: |
+                If the Saver's status is `fix_up`, the details they must correct before they can continue. `null` or missing when there's nothing to fix.
+              example: ['identity']
         - $ref: '#/components/schemas/Saver'
         - $ref: 'schemas.yaml#/components/schemas/Dates'
 
@@ -300,6 +311,10 @@ components:
           type: string
           minLength: 1
           example: 'Winslow Luggages'
+        nationality:
+          type: string
+          example: GB
+          description: 2-character country code in ISO 3166 format
     
     SaverBankDetails:
       type: object
