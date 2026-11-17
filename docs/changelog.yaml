@@ -2,6 +2,12 @@ description: |
 
   # Upcoming
 
+  # November 2026
+  - **Breaking:** A Saver's `status` can be `fix_up` or `manual_review`, in `GET /savers/{saverId}` and in `saver_status_updated`. `fix_up` means the Saver must verify their identity again at `idvUrl`. `manual_review` means Sync is reviewing the Saver's identity checks before they can continue.
+  - **Breaking:** `PATCH /savers/{saverId}` returns `400` when the Saver's `status` is `rejected`. Before, it updated the Saver and re-ran identity checks.
+  - Saver responses include `fieldsToFix`, the details a Saver in `fix_up` must correct. It's currently always `["identity"]`, and is `null` or missing when there's nothing to fix.
+  - `PATCH /savers/{saverId}` accepts `nationality`, as an ISO 3166-1 alpha-2 country code. Changing it re-runs identity checks, and `US` returns `400`, as on `POST /savers`.
+
   # October 2026
   - `PATCH /savers/{saverId}` accepts `institution`, to move a Saver to a different institution. Changing only `institution` doesn't re-run identity checks. It isn't available if your Savers' money or data is held separately for each institution.
 
